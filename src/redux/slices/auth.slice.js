@@ -5,7 +5,9 @@ const initialState = {
   isLogged: false,
   uid: null,
   token: null,
-  user: {}
+  user: {
+    role: 'user'
+  }
 };
 
 export const authSlice = createSlice({

@@ -1,9 +1,10 @@
 import React from "react";
 import CustomInput from "../input";
+import { classNames } from "../../assets/utils/helper";
 
 const FormControl = ({ label, className, error, ...props }) => {
   return (
-    <div className="w-full flex flex-col justify-start">
+    <div className={classNames("w-full flex flex-col justify-start", className)}>
       {label ? (
         <label className="mb-1 font-medium text-text ">
           {label || ""}

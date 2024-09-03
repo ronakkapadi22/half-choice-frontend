@@ -4,7 +4,7 @@ import withUser from '../hoc/withUser'
 
 
 const PrivateLayout = ({ ...props }) => {
-    return <section className="w-full h-auto" {...props}>
+    return <section className="w-full h-auto relative" {...props}>
         <WithAuthenticatedOutlet {...props} replace {...{ to: '/' }} />
     </section>
 }
