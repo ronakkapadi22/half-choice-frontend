@@ -28,3 +28,6 @@ export const ROLES = {
 }
 
 export const IMAGE_PATH = 'https://halfchoice.in/superadmin/public/images/variant/'
+
+export const CAT_IMAGE_PATH = 'https://halfchoice.in/superadmin/public/images/category/'
+

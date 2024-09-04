@@ -16,7 +16,9 @@ export default {
         yellow: '#FCB018',
         text: '#1B3030',
         'background':'#eef5f5',
-        'text-secondary': '#c7c7c7'
+        'text-secondary': '#c7c7c7',
+        danger: '#ce2c31',
+        'danger-hover': '#ffcdce'
       }
     },
   },

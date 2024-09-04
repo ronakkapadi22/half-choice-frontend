@@ -4,11 +4,17 @@ import useRoutes from "../hooks/useRoutes";
 import PublicLayout from "../layout/PublicLayout";
 import AuthLayout from "../layout/AuthLayout";
 import PrivateLayout from "../layout/UserLayout";
+import PLanLayout from "../layout/PlanLayout";
 
 const Routing = ({ ...props }) => {
-  const { authRoutes, privateRoutes, publicRoutes } = useRoutes();
+  const { authRoutes, privateRoutes, publicRoutes, planRoutes } = useRoutes();
   return (
     <Routes>
+      <Route path="/" element={<PLanLayout/>}>
+        {planRoutes.map(({ id, element: Element, ...otherData }) => (
+          <Route index key={`plan_${id}`} element={<Element/>} {...otherData} />
+        ))}
+      </Route>
       <Route path="/" element={<PublicLayout />}>
         {publicRoutes.map(({ id, element: Element, ...otherData }) => (
           <Route index key={`public_${id}`} element={<Element/>} {...otherData} />

@@ -18,10 +18,15 @@ export const authSlice = createSlice({
         return {
             ...state, ...action.payload
         }
+    },
+    handleAuthInitial: (state) => {
+        return {
+            ...initialState
+        }
     }
   }
 });
 
-export const { handleAuthSlice } = authSlice.actions;
+export const { handleAuthSlice, handleAuthInitial } = authSlice.actions;
 
 export default authSlice.reducer;
