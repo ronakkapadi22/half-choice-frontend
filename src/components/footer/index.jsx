@@ -1,6 +1,5 @@
 import React from "react";
 import logo from "../../assets/images/logo.png";
-import "../../styles/general.css";
 import { IoLocationOutline, IoMailOutline } from "react-icons/io5";
 import { TbWorld } from "react-icons/tb";
 import { BiPhoneCall } from "react-icons/bi";

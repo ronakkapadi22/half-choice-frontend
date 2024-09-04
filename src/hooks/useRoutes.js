@@ -131,10 +131,8 @@ const useRoutes = () => {
     authRoutes,
     privateRoutes,
     publicRoutes,
-<<<<<<< HEAD
-=======
     planRoutes
->>>>>>> 26b7274abe08c8808ba0e85b3aec95c0801d2909
+
   };
 };
 

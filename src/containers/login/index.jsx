@@ -19,32 +19,6 @@ import { handleAuthSlice } from "../../redux/slices/auth.slice";
 import { setDataFromLocal } from "../../assets/utils/local";
 
 const Login = () => {
-<<<<<<< HEAD
-  // Correctly initialize Recaptcha only once
-  const captchaVerifier = (id, handleSubmit) => {
-    window.recaptchaVerifier = new RecaptchaVerifier(id, {
-      size: "invisible",
-      callback: (response) => {
-        // reCAPTCHA solved, allow signInWithPhoneNumber.
-        handleSubmit();
-        console.log(response);
-        console.log("recaptcha verified");
-      },
-      defaultCountry: "IN",
-    });
-  };
-
-  const handleSendOTP = async (values) => {
-    captchaVerifier("sign-in-button", handleSendOTP);
-    const appVerifier = window.recaptchaVerifier;
-    const otpSent = signInPhoneNumber("+91" + values.phoneNumber, appVerifier);
-    console.log("OTP Sent", otpSent);
-  };
-
-  const { values, errors, handleSubmit, setValues } = useFormik({
-    initialValues: {
-      phoneNumber: null,
-=======
   const navigate = useNavigate();
   const [otp, setOtp] = useState("");
   const [otpError, setOtpError] = useState(false);
@@ -102,17 +76,10 @@ const Login = () => {
   const { values, errors, handleSubmit, setValues } = useFormik({
     initialValues: {
       phoneNumber: "",
->>>>>>> 26b7274abe08c8808ba0e85b3aec95c0801d2909
       keepSignIn: false,
     },
     validationSchema: LoginSchema,
     onSubmit: async (values) => {
-<<<<<<< HEAD
-      handleSendOTP(values);
-    },
-  });
-
-=======
       handleSendOTP();
     },
   });
@@ -132,7 +99,6 @@ const Login = () => {
       });
   };
 
->>>>>>> 26b7274abe08c8808ba0e85b3aec95c0801d2909
   const handleChange = (e) => {
     const { name, value } = e.target;
     setValues({
@@ -140,21 +106,21 @@ const Login = () => {
       [name]: value,
     });
   };
-<<<<<<< HEAD
-=======
 
   const fetchUserExistOrNot = async (uid) => {
     setLoader(true);
     try {
-      const response = await api.auth.otpVerify({data : {
-        phone: values.phoneNumber,
-        device_id: uid || "",
-        device_token: uid || "",
-        device_type: "browser",
-      }});
+      const response = await api.auth.otpVerify({
+        data: {
+          phone: values.phoneNumber,
+          device_id: uid || "",
+          device_token: uid || "",
+          device_type: "browser",
+        },
+      });
       if (response?.data) {
         const { data } = response?.data;
-        setLoader(false)
+        setLoader(false);
         if (!data?.isUserExist) {
           navigate(PAGES.REGISTER.path);
           return;
@@ -162,13 +128,13 @@ const Login = () => {
         dispatch(
           handleAuthSlice({
             isLogged: isTokenActivated(data?.authtoken),
-            uid: uid || '',
-            token: data?.authtoken || '',
-            user: { ...data, role: 'user' },
+            uid: uid || "",
+            token: data?.authtoken || "",
+            user: { ...data, role: "user" },
           })
         );
-        setDataFromLocal('token', data?.authtoken)
-        navigate(PAGES.HOME.path)
+        setDataFromLocal("token", data?.authtoken);
+        navigate(PAGES.HOME.path);
       }
     } catch (error) {
       setLoader(false);
@@ -205,10 +171,10 @@ const Login = () => {
             handleSubmit={handleSubmit}
             className="w-full flex-col md:max-w-[480px] mx-auto p-4 md:p-8 h-full flex justify-center"
           >
-            <h1 className="font-medium text-2xl mb-1 text-text">
+            <h1 className="mb-1 text-2xl font-medium text-text">
               Welcome Back!
             </h1>
-            <p className="text-base font-normal text-text-secondary mb-8">
+            <p className="mb-8 text-base font-normal text-text-secondary">
               Discover fun, colorful outfits that let kids be kids!
             </p>
             <FormControl
@@ -251,14 +217,14 @@ const Login = () => {
             className="w-full flex-col md:max-w-[480px] mx-auto p-4 md:p-8 h-full flex justify-center"
             {...{ handleSubmit: handleOTPSubmit }}
           >
-            <h1 className="font-medium text-2xl mb-1 text-text">
+            <h1 className="mb-1 text-2xl font-medium text-text">
               OTP Verification
             </h1>
-            <p className="text-base font-normal text-text-secondary mb-8">
+            <p className="mb-8 text-base font-normal text-text-secondary">
               Enter the code from the sms we sent to{" "}
               {"+91" + values.phoneNumber}
             </p>
-            <div className="my-2 w-full">
+            <div className="w-full my-2">
               <OtpInput
                 value={otp}
                 onChange={setOtp}
@@ -286,7 +252,7 @@ const Login = () => {
               {loader ? <Spinner className="ml-1 !w-4 !h-4" /> : null}
             </Button>
             <div className="flex items-center justify-center w-full">
-              <p className="text-base font-normal text-text mb-8 my-1">
+              <p className="my-1 mb-8 text-base font-normal text-text">
                 I didn't receive any code.{" "}
                 <span
                   className="font-medium cursor-pointer"
@@ -302,7 +268,6 @@ const Login = () => {
         return <></>;
     }
   };
->>>>>>> 26b7274abe08c8808ba0e85b3aec95c0801d2909
 
   return (
     <div className="grid w-full h-full grid-cols-12">
@@ -310,48 +275,8 @@ const Login = () => {
         <img className="w-4/5" src={logo} alt="logo" />
       </div>
       <div className="col-span-12 md:col-span-5">
-<<<<<<< HEAD
-        <Form
-          handleSubmit={handleSubmit}
-          className="w-full flex-col md:max-w-[480px] mx-auto p-4 md:p-8 h-full flex justify-center"
-        >
-          <h1 className="mb-1 text-2xl font-medium text-text">Welcome Back!</h1>
-          <p className="mb-8 text-base font-normal text-text-secondary">
-            Discover fun, colorful outfits that let kids be kids!
-          </p>
-          <FormControl
-            isPhone
-            placeholder="Enter Phone Number"
-            type="number"
-            label="Phone Number"
-            error={errors.phoneNumber}
-            {...{
-              name: "phoneNumber",
-              value: values.phoneNumber,
-              handleChange,
-            }}
-          />
-          <CustomCheckBox
-            {...{
-              name: "keepSignIn",
-              checked: values.keepSignIn,
-              handleChange,
-            }}
-            className="mt-4 mb-8"
-            label="Keep me signed in"
-          />
-          <Button
-            className="!w-full mb-1 !bg-pink !border-pink hover:!border-yellow hover:!bg-yellow transition-all duration-300 "
-            type="submit"
-          >
-            <span>Get OTP</span>
-          </Button>
-          <div id="sign-in-button"></div>
-        </Form>
-=======
         {handleFormProvider(common.ui_key)}
         <div id="recaptcha-container"></div>
->>>>>>> 26b7274abe08c8808ba0e85b3aec95c0801d2909
       </div>
     </div>
   );
