@@ -17,8 +17,7 @@ import { useSelector } from "react-redux";
 import Login from "../containers/login";
 
 const useRoutes = () => {
-
-    const { role } = useSelector(({auth}) => auth?.user)
+  const { role } = useSelector(({ auth }) => auth?.user);
 
   const routes = useMemo(
     () => [
@@ -103,22 +102,24 @@ const useRoutes = () => {
   }, []);
 
   const authRoutes = useMemo(() => {
-    return routes.filter(val => val?.isAuth)
-  }, [routes])
+    return routes.filter((val) => val?.isAuth);
+  }, [routes]);
 
   const publicRoutes = useMemo(() => {
-    return routes.filter(val => val?.isPublic)
-  }, [routes])
+    return routes.filter((val) => val?.isPublic);
+  }, [routes]);
 
   const privateRoutes = useMemo(() => {
-    return routes.filter(val => val?.isPrivate && isAccessible(val.roles, role))
-  }, [role, isAccessible, routes])
+    return routes.filter(
+      (val) => val?.isPrivate && isAccessible(val.roles, role)
+    );
+  }, [role, isAccessible, routes]);
 
   return {
     routes,
     authRoutes,
     privateRoutes,
-    publicRoutes
+    publicRoutes,
   };
 };
 

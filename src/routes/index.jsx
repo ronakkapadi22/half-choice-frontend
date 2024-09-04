@@ -11,17 +11,32 @@ const Routing = ({ ...props }) => {
     <Routes>
       <Route path="/" element={<PublicLayout />}>
         {publicRoutes.map(({ id, element: Element, ...otherData }) => (
-          <Route index key={`public_${id}`} element={<Element/>} {...otherData} />
+          <Route
+            index
+            key={`public_${id}`}
+            element={<Element />}
+            {...otherData}
+          />
         ))}
       </Route>
       <Route path="/" element={<AuthLayout />}>
         {authRoutes.map(({ id, element: Element, ...otherData }) => (
-          <Route index key={`auth_${id}`} element={<Element/>}  {...otherData} />
+          <Route
+            index
+            key={`auth_${id}`}
+            element={<Element />}
+            {...otherData}
+          />
         ))}
       </Route>
       <Route path="/" element={<PrivateLayout />}>
         {privateRoutes.map(({ id, element: Element, ...otherData }) => (
-          <Route index key={`private_${id}`} element={<Element/>} {...otherData} />
+          <Route
+            index
+            key={`private_${id}`}
+            element={<Element />}
+            {...otherData}
+          />
         ))}
       </Route>
       <Route path="*" element={<p>Not Found</p>} />
