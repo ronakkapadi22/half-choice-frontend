@@ -51,7 +51,12 @@ export const PAGES = {
     },
     CART: {
         id: 'cart',
-        path: 'cart',
+        path: '/cart',
         name: 'Cart'
+    },
+    SEARCH: {
+        id: 'search',
+        path: '/search',
+        name: 'Search'
     }
 }

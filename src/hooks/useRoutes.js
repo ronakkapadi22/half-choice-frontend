@@ -15,6 +15,7 @@ import OrderDetails from "../containers/orders/order-details";
 import Checkout from "../containers/checkout";
 import { useSelector } from "react-redux";
 import Login from "../containers/login";
+import ProductSearch from "../containers/search";
 
 const useRoutes = () => {
   const { role } = useSelector(({ auth }) => auth?.user);
@@ -63,6 +64,12 @@ const useRoutes = () => {
         isPublic: true,
       },
       {
+        ...PAGES.SEARCH,
+        element: ProductSearch,
+        isPublic: true,
+        layout: 'plan'
+      },
+      {
         ...PAGES.WISHLISTS,
         element: Wishlists,
         isPrivate: true,
@@ -109,6 +116,10 @@ const useRoutes = () => {
     return routes.filter((val) => val?.isPublic);
   }, [routes]);
 
+  const planRoutes = useMemo(() => {
+    return routes.filter(val => val?.isPublic && val.layout === 'plan')
+  }, [routes])
+
   const privateRoutes = useMemo(() => {
     return routes.filter(
       (val) => val?.isPrivate && isAccessible(val.roles, role)
@@ -120,6 +131,10 @@ const useRoutes = () => {
     authRoutes,
     privateRoutes,
     publicRoutes,
+<<<<<<< HEAD
+=======
+    planRoutes
+>>>>>>> 26b7274abe08c8808ba0e85b3aec95c0801d2909
   };
 };
 
