@@ -27,8 +27,6 @@ const Wishlists = () => {
     return clone || [];
   }, [isLoading, wishlist]);
 
-  console.log("wishlist", my_wishlist);
-
   return (
     <div className="relative container mx-auto lg:px-4 p-4 max-w-7xl">
       <div className="w-full flex flex-col items-start justify-start my-9">
@@ -37,7 +35,7 @@ const Wishlists = () => {
           A collection of favorite items saved for future purchase or
           inspiration.
         </p>
-        <div className="w-full mt-16 grid grid-cols-12 gap-4">
+        <div className="w-full mt-16 grid grid-cols-12 gap-4 lg:gap-8">
           {isLoading
             ? CAROUSEL_LOADER.map((id) => (
                 <div

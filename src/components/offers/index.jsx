@@ -18,7 +18,7 @@ const Offers = ({ ...props }) => {
   ];
 
   return (
-    <section className="container px-4 pb-16 mx-auto sm:px-6 lg:px-8">
+    <section className="relative container mx-auto lg:px-4 p-4 max-w-7xl">
       <div className="grid w-full grid-cols-12 gap-4">
         {offers?.map((item, index) => {
           return (

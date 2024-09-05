@@ -27,7 +27,7 @@ const Features = () => {
 
   return (
     <section className="py-12 pb-24 featureSection">
-      <div className="container px-4 mx-auto sm:px-6 lg:px-8">
+      <div className="relative container mx-auto lg:px-4 p-4 max-w-7xl">
         <div className="grid grid-cols-12 gap-6">
           {feature?.map((item, index) => {
             return (
@@ -40,7 +40,7 @@ const Features = () => {
                     {item.icon}
                   </i>
                   <div className="iconBox01">
-                    <h3 className="text-[#FF2189]">{item.name}</h3>
+                    <h3 className="text-pink">{item.name}</h3>
                     <p className="text-[#84CC16]">{item.desc}</p>
                   </div>
                 </div>

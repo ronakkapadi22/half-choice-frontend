@@ -5,8 +5,6 @@ import ReactOwlCarousel from "react-owl-carousel";
 const HomeBanner = () => {
   const { isLoading, data } = useSelector(({ commerce }) => commerce);
 
-  console.log("promotions", data);
-
   return (
     <div className="w-full h-auto">
       <ReactOwlCarousel

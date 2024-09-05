@@ -51,10 +51,11 @@ const LatestArrival = ({ title, className, ...props }) => {
         className
       )}
     >
-      <div className="flex items-end justify-between w-full">
+      <div className="flex items-end mb-12 justify-between w-full">
         <div className="flex flex-col">
-          <h2 className="text-4xl text-text mb-1.5">{title || ""}</h2>
-          <p className="text-slate-400 text-lg">
+          <h3 className="text-xl font-semibold text-pink">Our</h3>
+          <h2 className="mb-6 text-4xl font-bold">{title || ""}</h2>
+          <p className="text-gray-600 text-lg">
             Explore the latest arrivals in kids' clothing with adorable, comfy,
             and playful styles perfect for every little trendsetter.
           </p>
