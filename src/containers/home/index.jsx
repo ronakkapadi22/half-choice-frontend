@@ -6,6 +6,7 @@ import LatestArrival from "./latest-arrival";
 import Features from "../../components/features";
 import Offers from "../../components/offers";
 import WhatWeDo from "../../components/whatWeDo";
+import PopularProducts from "./popular-products";
 
 const Home = () => {
   const [fetchHome] = useDispatchWithAbort(getCommerce);
@@ -19,8 +20,9 @@ const Home = () => {
       <HomeBanner />
       <Features />
       <WhatWeDo />
-      <Offers />
       <LatestArrival className="py-12" title="Latest Arrival" />
+      <Offers />
+      <PopularProducts className="py-12" title='Popular Products' />
     </div>
   );
 };

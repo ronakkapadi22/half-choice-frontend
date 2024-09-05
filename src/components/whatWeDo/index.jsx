@@ -9,10 +9,10 @@ const WhatWeDo = () => {
   ];
 
   return (
-    <section className="p-12 lg:p-24 bg-gray-50 md:p-16">
-      <div className="container px-4 mx-auto text-center">
+    <section className="w-full">
+      <div className="relative container mx-auto lg:px-4 p-4 max-w-7xl">
         <div className="">
-          <h2 className="text-xl font-semibold text-[#FF2189]">What</h2>
+          <h2 className="text-xl font-semibold text-pink">What</h2>
           <h3 className="mb-6 text-4xl font-bold">We do</h3>
           <p className="mb-12 text-lg text-gray-600">
             At HalfChoice we don't just provide children's clothing; we

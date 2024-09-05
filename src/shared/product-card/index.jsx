@@ -22,8 +22,6 @@ const ProductCard = ({id, className, variant, ...props}) => {
         return [...new Set(clone.map(val => val.size))]
     }, [variant])
 
-    console.log('props', props)
-
     const isWishlist = useMemo(() => Boolean(props.wishlist), [props.wishlist])
 
   return (
