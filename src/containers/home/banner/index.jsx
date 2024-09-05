@@ -1,6 +1,6 @@
 import React from "react";
-import { useSelector } from "react-redux";
-import OwlCarousel from "react-owl-carousel";
+import { useSelector } from "react-redux";// Use curly braces for named exports
+import ReactOwlCarousel from "react-owl-carousel";
 
 const HomeBanner = () => {
   const { isLoading, data } = useSelector(({ commerce }) => commerce);
@@ -9,7 +9,7 @@ const HomeBanner = () => {
 
   return (
     <div className="w-full h-auto">
-      <OwlCarousel
+      <ReactOwlCarousel
         className="owl-theme !z-0"
         autoPlay={true}
         loop
@@ -25,7 +25,7 @@ const HomeBanner = () => {
         <div className="item w-full h-9 bg-pink"></div>
         <div className="item w-full h-9 bg-yellow"></div>
         <div className="item w-full h-9 bg-green"></div>
-      </OwlCarousel>
+      </ReactOwlCarousel>
     </div>
   );
 };

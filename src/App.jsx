@@ -1,4 +1,3 @@
-import $ from "jquery"
 import { Provider } from "react-redux";
 import { persistor, store } from "./redux";
 import { BrowserRouter } from "react-router-dom";
