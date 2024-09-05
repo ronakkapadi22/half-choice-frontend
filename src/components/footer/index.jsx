@@ -8,8 +8,8 @@ import moment from "moment";
 
 const Footer = () => {
   return (
-    <footer className="p-3 text-white md:p-20 bg-green">
-      <div className="container px-0 mx-auto md:px-4 max-w-7xl flex justify-start items-center mb-8">
+    <footer className="p-3 text-white md:p-10 bg-green lg:p-20">
+      <div className="container flex items-center justify-start px-0 mx-auto mb-8 md:px-4 max-w-7xl">
         <div className="p-4 rounded-full">
           <Link to={PAGES.HOME.path}>
             <img
@@ -54,14 +54,14 @@ const Footer = () => {
                 <input
                   type="email"
                   placeholder="Enter your email"
-                  className="w-full px-4 py-3 text-black rounded-[30px] md:w-auto focus:outline-none border-none md:min-w-[340px] min-w-[240px]"
+                  className="w-full px-4 py-3 text-black rounded-[30px] md:w-auto focus:outline-none border-none lg:min-w-[440px] min-w-[230px] md:min-w-[340px]"
                 />
-                <Button className="!ml-2 !rounded-[30px] ">
+                <Button className="!ml-2 !rounded-[30px] w-[140px] absolute right-0 hover:bg-[#FCB018] focus:outline-none border-none translate-x-0 duration-300">
                   <span>Submit</span>
                 </Button>
               </div>
             </div>
-            <div className="flex md:justify-end mr-[39px] mt-[60px] gap-3">
+            <div className="flex md:justify-end mr-[0px] mt-[60px] gap-3">
               <div className="border rounded-[30px] p-3 cursor-pointer text-3xl bg-white text-green">
                 <ICONS.FACEBOOK />
               </div>
@@ -86,19 +86,28 @@ const Footer = () => {
             </p>
           </div>
           <div className="flex justify-start text-base md:justify-start md:flex-row">
-            <Link to={PAGES.HOME.path} className="text-white hover:text-pink px-3">
+            <Link
+              to={PAGES.HOME.path}
+              className="px-3 text-white hover:text-pink"
+            >
               Home
             </Link>
-            <Link to={PAGES.ABOUT.path} className="text-white hover:text-pink px-3">
+            <Link
+              to={PAGES.ABOUT.path}
+              className="px-3 text-white hover:text-pink"
+            >
               About us
             </Link>
             <Link
               to={PAGES.CONTACT_US.path}
-              className="text-white hover:text-pink px-3"
+              className="px-3 text-white hover:text-pink"
             >
               contact us
             </Link>
-            <Link to={PAGES.HOME.path} className="text-white hover:text-pink px-3">
+            <Link
+              to={PAGES.HOME.path}
+              className="px-3 text-white hover:text-pink"
+            >
               Blogs
             </Link>
           </div>
