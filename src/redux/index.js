@@ -6,7 +6,7 @@ import { reducers } from "./slices";
 const persistConfig = {
   key: "root",
   storage,
-  whitelist: ["auth"],
+  whitelist: ["auth", "wishlist"],
 };
 
 const persistedReducer = persistReducer(persistConfig, reducers);

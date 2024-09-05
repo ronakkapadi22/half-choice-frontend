@@ -15,7 +15,7 @@ const withUser =
         <Footer />
       </Fragment>
     ) : (
-      <NavigateComponent {...{ to, replace }} />
+      <NavigateComponent {...{ to, replace: '/' }} />
     );
   };
 

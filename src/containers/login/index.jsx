@@ -27,8 +27,6 @@ const Login = () => {
   const dispatch = useDispatch();
   const common = useSelector(({ common }) => common);
 
-  console.log("common", common);
-
   // Function to set up reCAPTCHA
   const setUpRecaptcha = () => {
     // Check if reCAPTCHA is already set up; if not, set it up

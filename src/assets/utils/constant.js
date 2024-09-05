@@ -27,6 +27,9 @@ export const ROLES = {
     ADMIN: 'admin'
 }
 
+export const CAROUSEL_LOADER = [1, 2, 3, 4]
+export const PRODUCTS_LOADER = [1, 2, 3, 4, 5, 6, 7, 8]
+
 export const IMAGE_PATH = 'https://halfchoice.in/superadmin/public/images/variant/'
 
 export const CAT_IMAGE_PATH = 'https://halfchoice.in/superadmin/public/images/category/'
