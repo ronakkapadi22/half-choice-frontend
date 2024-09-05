@@ -1,6 +1,6 @@
 import { FaCheck } from "react-icons/fa6";
 import { CiDiscount1 } from "react-icons/ci";
-import { HiBars3, HiShoppingCart  } from "react-icons/hi2";
+import { HiBars3, HiChevronLeft, HiChevronRight, HiShoppingCart  } from "react-icons/hi2";
 import { HiUserAdd, HiOutlineSearch, HiChevronDown } from "react-icons/hi";
 import { IoIosClose } from "react-icons/io";
 import { FaUserCircle } from "react-icons/fa";
@@ -10,6 +10,8 @@ import { BiPhoneCall } from "react-icons/bi";
 import { FiFacebook, FiYoutube } from "react-icons/fi";
 import { FaInstagram } from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
+import { IoIosHeartEmpty, IoIosHeart } from "react-icons/io";
+
 
 
 export const ICONS = {
@@ -20,6 +22,8 @@ export const ICONS = {
     SEARCH: HiOutlineSearch,
     MENU: HiBars3,
     CHEVRON_DOWN: HiChevronDown,
+    CHEVRON_LEFT: HiChevronLeft,
+    CHEVRON_RIGHT: HiChevronRight,
     CLOSE: IoIosClose,
     USER: FaUserCircle,
     TWITTER: FaXTwitter,
@@ -29,7 +33,9 @@ export const ICONS = {
     PHONE: BiPhoneCall,
     LOCATION: IoLocationOutline,
     MAIL: IoMailOutline,
-    WORLD: TbWorld
+    WORLD: TbWorld,
+    HEART_EMPTY: IoIosHeartEmpty,
+    HEART_FILL: IoIosHeart
 }
 
 

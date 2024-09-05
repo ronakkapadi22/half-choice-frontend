@@ -46,8 +46,6 @@ const NavBar = () => {
     if(user.fname || user.lname) return `${user.fname} ${user.lname}`
   }, [user])
 
-  console.log('user', username)
-
   const handleRedirect = useCallback(
     (path) => {
       navigate(path);
