@@ -22,10 +22,14 @@ const ProductCard = ({id, className, variant, ...props}) => {
         return [...new Set(clone.map(val => val.size))]
     }, [variant])
 
+    console.log('props', props)
+
+    const isWishlist = useMemo(() => Boolean(props.wishlist), [props.wishlist])
+
   return (
     <div className={classNames('w-full cursor-pointer flex flex-col items-center justify-center relative h-auto', className)} >
         <div className='absolute top-2 right-2 bg-slate-100 rounded-full p-2' >
-            <ICONS.HEART_EMPTY className='w-6 h-6 text-pink' />
+            {isWishlist ? <ICONS.HEART_FILL className='w-6 h-6 text-pink' /> : <ICONS.HEART_EMPTY className='w-6 h-6 text-pink' />}
         </div>
         {attribute?.discount ? <div className='absolute top-2 left-2 bg-green text-white text-xs rounded-lg px-2 py-1' >
             {attribute?.discount ? `-${attribute?.discount}%` : null}

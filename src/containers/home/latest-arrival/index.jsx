@@ -87,7 +87,7 @@ const LatestArrival = ({ title, className, ...props }) => {
             isLoading ? CAROUSEL_LOADER.map(id => <div key={id} className="item w-full" >
                 <ProductSkeleton/>
             </div>) : latest.map(product => <div key={product?.id} className="w-full item" >
-                <ProductCard {...{id: product?.id, variant: product?.variantData?.[0]}} />
+                <ProductCard {...product} {...{id: product?.id, variant: product?.variantData?.[0]}} />
             </div>)
         }
         </ReactOwlCarousel>

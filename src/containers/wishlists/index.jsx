@@ -1,26 +1,76 @@
-import React, { useEffect } from 'react'
-import useDispatchWithAbort from '../../hooks/useDispatchWithAbort'
-import { getWishlist } from '../../redux/slices/wishlist.slice'
-import { useSelector } from 'react-redux'
+import React, { useEffect, useMemo } from "react";
+import useDispatchWithAbort from "../../hooks/useDispatchWithAbort";
+import { getWishlist } from "../../redux/slices/wishlist.slice";
+import { useSelector } from "react-redux";
+import { CAROUSEL_LOADER } from "../../assets/utils/constant";
+import ProductSkeleton from "../../shared/product-skeleton";
+import ProductCard from "../../shared/product-card";
+import cart_image from '../../assets/images/cart.svg'
+import Button from "../../shared/button";
 
 const Wishlists = () => {
-    const user = useSelector(({auth}) => auth.user)
-    const {isLoading, wishlist} = useSelector(({wishlist}) => wishlist)
-    const [fetchWishlist] = useDispatchWithAbort(getWishlist)
+  const user = useSelector(({ auth }) => auth.user);
+  const { isLoading, wishlist } = useSelector(({ wishlist }) => wishlist);
+  const [fetchWishlist] = useDispatchWithAbort(getWishlist);
 
-    useEffect(() => {
-        fetchWishlist({
-            params: {
-                user_id: user?.id
-            }
-        })
-    }, [user?.id, fetchWishlist])
+  useEffect(() => {
+    fetchWishlist({
+      params: {
+        user_id: user?.id,
+      },
+    });
+  }, [user?.id, fetchWishlist]);
 
-    console.log('wishlist', wishlist)
+  const my_wishlist = useMemo(() => {
+    if (isLoading) return [];
+    const clone = [...wishlist];
+    return clone || [];
+  }, [isLoading, wishlist]);
+
+  console.log("wishlist", my_wishlist);
 
   return (
-    <div>Wishlists</div>
-  )
-}
+    <div className="relative container mx-auto lg:px-4 p-4 max-w-7xl">
+      <div className="w-full flex flex-col items-start justify-start my-9">
+        <h2 className="text-3xl text-text mb-1.5 font-semibold">My Wishlist</h2>
+        <p className="text-slate-400 text-md">
+          A collection of favorite items saved for future purchase or
+          inspiration.
+        </p>
+        <div className="w-full mt-16 grid grid-cols-12 gap-4">
+          {isLoading
+            ? CAROUSEL_LOADER.map((id) => (
+                <div
+                  key={id}
+                  className="w-full col-span-6 md:col-span-4 lg:col-span-3"
+                >
+                  <ProductSkeleton />
+                </div>
+              ))
+            : my_wishlist?.length ? my_wishlist.map((product) => (
+                <div
+                  key={product?.id}
+                  className="w-full col-span-6 md:col-span-4 lg:col-span-3"
+                >
+                  <ProductCard
+                    {...product}
+                    {...{ id: product?.id, variant: product?.variantData?.[0] }}
+                  />
+                </div>
+              )) : <div className="w-full col-span-12" >
+                  <div className="w-full flex flex-col items-center justify-center" >
+                    <img alt="cart_image" src={cart_image} className="object-cover max-w-[280px] w-auto" />
+                    <div className="mt-10 flex flex-col items-center justify-center" >
+                      <h2 className="text-center text-2xl text-text mb-1 font-semibold" >Your wishlist is empty !!</h2>
+                      <p className="text-center text-slate-400 text-md my-0.5" >Explore more and shortlist some items.</p>
+                      <Button label='Explore' className='!w-auto mt-6 !min-w-36 !rounded-full mb-1 flex items-center justify-center !bg-pink !border-pink hover:!border-yellow hover:!bg-yellow transition-all duration-300' />
+                    </div>
+                  </div>
+                </div>}
+        </div>
+      </div>
+    </div>
+  );
+};
 
-export default Wishlists
+export default Wishlists;
