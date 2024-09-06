@@ -18,7 +18,8 @@ export default {
         'background':'#eef5f5',
         'text-secondary': '#c7c7c7',
         danger: '#ce2c31',
-        'danger-hover': '#ffcdce'
+        'danger-hover': '#ffcdce',
+        'less': '#aeb3c3'
       }
     },
   },

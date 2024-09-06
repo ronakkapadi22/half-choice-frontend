@@ -24,5 +24,14 @@ export const api = {
             params,
             ...configs
         })
+    },
+    wishlists: {
+        getAll: ({ data, params, ...configs }) => client({
+            url: '/product/getWishlist',
+            method: METHODS.GET,
+            data,
+            params,
+            ...configs
+        })
     }
 }
