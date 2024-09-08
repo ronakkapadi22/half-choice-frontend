@@ -13,6 +13,7 @@ export const getWishlist = createAsyncThunk(
     }
 );
 
+
 const initialState = {
     isLoading: false,
     wishlist: []
@@ -23,21 +24,21 @@ export const wishlistSlice = createSlice({
     initialState,
     reducers: {},
     extraReducers: (builder) => {
-      builder.addCase(getWishlist.pending, (state) => {
-          state.isLoading = true
-      })
-      .addCase(getWishlist.fulfilled, (state, action) => {
-          state.isLoading = false
-          const { data } = action.payload
-          state.wishlist = data?.data || []
-      })
-      .addCase(getWishlist.rejected, (state, action) => {
-          if (axios.isCancel(action.payload)) {
-              return;
-          }
-          state.isLoading = false
-      });
+        builder.addCase(getWishlist.pending, (state) => {
+            state.isLoading = true
+        })
+            .addCase(getWishlist.fulfilled, (state, action) => {
+                state.isLoading = false
+                const { data } = action.payload
+                state.wishlist = data?.data || []
+            })
+            .addCase(getWishlist.rejected, (state, action) => {
+                if (axios.isCancel(action.payload)) {
+                    return;
+                }
+                state.isLoading = false
+            });
     }
-  });
-  
-  export default wishlistSlice.reducer;
+});
+
+export default wishlistSlice.reducer;

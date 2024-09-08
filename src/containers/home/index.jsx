@@ -7,12 +7,19 @@ import Features from "../../components/features";
 import Offers from "../../components/offers";
 import WhatWeDo from "../../components/whatWeDo";
 import PopularProducts from "./popular-products";
+import { useSelector } from "react-redux";
 
 const Home = () => {
   const [fetchHome] = useDispatchWithAbort(getCommerce);
+  const user = useSelector(({ auth }) => auth.user);
 
   useEffect(() => {
-    fetchHome({});
+    fetchHome({
+      params: {
+        user_id: user?.id
+      }
+    });
+
   }, [fetchHome]);
 
   return (
