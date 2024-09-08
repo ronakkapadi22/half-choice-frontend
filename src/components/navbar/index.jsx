@@ -426,7 +426,7 @@ const NavBar = () => {
           </DialogPanel>
         </Dialog>
         <Confirmation handleAction={handleAction}
-          actionLabel='Sign out'
+          actionLabel='Yes, Sign out'
           title="Sign Out"
           description="Are you sure you want to sign out of your account?"
           open={confirm}

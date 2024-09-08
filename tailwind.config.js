@@ -13,13 +13,17 @@ export default {
         black: '#000000',
         pink: '#E2218F',
         green: '#8DC63F',
-        yellow: '#FCB018',
+        yellow: {
+          DEFAULT: '#FCB018',
+          light: '#fff3cd',
+          dark: '#856404'
+        },
         text: '#1B3030',
         'background':'#eef5f5',
         'text-secondary': '#c7c7c7',
         danger: '#ce2c31',
         'danger-hover': '#ffcdce',
-        'less': '#aeb3c3'
+        'less': '#aeb3c3',
       }
     },
   },
