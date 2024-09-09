@@ -14,7 +14,7 @@ export const PAGES = {
         path: "/register",
         name: "Register",
     },
-    PRODUCTS:{
+    PRODUCTS: {
         id: 'products',
         path: '/products',
         name: "Products"
@@ -58,5 +58,10 @@ export const PAGES = {
         id: 'search',
         path: '/search',
         name: 'Search'
+    },
+    ADDRESS: {
+        id: 'address',
+        path: '/address',
+        name: 'Address'
     }
 }

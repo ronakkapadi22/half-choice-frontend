@@ -6,7 +6,7 @@ import About from "../containers/about";
 import ContactUs from "../containers/contact-us";
 import PrivacyPolicy from "../containers/privacy-policy";
 import Products from "../containers/products";
-import ProductDetails from "../containers/products/product-details";
+import ProductDetails from "../containers/product-detail";
 import Wishlists from "../containers/wishlists";
 import { ROLES } from "../assets/utils/constant";
 import Orders from "../containers/orders";
@@ -16,6 +16,7 @@ import Checkout from "../containers/checkout";
 import { useSelector } from "react-redux";
 import Login from "../containers/login";
 import ProductSearch from "../containers/search";
+import Address from "../containers/address";
 
 const useRoutes = () => {
   const { role } = useSelector(({ auth }) => auth?.user);
@@ -58,7 +59,7 @@ const useRoutes = () => {
         isPublic: true,
       },
       {
-        path: PAGES.PRODUCTS.path + "/:id",
+        path: PAGES.PRODUCTS.path + "/:product_id",
         name: "Product Details",
         element: ProductDetails,
         isPublic: true,
@@ -72,6 +73,12 @@ const useRoutes = () => {
       {
         ...PAGES.WISHLISTS,
         element: Wishlists,
+        isPrivate: true,
+        roles: [ROLES.USER, ROLES.ADMIN],
+      },
+      {
+        ...PAGES.ADDRESS,
+        element: Address,
         isPrivate: true,
         roles: [ROLES.USER, ROLES.ADMIN],
       },

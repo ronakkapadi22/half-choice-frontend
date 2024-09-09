@@ -22,6 +22,12 @@ import { FaInstagram } from "react-icons/fa";
 import { FaXTwitter, FaPeopleCarryBox } from "react-icons/fa6";
 import { IoIosHeartEmpty, IoIosHeart } from "react-icons/io";
 import { RxCaretRight } from "react-icons/rx";
+import { IoBagHandleOutline } from "react-icons/io5";
+import { MdDeleteOutline } from "react-icons/md";
+import { IoLogOutOutline } from "react-icons/io5";
+import { MdOutlineEdit } from "react-icons/md";
+
+
 
 export const ICONS = {
   CHECK: FaCheck,
@@ -50,4 +56,8 @@ export const ICONS = {
   PEOPLE_BOX: FaPeopleCarryBox,
   USER_CLOCK: FaUserClock,
   RIGHT: RxCaretRight,
+  BAG: IoBagHandleOutline,
+  DELETE: MdDeleteOutline,
+  LOGOUT: IoLogOutOutline,
+  EDIT: MdOutlineEdit
 };

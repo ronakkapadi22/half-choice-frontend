@@ -14,5 +14,8 @@ export default defineConfig({
   },
   server: {
     port: 4000,
+    hmr: {
+      overlay: false
+    },
   },
 });

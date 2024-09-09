@@ -20,11 +20,10 @@ import Button from "../../shared/button";
 import Confirmation from "../../shared/confirmation";
 import { handleAuthInitial } from "../../redux/slices/auth.slice";
 import { clearDataFromLocal } from "../../assets/utils/local";
-import * as Menubar from '@radix-ui/react-menubar';
+import * as Menubar from "@radix-ui/react-menubar";
 
 const NavBar = () => {
-
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [confirm, setConfirm] = useState(false);
   const { user } = useSelector(({ auth }) => auth);
@@ -35,16 +34,15 @@ const NavBar = () => {
   }, [user]);
 
   const handleAction = () => {
-    dispatch(handleAuthInitial())
-    clearDataFromLocal()
-    setConfirm(false)
-    setMobileMenuOpen(false)
-  }
+    dispatch(handleAuthInitial());
+    clearDataFromLocal();
+    setConfirm(false);
+    setMobileMenuOpen(false);
+  };
 
-  
   const username = useMemo(() => {
-    if(user.fname || user.lname) return `${user.fname} ${user.lname}`
-  }, [user])
+    if (user.fname || user.lname) return `${user.fname} ${user.lname}`;
+  }, [user]);
 
   const handleRedirect = useCallback(
     (path) => {
@@ -268,26 +266,50 @@ const NavBar = () => {
               className="w-6 h-6 text-gray-600 cursor-pointer"
             />
             <div className="w-[1px] h-5 bg-gray-400 mx-2"></div>
-            {!isUserLogged ? <ICONS.USER_PLUS
-              onClick={() => handleRedirect(PAGES.LOGIN.path)}
-              className="w-6 h-6 text-gray-600 cursor-pointer"
-            /> : <div className="relative" >
-              <Menubar.Root>
-                <Menubar.Menu>
+            {!isUserLogged ? (
+              <ICONS.USER_PLUS
+                onClick={() => handleRedirect(PAGES.LOGIN.path)}
+                className="w-6 h-6 text-gray-600 cursor-pointer"
+              />
+            ) : (
+              <div className="relative">
+                <Menubar.Root>
+                  <Menubar.Menu>
                     <Menubar.Trigger>
-                        <ICONS.USER className="w-6 h-6 text-gray-600 cursor-pointer" />
+                      <ICONS.USER className="w-6 h-6 text-gray-600 cursor-pointer" />
                     </Menubar.Trigger>
                     <Menubar.Portal>
-                      <Menubar.Content align="end"
-            sideOffset={10} className="flex w-40 flex-col items-center justify-center overflow-hidden rounded-md bg-white align-middle !drop-shadow-lg" >
-                          <Menubar.Item className="w-full px-4 py-2 text-sm font-medium text-center text-gray-700 cursor-pointer hover:bg-gray-100 hover:outline-none" >{username || ''}</Menubar.Item>
-                          <div className="w-full divide-y h-[1px] bg-gray-100" ></div>
-                          <Menubar.Item onClick={() => setConfirm(true)} className="w-full px-4 py-2 text-sm font-medium text-center text-gray-700 cursor-pointer hover:bg-gray-100 hover:outline-none" >Sign out</Menubar.Item>
+                      <Menubar.Content
+                        align="end"
+                        sideOffset={10}
+                        className="flex w-40 flex-col items-center justify-center overflow-hidden rounded-md bg-white align-middle !drop-shadow-lg"
+                      >
+                        <Menubar.Item className="w-full px-4 py-2 text-sm font-medium text-left text-gray-700 cursor-pointer hover:bg-gray-100 hover:outline-none">
+                          Hello, <br /> {username || ""}
+                        </Menubar.Item>
+                        <div className="w-full divide-y h-[1px] bg-gray-100"></div>
+                        <Menubar.Item onClick={() => handleRedirect(PAGES.WISHLISTS.path)} className="w-full flex items-center justify-between px-4 py-2 text-sm font-medium text-left text-gray-700 cursor-pointer hover:bg-gray-100 hover:outline-none">
+                          My Wishlist
+                          <ICONS.BAG className="w-5 h-5" />
+                        </Menubar.Item>
+                        <Menubar.Item onClick={() => handleRedirect(PAGES.CART.path)} className="w-full flex items-center justify-between px-4 py-2 text-sm font-medium text-left text-gray-700 cursor-pointer hover:bg-gray-100 hover:outline-none">
+                          My Cart
+                          <ICONS.CART className="w-5 h-5" />
+                        </Menubar.Item>
+                        <div className="w-full divide-y h-[1px] bg-gray-100"></div>
+                        <Menubar.Item
+                          onClick={() => setConfirm(true)}
+                          className="w-full px-4 py-2 flex items-center justify-between text-sm font-medium text-left text-gray-700 cursor-pointer hover:bg-gray-100 hover:outline-none"
+                        >
+                          Sign out
+                          <ICONS.LOGOUT className="w-5 h-5" />
+                        </Menubar.Item>
                       </Menubar.Content>
                     </Menubar.Portal>
-                </Menubar.Menu>
-              </Menubar.Root>
-              </div>}
+                  </Menubar.Menu>
+                </Menubar.Root>
+              </div>
+            )}
           </div>
         </nav>
         <Dialog
@@ -425,8 +447,9 @@ const NavBar = () => {
             </div>
           </DialogPanel>
         </Dialog>
-        <Confirmation handleAction={handleAction}
-          actionLabel='Yes, Sign out'
+        <Confirmation
+          handleAction={handleAction}
+          actionLabel="Yes, Sign out"
           title="Sign Out"
           description="Are you sure you want to sign out of your account?"
           open={confirm}

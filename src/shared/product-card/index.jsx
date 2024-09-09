@@ -1,7 +1,9 @@
-import React, { useMemo } from "react";
+import React, { useCallback, useMemo } from "react";
 import { classNames } from "../../assets/utils/helper";
 import { IMAGE_PATH } from "../../assets/utils/constant";
 import { ICONS } from "../../assets/icons";
+import { useNavigate } from "react-router-dom";
+import { PAGES } from "../../assets/utils/urls";
 
 const ProductCard = ({
     id,
@@ -10,6 +12,12 @@ const ProductCard = ({
     handleWishlist,
     ...props
 }) => {
+
+    const navigate = useNavigate()
+
+    const handleRedirect = useCallback((path = '') => {
+        navigate(path)
+    }, [navigate])
 
     const renderImages = useMemo(() => {
         if (variant?.image) {
@@ -31,11 +39,11 @@ const ProductCard = ({
     return (
         <div
             className={classNames(
-                "w-full cursor-pointer flex flex-col items-center justify-center relative h-auto",
+                "w-full flex flex-col items-center justify-center relative h-auto",
                 className
             )}
         >
-            <div className="absolute top-2 right-2 bg-slate-100 rounded-full p-2">
+            <div className="absolute top-2 right-2 cursor-pointer bg-slate-100 rounded-full p-2">
                 {props.wishlist ? (
                     <ICONS.HEART_FILL
                         onClick={() => handleWishlist(id, props.wishlist)}
@@ -61,7 +69,7 @@ const ProductCard = ({
                 />
             </div>
             <div className="mt-3 w-full flex flex-col justify-start">
-                <p className="text-text text-base max-w-xs overflow-hidden text-ellipsis whitespace-nowrap">
+                <p onClick={() => handleRedirect(PAGES.PRODUCTS.path + '/' + id)} className="text-text text-base max-w-xs overflow-hidden text-ellipsis whitespace-nowrap cursor-pointer">
                     {variant?.name || ""}
                 </p>
                 <div className="w-full flex justify-start items-center my-1.5 text-xl font-medium">

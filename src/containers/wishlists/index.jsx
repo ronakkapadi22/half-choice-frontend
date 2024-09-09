@@ -56,6 +56,7 @@ const Wishlists = () => {
       }
     } catch (error) {
       setLoading(false)
+      console.log('error', error)
     }
   }, [confirm, user?.id, fetchWishlist])
 

@@ -45,4 +45,62 @@ export const api = {
         ...configs,
       }),
   },
+  product: {
+    get: ({ data, params, ...configs }) =>
+      client({
+        url: "/product/getProductDetails",
+        method: METHODS.GET,
+        data,
+        params,
+        ...configs,
+      }),
+  },
+  cart: {
+    getAll: ({ data, params, ...configs }) =>
+      client({
+        url: "/cart/getCart",
+        method: METHODS.GET,
+        data,
+        params,
+        ...configs,
+      }),
+    update: ({ data, ...configs }) =>
+      client({
+        url: "/cart/addTocart",
+        method: METHODS.POST,
+        data,
+        ...configs,
+      }),
+    delete: ({ data, ...configs }) =>
+      client({
+        url: '/cart/removeCart',
+        method: METHODS.DELETE,
+        data,
+        ...configs,
+      })
+  },
+  address: {
+    getAll: ({ data, params, ...configs }) =>
+      client({
+        url: "/users/address",
+        method: METHODS.GET,
+        data,
+        params,
+        ...configs,
+      }),
+    update: ({ data, ...configs }) =>
+      client({
+        url: "/users/addEditAddress",
+        method: METHODS.POST,
+        data,
+        ...configs,
+      }),
+    default: ({ data, ...configs }) =>
+      client({
+        url: "/users/defaultAddress",
+        method: METHODS.POST,
+        data,
+        ...configs,
+      })
+  }
 };
