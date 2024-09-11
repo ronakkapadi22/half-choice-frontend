@@ -15,8 +15,8 @@ import useDispatchWithAbort from "../../hooks/useDispatchWithAbort";
 import { getAddress } from "../../redux/slices/address.slice";
 
 const AddressForm = ({ id, open, setOpen, ...props }) => {
-  const user = useSelector(({auth}) => auth.user)
-  const dispatch = useDispatch()
+  const user = useSelector(({ auth }) => auth.user);
+  const dispatch = useDispatch();
   const [loader, setLoader] = useState(false);
 
   const initialValues = useMemo(() => {
@@ -62,39 +62,40 @@ const AddressForm = ({ id, open, setOpen, ...props }) => {
     enableReinitialize: true,
     validationSchema: AddressSchema,
     onSubmit: async (values) => {
-      await handleSubmitAddress(values)
+      await handleSubmitAddress(values);
     },
   });
 
-
-  const handleSubmitAddress = async(payload) => {
-    setLoader(true)
+  const handleSubmitAddress = async (payload) => {
+    setLoader(true);
     try {
-        const data = {
-            ...payload,
-            country: 'India',
-            customer_id: user?.id
-        }
-        if(Boolean(id)){
-            data['id'] = id
-        }
-        const response =  await api.address.update({ data })
-        if(response?.data){
-            setLoader(false)
-            dispatch(getAddress({
-                isLoader: false,
-                params: {
-                    user_id: user?.id
-                }
-            })).then(response => {
-                response?.payload?.response?.status === 200 && setOpen(false)
-            })
-        }
+      const data = {
+        ...payload,
+        country: "India",
+        customer_id: user?.id,
+      };
+      if (Boolean(id)) {
+        data["id"] = id;
+      }
+      const response = await api.address.update({ data });
+      if (response?.data) {
+        setLoader(false);
+        dispatch(
+          getAddress({
+            isLoader: false,
+            params: {
+              user_id: user?.id,
+            },
+          })
+        ).then((response) => {
+          response?.payload?.response?.status === 200 && setOpen(false);
+        });
+      }
     } catch (error) {
-        setLoader(false)
-        console.log('error', error)
+      setLoader(false);
+      console.log("error", error);
     }
-  }
+  };
 
   const handleChange = useCallback(
     (e) => {
@@ -109,8 +110,8 @@ const AddressForm = ({ id, open, setOpen, ...props }) => {
 
   return (
     <div className="w-full h-auto">
-      <div className="w-full flex justify-between items-center">
-        <h2 className="text-xl mb-4 mt-3 font-medium text-text">
+      <div className="flex items-center justify-between w-full">
+        <h2 className="mt-3 mb-4 text-xl font-medium text-text">
           {id ? "Edit Address" : "Add Address"}
         </h2>
         <Button className="!bg-slate-200 !border-none !rounded-full !p-1 !text-text">
@@ -122,7 +123,7 @@ const AddressForm = ({ id, open, setOpen, ...props }) => {
       </div>
       <Form
         {...{ handleSubmit }}
-        className="w-full mt-4 grid grid-cols-12 gap-4"
+        className="grid w-full grid-cols-12 gap-4 mt-4"
       >
         <FormControl
           className="col-span-12 md:col-span-6"
@@ -156,7 +157,7 @@ const AddressForm = ({ id, open, setOpen, ...props }) => {
             name: "address_line_1",
             value: values.address_line_1,
             error: errors["address_line_1"],
-            handleChange
+            handleChange,
           }}
         />
         <FormControl
@@ -167,7 +168,7 @@ const AddressForm = ({ id, open, setOpen, ...props }) => {
             name: "address_line_2",
             value: values.address_line_2,
             error: errors["address_line_2"],
-            handleChange
+            handleChange,
           }}
         />
         <FormControl
@@ -178,7 +179,7 @@ const AddressForm = ({ id, open, setOpen, ...props }) => {
             name: "city",
             value: values.city,
             error: errors["city"],
-            handleChange
+            handleChange,
           }}
         />
         <FormControl
@@ -189,7 +190,7 @@ const AddressForm = ({ id, open, setOpen, ...props }) => {
             name: "state",
             value: values.state,
             error: errors["state"],
-            handleChange
+            handleChange,
           }}
         />
         <FormControl
@@ -201,24 +202,24 @@ const AddressForm = ({ id, open, setOpen, ...props }) => {
             name: "pincode",
             value: values.pincode,
             error: errors["pincode"],
-            handleChange
+            handleChange,
           }}
         />
-        <div className="col-span-12 w-full">
+        <div className="w-full col-span-12">
           <CustomCheckBox
             {...{
               name: "isDefault",
               checked: values.isDefault,
               value: values.isDefault,
-              handleChange
+              handleChange,
             }}
             className="my-2"
             label="Use a default address"
           />
         </div>
-        <div className="col-span-12 w-full">
+        <div className="w-full col-span-12">
           <label className="mb-1 font-medium text-text ">Address Type</label>
-          <div className="w-full flex items-center justify-start flex-wrap gap-3 mt-2">
+          <div className="flex flex-wrap items-center justify-start w-full gap-3 mt-2">
             {ADDRESS_TYPE?.map((type) => (
               <div
                 onClick={() => setValues({ ...values, address_type: type })}
@@ -234,8 +235,9 @@ const AddressForm = ({ id, open, setOpen, ...props }) => {
             ))}
           </div>
         </div>
-        <div className="col-span-12 mt-2 items-end flex justify-end">
-          <Button type='submit'
+        <div className="flex items-end justify-end col-span-12 mt-2">
+          <Button
+            type="submit"
             disabled={loader}
             className={classNames(
               "!w-auto mb-1 flex min-w-28 items-center justify-center !bg-pink !border-pink hover:border-yellow hover:bg-yellow transition-all duration-300",

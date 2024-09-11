@@ -7,7 +7,6 @@ export const getAddress = createAsyncThunk(
     async ({ isLoader, ...data }, { rejectWithValue }) => {
         try {
             const response = await api.address.getAll(data);
-            console.log('isLoader', isLoader)
             return { response, isLoader }
         } catch (error) {
             return rejectWithValue(error);
