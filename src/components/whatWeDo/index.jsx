@@ -42,8 +42,8 @@ const WhatWeDo = () => {
 
   return (
     <section className="w-full">
-      <div className="container relative p-4 mx-auto lg:px-4 max-w-[84rem]">
-        <div className="p-4">
+      <div className="relative container mx-auto lg:px-4 p-4 max-w-7xl">
+        <div className="w-full">
           <h2 className="text-xl font-semibold text-pink">What</h2>
           <h3 className="mb-6 text-4xl font-bold">We do</h3>
           <p className="mb-12 text-lg text-gray-600">
@@ -54,11 +54,11 @@ const WhatWeDo = () => {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 gap-6 p-8 md:grid-cols-2 lg:grid-cols-4 lg:p-0 md:p-8 sm:p-4">
+        <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
           {features.map((feature, index) => (
             <div
               key={index}
-              className={`p-6 rounded-[2rem] border-2 ${feature.borderColor}`}
+              className={`p-6 rounded-xl border-2 ${feature.borderColor}`}
             >
               <div className={`w-24 h-24 mx-0 mb-8 relative`}>
                 <img src={feature.vec} alt="vector" />
