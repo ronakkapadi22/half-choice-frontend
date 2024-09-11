@@ -4,9 +4,10 @@ import axios from "axios";
 
 export const getCart = createAsyncThunk(
     "cart/getCart",
-    async (data, { rejectWithValue }) => {
+    async ({ isLoader, ...data }, { rejectWithValue }) => {
         try {
-            return await api.cart.getAll(data);
+            const response = await api.cart.getAll(data);
+            return { response, isLoader }
         } catch (error) {
             return rejectWithValue(error);
         }
@@ -24,12 +25,12 @@ export const cartSlice = createSlice({
     reducers: {},
     extraReducers: (builder) => {
         builder
-            .addCase(getCart.pending, (state) => {
-                state.isLoading = true;
+            .addCase(getCart.pending, (state, action) => {
+                state.isLoading = action.meta.arg.isLoader
             })
             .addCase(getCart.fulfilled, (state, action) => {
                 state.isLoading = false;
-                const { data } = action.payload;
+                const { response: { data } } = action.payload
                 state.cart = data?.data || [];
             })
             .addCase(getCart.rejected, (state, action) => {

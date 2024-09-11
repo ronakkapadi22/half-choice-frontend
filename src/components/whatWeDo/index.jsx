@@ -43,7 +43,7 @@ const WhatWeDo = () => {
   return (
     <section className="w-full">
       <div className="container relative p-4 mx-auto lg:px-4 max-w-[84rem]">
-        <div className="p-4 sm:text-center">
+        <div className="p-4">
           <h2 className="text-xl font-semibold text-pink">What</h2>
           <h3 className="mb-6 text-4xl font-bold">We do</h3>
           <p className="mb-12 text-lg text-gray-600">

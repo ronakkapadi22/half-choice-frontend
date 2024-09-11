@@ -5,7 +5,6 @@ import location_image from '../../assets/images/location.svg'
 import { useSelector } from 'react-redux'
 import useDispatchWithAbort from '../../hooks/useDispatchWithAbort'
 import { getAddress } from '../../redux/slices/address.slice'
-import { CAROUSEL_LOADER } from '../../assets/utils/constant'
 import { classNames } from '../../assets/utils/helper'
 import { api } from '../../api'
 import Modal from '../../shared/modal'
@@ -96,7 +95,7 @@ const Address = () => {
                                 key={address?.id}
                                 className="w-full col-span-12 md:col-span-6 lg:col-span-4"
                             >
-                                <div onClick={() => handleDefault(address?.id)} className={classNames('w-full py-2 px-3 lex rounded-lg h-full bg-slate-50 flex-col cursor-pointer', address?.isDefault ? 'border-2 border-green ' : '')} >
+                                <div onClick={() => handleDefault(address?.id)} className={classNames('w-full py-2 px-3 lex rounded-lg h-full bg-slate-50 flex-col cursor-pointer border-2', address?.isDefault ? 'border-green ' : 'border-slate-50')} >
                                     <div className='w-full flex justify-between items-center' >
                                         <div className='w-auto' >
                                             <h2 className="text-text text-lg title-font font-medium">{address?.full_name || ''}</h2>

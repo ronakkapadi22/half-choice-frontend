@@ -26,11 +26,17 @@ import { IoBagHandleOutline } from "react-icons/io5";
 import { MdDeleteOutline } from "react-icons/md";
 import { IoLogOutOutline } from "react-icons/io5";
 import { MdOutlineEdit } from "react-icons/md";
+import { GoPlus } from "react-icons/go";
+import { IoCard } from "react-icons/io5";
+import { BsBank2 } from "react-icons/bs";
+import { IoMdCash } from "react-icons/io";
+import { LuUnlink } from "react-icons/lu";
 
 
 
 export const ICONS = {
   CHECK: FaCheck,
+  PLUS: GoPlus,
   DISCOUNT: CiDiscount1,
   CART: HiShoppingCart,
   USER_PLUS: HiUserAdd,
@@ -59,5 +65,9 @@ export const ICONS = {
   BAG: IoBagHandleOutline,
   DELETE: MdDeleteOutline,
   LOGOUT: IoLogOutOutline,
-  EDIT: MdOutlineEdit
+  EDIT: MdOutlineEdit,
+  CARD: IoCard,
+  BANK: BsBank2,
+  CASH: IoMdCash,
+  LINK: LuUnlink
 };
