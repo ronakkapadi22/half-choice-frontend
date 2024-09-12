@@ -1,3 +1,4 @@
+import axios from "axios";
 import { METHODS } from "../assets/utils/constant";
 import client from "./client";
 
@@ -102,5 +103,41 @@ export const api = {
         data,
         ...configs,
       })
+  },
+  orders: {
+    add: ({ data, ...configs }) =>
+      client({
+        url: '/orders/addOrder',
+        method: METHODS.POST,
+        data,
+        ...configs
+      })
   }
 };
+
+
+export const shiprocket = {
+  auth: async () => {
+    try {
+      const response = await axios.post('https://apiv2.shiprocket.in/v1/external/auth/login', {
+        email: 'sujanbarochiya@gmail.com',
+        password: 'Sujan@2023'
+      })
+      return await response.data
+    } catch (error) {
+      console.log('error', error)
+    }
+  },
+  estimate: async ({ pin, token }) => {
+    try {
+      const response = await axios.get(`https://apiv2.shiprocket.in/v1/external/courier/serviceability?cod=1&delivery_postcode=${pin}&pickup_postcode=382470&weight=1`, {
+        headers: {
+          Authorization: 'Bearer' + token
+        }
+      })
+      return await response.data
+    } catch (error) {
+      console.log('error', error)
+    }
+  }
+}

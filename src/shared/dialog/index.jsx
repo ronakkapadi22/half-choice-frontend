@@ -20,7 +20,7 @@ const CustomDialog = ({ open, handleClose, className, children }) => {
           <Dialog.Close asChild>
             <Button
               handleClick={handleClose}
-              className="!p-2 absolute hover:bg-[#FCB018] hover:border-[#FCB018] transition-all border -top-[19px] -right-[18px] flex !h-12 !w-12 appearance-none items-center justify-center !rounded-full focus:ring-0 focus:outline-none z-[999] duration-300"
+              className="!p-2 absolute hover:bg-[#FCB018] hover:border-[#FCB018] transition-all border flex !h-12 !w-12 appearance-none items-center justify-center !rounded-full focus:ring-0 focus:outline-none z-[999] duration-300"
               aria-label="Close"
             >
               <ICONS.CLOSE className="w-8 h-8 text-white" />

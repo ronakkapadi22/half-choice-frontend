@@ -248,7 +248,7 @@ const NavBar = () => {
               About Us
             </Link>
             <Link
-              to="/"
+              to={PAGES.ORDERS.path}
               className="text-sm font-semibold leading-6 text-gray-900"
             >
               Orders

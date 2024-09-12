@@ -7,6 +7,7 @@ import {
   HiShoppingCart,
 } from "react-icons/hi2";
 import { HiUserAdd, HiOutlineSearch, HiChevronDown } from "react-icons/hi";
+import { MdOutlineLocalShipping } from "react-icons/md";
 import { IoIosClose } from "react-icons/io";
 import {
   FaUserCircle,
@@ -31,6 +32,7 @@ import { IoCard } from "react-icons/io5";
 import { BsBank2 } from "react-icons/bs";
 import { IoMdCash } from "react-icons/io";
 import { LuUnlink } from "react-icons/lu";
+import { IoIosCheckmarkCircle } from "react-icons/io";
 
 
 
@@ -69,5 +71,7 @@ export const ICONS = {
   CARD: IoCard,
   BANK: BsBank2,
   CASH: IoMdCash,
-  LINK: LuUnlink
+  LINK: LuUnlink,
+  TRUCK: MdOutlineLocalShipping,
+  CHECK: IoIosCheckmarkCircle
 };

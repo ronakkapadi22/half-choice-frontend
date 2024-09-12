@@ -4,13 +4,16 @@ import { getAddress } from '../../redux/slices/address.slice';
 import { useSelector } from 'react-redux';
 import useDispatchWithAbort from '../../hooks/useDispatchWithAbort';
 import { getCart } from '../../redux/slices/cart.slice';
-import { classNames } from '../../assets/utils/helper';
+import { classNames, generateRandomDigitNumber } from '../../assets/utils/helper';
 import { CAROUSEL_LOADER, IMAGE_PATH } from '../../assets/utils/constant';
 import { PAGES } from '../../assets/utils/urls';
 import { useNavigate } from 'react-router-dom';
 import Button from '../../shared/button';
 import Confirmation from '../../shared/confirmation';
-import { api } from '../../api';
+import { api, shiprocket } from '../../api';
+import moment from 'moment';
+import Spinner from '../..';
+import PopUp from '../../shared/popup';
 
 const Checkout = () => {
 
@@ -23,8 +26,10 @@ const Checkout = () => {
 
   const [confirm, setConfirm] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [estimationDate, setEstimationDate] = useState(null);
 
-
+  const [order, setOrder] = useState(null)
+  const [orderLoader, setOrderLoader] = useState(false);
 
   useEffect(() => {
     fetchAddress({
@@ -56,8 +61,23 @@ const Checkout = () => {
     return clone || {};
   }, [isLoading, address]);
 
+  const getEstimationDate = async () => {
+    const response = await shiprocket.auth()
+    const token = await response?.token
+    const estimate = await shiprocket.estimate({
+      pin: my_address?.pincode,
+      token
+    })
+    return await estimate
+  }
 
-  console.log('cart', cart)
+  useEffect(() => {
+    if (my_address) {
+      getEstimationDate().then(({ data }) => {
+        setEstimationDate(data?.available_courier_companies?.[0]?.etd)
+      })
+    }
+  }, [my_address])
 
   const handleRedirect = useCallback((path) => {
     navigate(path)
@@ -120,6 +140,50 @@ const Checkout = () => {
     }
   }, [user?.id, fetchCart, confirm]);
 
+  const handleOrder = async () => {
+    const payload = {
+      address_city: my_address?.city,
+      address_country: my_address?.country,
+      address_full_name: my_address?.full_name,
+      address_id: String(my_address?.id),
+      address_line_1: my_address?.address_line_1,
+      address_line_2: my_address?.address_line_2,
+      address_phone: my_address?.phone,
+      address_pincode: my_address?.pincode,
+      address_type: my_address?.address_type,
+      address_state: my_address?.state,
+      delivery_charge: "60",
+      delivery_date: estimationDate,
+      orderItems: cart?.map(({ user_id, attribute_id, product_id, quantity, variant_id }) => ({
+        user_id: String(user_id), attribute_id: String(attribute_id), product_id: String(product_id), quantity: String(quantity), variant_id: String(variant_id), delivery_date: estimationDate
+      })),
+      order_discount: Number(summary.total_discount).toFixed(1),
+      order_no: `${user?.id}_${generateRandomDigitNumber()}`,
+      order_sub_total: Number(summary.subtotal).toFixed(1),
+      order_total: Number(summary.total).toFixed(1),
+      payment_method: 'COD',
+      return_policy: '7 day return policy',
+      status: 'PENDING',
+      store_id: String(2),
+      tax_slab: '',
+      tax_total: '',
+      transaction_id: '',
+      user_id: String(user?.id)
+    }
+    setOrderLoader(true)
+    try {
+      const response = await api.orders.add({ data: payload })
+      if (response?.data) {
+        setOrderLoader(false)
+        setOrder({ ...response?.data?.data, estimationDate })
+      }
+    } catch (error) {
+      setOrderLoader(false)
+      setOrder(null)
+      console.log('error', error)
+    }
+  }
+
   return (
     <div className='relative container mx-auto lg:px-4 p-4 max-w-7xl' >
       <div className="w-full flex flex-col items-start justify-start my-9">
@@ -148,6 +212,11 @@ const Checkout = () => {
                   <p>{my_address?.address_line_1}, {my_address?.address_line_2}</p>
                   <p>{my_address?.city}, {my_address?.state} - {my_address?.pincode}</p>
                   <p>{my_address?.country}</p>
+                </div>
+                <div className='w-full flex item justify-between text-green' >
+                  {
+                    estimationDate ? <p className='flex items-center' ><ICONS.TRUCK className='w-5 h-5 mr-2' /> Delivery By {moment(estimationDate).format('DD MMM, YYYY')}</p> : null
+                  }
                 </div>
               </div>
             </div>
@@ -205,6 +274,9 @@ const Checkout = () => {
                               <del className="ml-2 line-through text-sm text-less">
                                 ₹ {variantData?.mrp}
                               </del>
+                              <div className="ml-2 py-0.5 px-1.5 text-xs text-white font-medium bg-green rounded-md">
+                                {`-${variantData?.discount}%` || ""}
+                              </div>
                             </div>
                             <div className="w-full flex items-center mt-2 text-sm text-gray-500 justify-start">
                               <p>Color:</p>
@@ -267,7 +339,7 @@ const Checkout = () => {
               <div className="flex justify-between mb-3">
                 <span className="text-slate-400">Discount</span>
                 <span className="text-text">
-                  ₹ {summary?.total_discount?.toFixed(2)}
+                  ₹ -{summary?.total_discount?.toFixed(2)}
                 </span>
               </div>
               <div className="flex justify-between mb-3">
@@ -301,14 +373,23 @@ const Checkout = () => {
                   <ICONS.LINK className='w-5 h-5 text-text mr-2' />
                   <p className='text-text font-medium text-sm' >UPI</p>
                 </div>
-                <div className='cursor-pointer col-span-12 border flex items-center justify-start p-4 bg-white rounded-lg' >
-                  <ICONS.CASH className='w-5 h-5 text-text mr-2' />
-                  <p className='text-text font-medium text-sm' >Cash on Delivery</p>
+                <div className='cursor-pointer col-span-12 border border-select flex items-center justify-start p-4 bg-select rounded-lg' >
+                  <ICONS.CASH className='w-5 h-5 text-white mr-2' />
+                  <p className='text-white font-medium text-sm' >Cash on Delivery</p>
                 </div>
               </div>
             </div>
             <div className='w-full mt-8' >
-              <Button className='w-full hover:bg-yellow hover:border-yellow transition-all duration-300' label='Place Order' />
+              <Button handleClick={handleOrder}
+                disabled={orderLoader}
+                className={classNames(
+                  "!w-full flex min-w-28 items-center justify-center hover:border-yellow hover:bg-yellow transition-all duration-300",
+                  orderLoader ? "cursor-not-allowed" : ""
+                )}
+              >
+                <span>{!orderLoader ? 'Place Order' : "Loading"}</span>
+                {orderLoader ? <Spinner className="ml-1 !w-4 !h-4" /> : null}
+              </Button>
             </div>
           </div>
         </div>
@@ -324,6 +405,8 @@ const Checkout = () => {
         open={Boolean(confirm?.id)}
         setOpen={setConfirm}
       />
+
+      <PopUp {...{ order, handleClose: setOrder, open: Boolean(order?.orderId) }} />
     </div>
   )
 }

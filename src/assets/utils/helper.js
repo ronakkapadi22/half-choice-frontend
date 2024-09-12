@@ -21,3 +21,8 @@ export const isTokenActivated = (token) => {
   const decoded = jwtDecode(token);
   return decoded?.exp > Date.now() / 1000;
 };
+
+export const generateRandomDigitNumber = () => {
+  // Generate a random number between 1000000000000 and 9999999999999
+  return Math.floor(Math.random() * 9000000000000) + 1000000000000;
+}

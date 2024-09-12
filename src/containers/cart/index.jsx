@@ -42,8 +42,6 @@ const Cart = () => {
     return clone || [];
   }, [isLoading, cart]);
 
-  console.log("my_cart", my_cart);
-
   const summary = useMemo(() => {
     if (isLoading)
       return {
@@ -114,7 +112,7 @@ const Cart = () => {
           <div
             className={classNames(
               "col-span-12 md:col-span-7",
-              my_cart?.length ? "" : "md:col-span-12"
+              my_cart?.length ? "" : "md:!col-span-12"
             )}
           >
             {isLoading ? (
@@ -158,6 +156,9 @@ const Cart = () => {
                           <del className="ml-2 line-through text-sm text-less">
                             ₹ {variantData?.mrp}
                           </del>
+                          <div className="ml-2 py-0.5 px-1.5 text-xs text-white font-medium bg-green rounded-md">
+                            {`-${variantData?.discount}%` || ""}
+                          </div>
                         </div>
                         <div className="w-full flex items-center mt-2 text-sm text-gray-500 justify-start">
                           <p>Color:</p>
@@ -228,7 +229,7 @@ const Cart = () => {
               <div className="flex justify-between mb-3">
                 <span className="text-slate-400">Discount</span>
                 <span className="text-text">
-                  ₹ {summary?.total_discount?.toFixed(2)}
+                  ₹ -{summary?.total_discount?.toFixed(2)}
                 </span>
               </div>
               <div className="flex justify-between mb-3">
