@@ -6,6 +6,7 @@ import svgr from "vite-plugin-svgr";
 export default defineConfig({
   plugins: [react(), svgr()],
   optimizeDeps: {
+    include: ['yup'],
     esbuildOptions: {
       define: {
         global: 'globalThis',

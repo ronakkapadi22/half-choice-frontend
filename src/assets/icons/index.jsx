@@ -76,7 +76,7 @@ export const ICONS = {
   CASH: IoMdCash,
   LINK: LuUnlink,
   TRUCK: MdOutlineLocalShipping,
-  CHECK: IoIosCheckmarkCircle,
+  CHECK_CIRCLE: IoIosCheckmarkCircle,
   BOX: CiBoxes,
   HOME: TiHome
 };

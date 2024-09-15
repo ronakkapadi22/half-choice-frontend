@@ -1,4 +1,4 @@
-import * as Yup from "Yup";
+import * as Yup from "yup";
 import { parsePhoneNumberFromString } from "libphonenumber-js";
 
 Yup.addMethod(Yup.string, "phone", function (message) {
