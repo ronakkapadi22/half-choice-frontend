@@ -5,18 +5,25 @@ import location_image from '../../assets/images/location.svg'
 import { useSelector } from 'react-redux'
 import useDispatchWithAbort from '../../hooks/useDispatchWithAbort'
 import { getAddress } from '../../redux/slices/address.slice'
-import { CAROUSEL_LOADER } from '../../assets/utils/constant'
 import { classNames } from '../../assets/utils/helper'
 import { api } from '../../api'
 import Modal from '../../shared/modal'
 import AddressForm from '../../components/add-edit-addres'
+import { useNavigate, useSearchParams } from 'react-router-dom'
+import { PAGES } from '../../assets/utils/urls'
 
 const Address = () => {
 
+    const navigate = useNavigate()
+    const [searchParams] = useSearchParams()
     const user = useSelector(({ auth }) => auth.user);
     const { isLoading, address } = useSelector(({ address }) => address);
     const [fetchAddress] = useDispatchWithAbort(getAddress);
     const [selected, setSelected] = useState(null)
+
+    const getParams = useCallback((key = '') => {
+        return searchParams.get(key)
+    }, [searchParams])
 
     useEffect(() => {
         fetchAddress({
@@ -31,8 +38,8 @@ const Address = () => {
     const handleSelected = useCallback((e, data) => {
         e.stopPropagation()
         setSelected(data)
-        console.log('data', data)
     }, [])
+
 
 
     const my_address = useMemo(() => {
@@ -50,6 +57,10 @@ const Address = () => {
                 }
             })
             if (response?.data) {
+                if (getParams('from') === 'checkout') {
+                    navigate(PAGES.CHECKOUT.path)
+                    return
+                }
                 fetchAddress({
                     isLoading: false,
                     params: {
@@ -96,7 +107,7 @@ const Address = () => {
                                 key={address?.id}
                                 className="w-full col-span-12 md:col-span-6 lg:col-span-4"
                             >
-                                <div onClick={() => handleDefault(address?.id)} className={classNames('w-full py-2 px-3 lex rounded-lg h-full bg-slate-50 flex-col cursor-pointer', address?.isDefault ? 'border-2 border-green ' : '')} >
+                                <div onClick={() => handleDefault(address?.id)} className={classNames('w-full py-2 px-3 lex rounded-lg h-full bg-slate-50 flex-col cursor-pointer border-2', address?.isDefault ? 'border-green ' : 'border-slate-50')} >
                                     <div className='w-full flex justify-between items-center' >
                                         <div className='w-auto' >
                                             <h2 className="text-text text-lg title-font font-medium">{address?.full_name || ''}</h2>

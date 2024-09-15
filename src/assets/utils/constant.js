@@ -1,3 +1,5 @@
+import { ICONS } from "../icons";
+
 export const ERROR_MESSAGES = {
   400: "Invalid request. Please try again.",
   401: "Please log in to continue.",
@@ -37,4 +39,70 @@ export const IMAGE_PATH = 'https://halfchoice.in/superadmin/public/images/varian
 export const CAT_IMAGE_PATH = 'https://halfchoice.in/superadmin/public/images/category/'
 
 export const BANNER_PATH = 'https://halfchoice.in/superadmin/public/images/promotion/'
+
+export const FEATURES = [
+  {
+    name: "Free Shipping",
+    desc: "Free shipping on all orders",
+    icon: ICONS.SHIPPING,
+    color: 'text-[#8DC63F]'
+  },
+  {
+    name: "Secure Payments",
+    desc: "Your transactions, always protected",
+    icon: ICONS.SHIELD,
+    color: 'text-[#FF2189]'
+  },
+  {
+    name: "Easy Returns",
+    desc: "Hassle-free 30-day returns, No questions asked.",
+    icon: ICONS.PEOPLE_BOX,
+    color: 'text-[#FCB018]'
+  },
+  {
+    name: "24/7 Support",
+    desc: "Always here when you need us, day or night",
+    icon: ICONS.USER_CLOCK,
+    color: 'text-[#77b9b9]'
+  },
+];
+
+export const ORDER_COLORS = {
+  'PENDING': {
+    bg: '#fff3cd',
+    fill: '#856404'
+  },
+  CANCELLED: {
+    bg: '#ffcdce',
+    fill: '#ce2c31'
+  },
+  DELIVERED: {
+    bg: '#d4edda',
+    fill: '#155724'
+  },
+  CANCELLED_BY_COMPANY: {
+    bg: '#ffcdce',
+    fill: '#ce2c31'
+  }
+}
+
+
+export const ORDER_STATUS = [
+  {
+    id: 1,
+    label: 'All'
+  },
+  {
+    id: 2,
+    label: 'Pending'
+  },
+  {
+    id: 3,
+    label: 'Delivered'
+  },
+  {
+    id: 4,
+    label: 'Calcelled'
+  }
+]
 

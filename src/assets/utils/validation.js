@@ -1,4 +1,4 @@
-import * as Yup from "Yup";
+import * as Yup from "yup";
 import { parsePhoneNumberFromString } from "libphonenumber-js";
 
 Yup.addMethod(Yup.string, "phone", function (message) {
@@ -42,15 +42,21 @@ export const RegisterSchema = Yup.object().shape({
     .required("Phone number is required"),
 });
 
+export const CancelReasonSchema = Yup.object().shape({
+  reason: Yup
+    .string()
+    .required('Reason is required')
+})
 
 export const AddressSchema = Yup.object().shape({
   address_line_1: Yup
     .string()
-    .required('Address Line 1 is required')
-    .max(100, 'Address Line 1 cannot exceed 100 characters'),
+    .required('Block / House / Building is required')
+    .max(100, 'Block / House / Building cannot exceed 100 characters'),
   address_line_2: Yup
     .string()
-    .max(100, 'Address Line 2 cannot exceed 100 characters'),
+    .required('Road / Area colony is required')
+    .max(100, 'Road / Area colony cannot exceed 100 characters'),
   address_type: Yup
     .string()
     .oneOf(['HOME', 'OFFICE', 'OTHERS'], 'Invalid address type')
@@ -59,15 +65,6 @@ export const AddressSchema = Yup.object().shape({
     .string()
     .required('City is required')
     .max(50, 'City cannot exceed 50 characters'),
-  country: Yup
-    .string()
-    .required('Country is required')
-    .max(50, 'Country cannot exceed 50 characters'),
-  customer_id: Yup
-    .number()
-    .required('Customer ID is required')
-    .positive('Customer ID must be a positive number')
-    .integer('Customer ID must be an integer'),
   full_name: Yup
     .string()
     .required('Full name is required')
@@ -78,7 +75,7 @@ export const AddressSchema = Yup.object().shape({
   pincode: Yup
     .string()
     .required('Pincode is required')
-    .matches(/^[0-9]{6}$/, 'Pincode must be exactly 6 digits'),
+    .matches(/^[0-9]{6}$/, 'Invalid Pincode'),
   state: Yup
     .string()
     .required('State is required')

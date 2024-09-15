@@ -4,9 +4,10 @@ import {
   HiBars3,
   HiChevronLeft,
   HiChevronRight,
-  HiShoppingCart,
+  HiOutlineShoppingCart,
 } from "react-icons/hi2";
 import { HiUserAdd, HiOutlineSearch, HiChevronDown } from "react-icons/hi";
+import { MdOutlineLocalShipping } from "react-icons/md";
 import { IoIosClose } from "react-icons/io";
 import {
   FaUserCircle,
@@ -26,13 +27,23 @@ import { IoBagHandleOutline } from "react-icons/io5";
 import { MdDeleteOutline } from "react-icons/md";
 import { IoLogOutOutline } from "react-icons/io5";
 import { MdOutlineEdit } from "react-icons/md";
+import { GoPlus, GoHorizontalRule } from "react-icons/go";
+import { IoCard } from "react-icons/io5";
+import { BsBank2 } from "react-icons/bs";
+import { IoMdCash } from "react-icons/io";
+import { LuUnlink } from "react-icons/lu";
+import { IoIosCheckmarkCircle } from "react-icons/io";
+import { CiBoxes } from "react-icons/ci";
+import { TiHome } from "react-icons/ti";
 
 
 
 export const ICONS = {
   CHECK: FaCheck,
+  PLUS: GoPlus,
+  MINUS: GoHorizontalRule,
   DISCOUNT: CiDiscount1,
-  CART: HiShoppingCart,
+  CART: HiOutlineShoppingCart,
   USER_PLUS: HiUserAdd,
   SEARCH: HiOutlineSearch,
   MENU: HiBars3,
@@ -59,5 +70,13 @@ export const ICONS = {
   BAG: IoBagHandleOutline,
   DELETE: MdDeleteOutline,
   LOGOUT: IoLogOutOutline,
-  EDIT: MdOutlineEdit
+  EDIT: MdOutlineEdit,
+  CARD: IoCard,
+  BANK: BsBank2,
+  CASH: IoMdCash,
+  LINK: LuUnlink,
+  TRUCK: MdOutlineLocalShipping,
+  CHECK_CIRCLE: IoIosCheckmarkCircle,
+  BOX: CiBoxes,
+  HOME: TiHome
 };

@@ -7,6 +7,7 @@ import { PAGES } from "../../assets/utils/urls";
 
 const ProductCard = ({
     id,
+    imgClass,
     className,
     variant,
     handleWishlist,
@@ -65,7 +66,7 @@ const ProductCard = ({
                 <img
                     alt={id}
                     src={renderImages}
-                    className="rounded-xl xl:min-h-[400px] object-cover object-center"
+                    className={classNames("rounded-xl xl:min-h-[400px] object-cover object-center", imgClass)}
                 />
             </div>
             <div className="mt-3 w-full flex flex-col justify-start">

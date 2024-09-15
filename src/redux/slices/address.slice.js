@@ -7,7 +7,6 @@ export const getAddress = createAsyncThunk(
     async ({ isLoader, ...data }, { rejectWithValue }) => {
         try {
             const response = await api.address.getAll(data);
-            console.log('isLoader', isLoader)
             return { response, isLoader }
         } catch (error) {
             return rejectWithValue(error);
@@ -17,7 +16,8 @@ export const getAddress = createAsyncThunk(
 
 const initialState = {
     isLoading: true,
-    address: []
+    address: [],
+    default: {}
 };
 
 export const addressSlice = createSlice({
@@ -31,7 +31,10 @@ export const addressSlice = createSlice({
             .addCase(getAddress.fulfilled, (state, action) => {
                 state.isLoading = false
                 const { response: { data } } = action.payload
-                state.address = data?.data || []
+                const clone = [...data?.data]
+                const defaultAddress = clone?.find(val => val?.isDefault)
+                state.address = clone || []
+                state.default = defaultAddress
             })
             .addCase(getAddress.rejected, (state, action) => {
                 if (axios.isCancel(action.payload)) {

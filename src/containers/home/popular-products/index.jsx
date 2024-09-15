@@ -76,7 +76,7 @@ const PopularProducts = ({ title, className, ...props }) => {
             sought-after items that everyone is talking about!
           </p>
         </div>
-        <div className="flex items-center justify-end">
+        {/* <div className="flex items-center justify-end">
           <Link className="text-text text-lg mx-2" to={PAGES.HOME.path}>
             All
           </Link>
@@ -92,7 +92,7 @@ const PopularProducts = ({ title, className, ...props }) => {
           >
             Girls
           </Link>
-        </div>
+        </div> */}
       </div>
       <div className="w-full mt-10 grid grid-cols-12 gap-4 lg:gap-8">
         {isLoading
