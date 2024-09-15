@@ -11,6 +11,7 @@ import Confirmation from "../../shared/confirmation";
 import { api } from "../../api";
 import { useNavigate } from "react-router-dom";
 import { PAGES } from "../../assets/utils/urls";
+import Breadcrumb from "../../shared/breadcrumb";
 
 const Cart = () => {
   const navigate = useNavigate();
@@ -19,6 +20,14 @@ const Cart = () => {
   const [fetchCart] = useDispatchWithAbort(getCart);
   const [confirm, setConfirm] = useState(null);
   const [loading, setLoading] = useState(false);
+
+  const links = useMemo(() => [
+    {
+      id: 'cart',
+      label: 'Cart'
+    }
+  ], [])
+
 
   useEffect(() => {
     fetchCart({
@@ -100,6 +109,9 @@ const Cart = () => {
 
   return (
     <div className="relative container mx-auto lg:px-4 p-4 max-w-7xl">
+      <div className="w-full" >
+        <Breadcrumb links={links} />
+      </div>
       <div className="w-full flex flex-col items-start justify-start my-9">
         <h2 className="text-3xl text-text mb-1.5 font-semibold">
           Shopping Bag
@@ -227,8 +239,8 @@ const Cart = () => {
                 </span>
               </div>
               <div className="flex justify-between mb-3">
-                <span className="text-slate-400">Discount</span>
-                <span className="text-text">
+                <span className="text-green">Discount</span>
+                <span className="text-green">
                   ₹ -{summary?.total_discount?.toFixed(2)}
                 </span>
               </div>
@@ -240,7 +252,7 @@ const Cart = () => {
               </div>
               <hr />
               <div className="flex justify-between my-3">
-                <span className="text-slate-400 font-semibold">You Pay</span>
+                <span className="text-text font-semibold">You Pay</span>
                 <span className="text-text font-semibold">
                   ₹{summary?.subtotal?.toFixed(2)}
                 </span>

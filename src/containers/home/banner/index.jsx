@@ -23,15 +23,15 @@ const HomeBanner = () => {
           autoplayTimeout: 1000,
           autoplayHoverPause: true,
           items: 1,
-          margin: 36,
+          margin: 16,
           dots: false,
         }}
       >
         {
           isLoading ? CAROUSEL_LOADER.map(id => <div key={id} className="item w-full" >
-            <div className="animate-pulse w-full rounded-xl bg-slate-200 min-h-[450px] h-auto" />
-          </div>) : promotions.map(promotion => <div key={promotion?.id} className="w-full px-10 item bg-transparent" >
-            <img alt="banners" className="w-full h-auto object-cover object-center" src={BANNER_PATH + promotion?.image} />
+            <div className="animate-pulse w-full rounded-xl bg-slate-200 min-h-[70vh] h-auto" />
+          </div>) : promotions.map(promotion => <div key={promotion?.id} className="w-full px-6 item bg-transparent" >
+            <img alt="banners" className="aspect-[16/9] w-full h-auto object-cover object-center" src={BANNER_PATH + promotion?.image} />
           </div>)
         }
       </ReactOwlCarousel>

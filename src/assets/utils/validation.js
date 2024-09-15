@@ -42,6 +42,11 @@ export const RegisterSchema = Yup.object().shape({
     .required("Phone number is required"),
 });
 
+export const CancelReasonSchema = Yup.object().shape({
+  reason: Yup
+    .string()
+    .required('Reason is required')
+})
 
 export const AddressSchema = Yup.object().shape({
   address_line_1: Yup

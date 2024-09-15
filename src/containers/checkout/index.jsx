@@ -14,6 +14,7 @@ import { api, shiprocket } from '../../api';
 import moment from 'moment';
 import Spinner from '../..';
 import PopUp from '../../shared/popup';
+import Breadcrumb from '../../shared/breadcrumb';
 
 const Checkout = () => {
 
@@ -30,6 +31,19 @@ const Checkout = () => {
 
   const [order, setOrder] = useState(null)
   const [orderLoader, setOrderLoader] = useState(false);
+
+  const links = useMemo(() => [
+    {
+      id: 'cart',
+      label: 'Cart',
+      redirect: PAGES.CART.path
+    },
+    {
+      id: 'checkout',
+      label: 'Checkout'
+    }
+  ], [])
+
 
   useEffect(() => {
     fetchAddress({
@@ -186,6 +200,9 @@ const Checkout = () => {
 
   return (
     <div className='relative container mx-auto lg:px-4 p-4 max-w-7xl' >
+      <div className="w-full" >
+        <Breadcrumb links={links} />
+      </div>
       <div className="w-full flex flex-col items-start justify-start my-9">
         <h2 className="text-3xl text-text mb-1.5 font-semibold">
           Review and Complete Your Purchase
@@ -198,7 +215,7 @@ const Checkout = () => {
             <div className='w-full' >
               <h2 className='font-medium text-text text-lg' >Shipping Information</h2>
               <div className='mt-4 w-full rounded-lg p-4 bg-slate-50 relative' >
-                <p onClick={() => handleRedirect(PAGES.ADDRESS.path)} className='text-sm text-pink font-medium cursor-pointer absolute top-4 right-4' >Choose another address</p>
+                <p onClick={() => handleRedirect(`${PAGES.ADDRESS.path}?from=checkout`)} className='text-sm text-pink font-medium cursor-pointer absolute top-4 right-4' >Choose another address</p>
                 <div className='w-full flex justify-between items-center' >
                   <div className='flex items-start justify-start' >
                     <ICONS.LOCATION className='w-5 h-5 mt-1 mr-1 text-pink ' />
@@ -337,8 +354,8 @@ const Checkout = () => {
                 </span>
               </div>
               <div className="flex justify-between mb-3">
-                <span className="text-slate-400">Discount</span>
-                <span className="text-text">
+                <span className="text-green">Discount</span>
+                <span className="text-green">
                   ₹ -{summary?.total_discount?.toFixed(2)}
                 </span>
               </div>
@@ -350,7 +367,7 @@ const Checkout = () => {
               </div>
               <hr />
               <div className="flex justify-between my-3">
-                <span className="text-slate-400 font-semibold">You Pay</span>
+                <span className="text-text font-semibold">You Pay</span>
                 <span className="text-text font-semibold">
                   ₹{summary?.subtotal?.toFixed(2)}
                 </span>

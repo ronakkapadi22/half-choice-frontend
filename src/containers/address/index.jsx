@@ -9,13 +9,21 @@ import { classNames } from '../../assets/utils/helper'
 import { api } from '../../api'
 import Modal from '../../shared/modal'
 import AddressForm from '../../components/add-edit-addres'
+import { useNavigate, useSearchParams } from 'react-router-dom'
+import { PAGES } from '../../assets/utils/urls'
 
 const Address = () => {
 
+    const navigate = useNavigate()
+    const [searchParams] = useSearchParams()
     const user = useSelector(({ auth }) => auth.user);
     const { isLoading, address } = useSelector(({ address }) => address);
     const [fetchAddress] = useDispatchWithAbort(getAddress);
     const [selected, setSelected] = useState(null)
+
+    const getParams = useCallback((key = '') => {
+        return searchParams.get(key)
+    }, [searchParams])
 
     useEffect(() => {
         fetchAddress({
@@ -30,8 +38,8 @@ const Address = () => {
     const handleSelected = useCallback((e, data) => {
         e.stopPropagation()
         setSelected(data)
-        console.log('data', data)
     }, [])
+
 
 
     const my_address = useMemo(() => {
@@ -49,6 +57,10 @@ const Address = () => {
                 }
             })
             if (response?.data) {
+                if (getParams('from') === 'checkout') {
+                    navigate(PAGES.CHECKOUT.path)
+                    return
+                }
                 fetchAddress({
                     isLoading: false,
                     params: {

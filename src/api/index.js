@@ -47,6 +47,14 @@ export const api = {
       }),
   },
   product: {
+    getAll: ({ data, params, ...configs }) =>
+      client({
+        url: "/product/getProduct",
+        method: METHODS.GET,
+        data,
+        params,
+        ...configs,
+      }),
     get: ({ data, params, ...configs }) =>
       client({
         url: "/product/getProductDetails",
@@ -74,11 +82,11 @@ export const api = {
       }),
     delete: ({ data, ...configs }) =>
       client({
-        url: '/cart/removeCart',
+        url: "/cart/removeCart",
         method: METHODS.DELETE,
         data,
         ...configs,
-      })
+      }),
   },
   address: {
     getAll: ({ data, params, ...configs }) =>
@@ -102,42 +110,88 @@ export const api = {
         method: METHODS.POST,
         data,
         ...configs,
-      })
+      }),
   },
   orders: {
+    getAll: ({ data, params, ...configs }) =>
+      client({
+        url: '/orders/getOrders',
+        method: METHODS.GET,
+        data,
+        params,
+        ...configs
+      }),
+    get: ({ data, params, ...configs }) =>
+      client({
+        url: '/orders/getOrdersDetails',
+        method: METHODS.GET,
+        data,
+        params,
+        ...configs
+      }),
     add: ({ data, ...configs }) =>
       client({
-        url: '/orders/addOrder',
+        url: "/orders/addOrder",
         method: METHODS.POST,
         data,
+        ...configs,
+      }),
+    reason: ({ data, params, ...configs }) =>
+      client({
+        url: '/users/calceledReason',
+        method: METHODS.GET,
+        data,
+        params,
         ...configs
+      }),
+    cancel: ({ data, ...configs }) =>
+      client({
+        url: '/orders/cancelOrder',
+        method: METHODS.POST,
+        data,
+        ...configs,
+      })
+  },
+  category: {
+    getAll: ({ data, params, ...configs }) =>
+      client({
+        url: "/category/all",
+        method: METHODS.GET,
+        data,
+        params,
+        ...configs,
       })
   }
 };
 
-
 export const shiprocket = {
   auth: async () => {
     try {
-      const response = await axios.post('https://apiv2.shiprocket.in/v1/external/auth/login', {
-        email: 'sujanbarochiya@gmail.com',
-        password: 'Sujan@2023'
-      })
-      return await response.data
+      const response = await axios.post(
+        "https://apiv2.shiprocket.in/v1/external/auth/login",
+        {
+          email: "sujanbarochiya@gmail.com",
+          password: "Sujan@2023",
+        }
+      );
+      return await response.data;
     } catch (error) {
-      console.log('error', error)
+      console.log("error", error);
     }
   },
   estimate: async ({ pin, token }) => {
     try {
-      const response = await axios.get(`https://apiv2.shiprocket.in/v1/external/courier/serviceability?cod=1&delivery_postcode=${pin}&pickup_postcode=382470&weight=1`, {
-        headers: {
-          Authorization: 'Bearer' + token
+      const response = await axios.get(
+        `https://apiv2.shiprocket.in/v1/external/courier/serviceability?cod=1&delivery_postcode=${pin}&pickup_postcode=382470&weight=1`,
+        {
+          headers: {
+            Authorization: "Bearer" + token,
+          },
         }
-      })
-      return await response.data
+      );
+      return await response.data;
     } catch (error) {
-      console.log('error', error)
+      console.log("error", error);
     }
-  }
-}
+  },
+};

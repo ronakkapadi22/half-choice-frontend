@@ -38,3 +38,43 @@ export const CAT_IMAGE_PATH = 'https://halfchoice.in/superadmin/public/images/ca
 
 export const BANNER_PATH = 'https://halfchoice.in/superadmin/public/images/promotion/'
 
+
+export const ORDER_COLORS = {
+  'PENDING': {
+    bg: '#fff3cd',
+    fill: '#856404'
+  },
+  CANCELLED: {
+    bg: '#ffcdce',
+    fill: '#ce2c31'
+  },
+  DELIVERED: {
+    bg: '#d4edda',
+    fill: '#155724'
+  },
+  CANCELLED_BY_COMPANY: {
+    bg: '#ffcdce',
+    fill: '#ce2c31'
+  }
+}
+
+
+export const ORDER_STATUS = [
+  {
+    id: 1,
+    label: 'All'
+  },
+  {
+    id: 2,
+    label: 'Pending'
+  },
+  {
+    id: 3,
+    label: 'Delivered'
+  },
+  {
+    id: 4,
+    label: 'Calcelled'
+  }
+]
+

@@ -6,6 +6,8 @@ import wishlistSlice from "./wishlist.slice";
 import productsSlice from "./products.slice";
 import cartSlice from "./cart.slice";
 import addressSlice from "./address.slice";
+import orderSlice from "./order.slice";
+import categorySlice from "./category.slice";
 
 
 export const reducers = combineReducers({
@@ -15,5 +17,7 @@ export const reducers = combineReducers({
     wishlist: wishlistSlice,
     products: productsSlice,
     cart: cartSlice,
-    address: addressSlice
+    address: addressSlice,
+    order: orderSlice,
+    category: categorySlice
 })

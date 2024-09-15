@@ -9,6 +9,7 @@ import cart_image from "../../assets/images/cart.svg";
 import Button from "../../shared/button";
 import Confirmation from "../../shared/confirmation";
 import { api } from "../../api";
+import Breadcrumb from "../../shared/breadcrumb";
 
 const Wishlists = () => {
   const user = useSelector(({ auth }) => auth.user);
@@ -16,6 +17,13 @@ const Wishlists = () => {
   const [fetchWishlist] = useDispatchWithAbort(getWishlist);
   const [confirm, setConfirm] = useState(null)
   const [loading, setLoading] = useState(false)
+
+  const links = useMemo(() => [
+    {
+      id: 'wishlist',
+      label: 'Wishlist'
+    }
+  ], [])
 
   useEffect(() => {
     fetchWishlist({
@@ -62,6 +70,9 @@ const Wishlists = () => {
 
   return (
     <div className="relative container mx-auto lg:px-4 p-4 max-w-7xl">
+      <div className="w-full" >
+        <Breadcrumb links={links} />
+      </div>
       <div className="w-full flex flex-col items-start justify-start my-9">
         <h2 className="text-3xl text-text mb-1.5 font-semibold">My Wishlist</h2>
         <p className="text-slate-400 text-md">

@@ -19,7 +19,6 @@ const Home = () => {
         user_id: user?.id
       }
     });
-
   }, [fetchHome]);
 
   return (

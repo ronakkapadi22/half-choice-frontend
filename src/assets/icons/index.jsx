@@ -4,7 +4,7 @@ import {
   HiBars3,
   HiChevronLeft,
   HiChevronRight,
-  HiShoppingCart,
+  HiOutlineShoppingCart,
 } from "react-icons/hi2";
 import { HiUserAdd, HiOutlineSearch, HiChevronDown } from "react-icons/hi";
 import { MdOutlineLocalShipping } from "react-icons/md";
@@ -33,6 +33,8 @@ import { BsBank2 } from "react-icons/bs";
 import { IoMdCash } from "react-icons/io";
 import { LuUnlink } from "react-icons/lu";
 import { IoIosCheckmarkCircle } from "react-icons/io";
+import { CiBoxes } from "react-icons/ci";
+import { TiHome } from "react-icons/ti";
 
 
 
@@ -40,7 +42,7 @@ export const ICONS = {
   CHECK: FaCheck,
   PLUS: GoPlus,
   DISCOUNT: CiDiscount1,
-  CART: HiShoppingCart,
+  CART: HiOutlineShoppingCart,
   USER_PLUS: HiUserAdd,
   SEARCH: HiOutlineSearch,
   MENU: HiBars3,
@@ -73,5 +75,7 @@ export const ICONS = {
   CASH: IoMdCash,
   LINK: LuUnlink,
   TRUCK: MdOutlineLocalShipping,
-  CHECK: IoIosCheckmarkCircle
+  CHECK: IoIosCheckmarkCircle,
+  BOX: CiBoxes,
+  HOME: TiHome
 };
