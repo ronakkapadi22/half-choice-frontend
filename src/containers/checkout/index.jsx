@@ -237,7 +237,7 @@ const Checkout = () => {
                 </div>
               </div>
             </div>
-            <div className='w-full mt-16' >
+            <div className='w-full mt-12' >
               <div className='w-full flex items-center justify-between' >
                 <h2 className='font-medium text-text text-lg' >Your Cart <span className='text-slate-400 text-sm'>{`(${my_cart?.length || 0} items)`}</span></h2>
                 <p onClick={() => handleRedirect(PAGES.WISHLISTS.path)} className='flex items-center text-sm text-pink font-medium cursor-pointer'>

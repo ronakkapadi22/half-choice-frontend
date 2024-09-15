@@ -4,7 +4,7 @@ import useDispatchWithAbort from '../../hooks/useDispatchWithAbort'
 import { getProducts } from '../../redux/slices/products.slice'
 import { useSelector } from 'react-redux'
 import Breadcrumb from '../../shared/breadcrumb'
-import cart_image from "../../assets/images/cart.svg";
+import cart_image from "../../assets/images/no_data.svg";
 import { PRODUCTS_LOADER } from '../../assets/utils/constant'
 import ProductSkeleton from '../../shared/product-skeleton'
 import ProductCard from '../../shared/product-card'
@@ -12,8 +12,10 @@ import Modal from '../../shared/modal'
 import Button from '../../shared/button'
 import { ICONS } from '../../assets/icons'
 import { api } from '../../api'
-import { classNames, getCurrentPage, totalPages } from '../../assets/utils/helper'
+import { classNames, getCurrentPage, restructureCategories, totalPages } from '../../assets/utils/helper'
 import Spinner from '../..'
+import CustomAccordion from '../../shared/accordion'
+import { PAGES } from '../../assets/utils/urls'
 
 const Products = () => {
 
@@ -25,6 +27,7 @@ const Products = () => {
 
   const user = useSelector(({ auth }) => auth.user);
   const { total, isLoading, data, pagination, loader } = useSelector(({ products }) => products?.products)
+  const { data: categoryData, isLoading: categoryLoading } = useSelector(({ category }) => category);
 
 
   const handleRedirect = useCallback((path = '') => {
@@ -53,6 +56,10 @@ const Products = () => {
     fetchAllProducts({
       isInitial: true,
       isLoader: true,
+      query: {
+        pageSize: 8,
+        pageNumber: 1
+      },
       params: {
         user_id: user?.id,
         cat_id: getParams('cat_id'),
@@ -121,9 +128,22 @@ const Products = () => {
   }
 
   const isLimitExist = useMemo(() => {
-    const value = totalPages(total, pagination.pageSize)
+    const value = totalPages(total, 8)
     return value === pagination.pageNumber
   }, [totalPages, pagination])
+
+  const categories = useMemo(() => {
+    if (categoryLoading) return []
+    const clone = [...categoryData]
+    return restructureCategories(clone)?.map(({ id, name, sub, ...val }) => ({
+      id,
+      label: name,
+      items: sub?.map(({ id, ids, name }) => ({
+        label: name, id, ids
+      })),
+      ...val
+    }))
+  }, [categoryLoading, data])
 
   return (
     <div className="relative container mx-auto lg:px-4 p-4 max-w-7xl">
@@ -136,7 +156,9 @@ const Products = () => {
           Vibrant and durable clothing for kids of all ages, designed to inspire play and comfort. From cozy pajamas to adventure-ready outfits, we dress young imaginations with style and practicality.
         </p>
         <div className='w-full mt-16 grid grid-cols-12 gap-6' >
-          <div className='col-span-3' >Filter</div>
+          <div className='col-span-3' >
+            <CustomAccordion {...{ cat_id: getParams('cat_id'), sub_sub_cat_id: getParams('sub_sub_cat_id') }} handleValue={(main, sub) => handleRedirect(`${PAGES.PRODUCTS.path}/?cat_id=${main?.is_parent ? "" : main?.id}&sub_sub_cat_id=${sub?.ids ? sub?.ids?.join(',') : sub?.id}`)} accordion={categories} />
+          </div>
           <div className='col-span-9' >
             <div className="w-full grid grid-cols-12 gap-4">
               {isLoading ? (
@@ -187,10 +209,6 @@ const Products = () => {
                       <p className="text-center text-slate-400 text-md my-0.5">
                         Explore more and another some items.
                       </p>
-                      <Button
-                        label="Explore"
-                        className="!w-auto mt-6 !min-w-36 !rounded-full mb-1 flex items-center justify-center !bg-pink !border-pink hover:!border-yellow hover:!bg-yellow transition-all duration-300"
-                      />
                     </div>
                   </div>
                 </div>

@@ -2,28 +2,6 @@ import React from "react";
 import { ICONS } from "../../assets/icons";
 
 const Features = () => {
-  const feature = [
-    {
-      name: "Free Shipping",
-      desc: "Ut enim ad minim veniam liquip ami tomader",
-      icon: <ICONS.SHIPPING />,
-    },
-    {
-      name: "Secure Payments",
-      desc: "Ut enim ad minim veniam liquip ami tomader",
-      icon: <ICONS.SHIELD />,
-    },
-    {
-      name: "Easy Returns",
-      desc: "Ut enim ad minim veniam liquip ami tomader",
-      icon: <ICONS.PEOPLE_BOX />,
-    },
-    {
-      name: "24/7 Support",
-      desc: "Ut enim ad minim veniam liquip ami tomader",
-      icon: <ICONS.USER_CLOCK />,
-    },
-  ];
 
   return (
     <section className="py-12 pb-24 featureSection">
