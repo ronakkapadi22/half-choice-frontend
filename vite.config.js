@@ -14,6 +14,13 @@ export default defineConfig({
     }
   },
   server: {
+    proxy: {
+      '/api': {
+        target: 'http://api.halfchoice.in:3306',
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/api/, ''),
+      },
+    },
     port: 4000,
     hmr: {
       overlay: false
