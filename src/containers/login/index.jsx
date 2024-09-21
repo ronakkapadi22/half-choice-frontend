@@ -113,7 +113,7 @@ const Login = () => {
           phone: values.phoneNumber,
           device_id: uid || "",
           device_token: uid || "",
-          device_type: "browser",
+          device_type: "web",
         },
       });
       if (response?.data) {

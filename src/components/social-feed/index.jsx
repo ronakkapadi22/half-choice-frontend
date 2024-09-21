@@ -3,7 +3,7 @@ import { classNames } from '../../assets/utils/helper'
 import { useSelector } from 'react-redux'
 import useDispatchWithAbort from '../../hooks/useDispatchWithAbort'
 import { getSocialFeeds } from '../../redux/slices/feed.slice'
-import { CAROUSEL_LOADER, INSTA_ACCESS } from '../../assets/utils/constant'
+import { CAROUSEL_LOADER } from '../../assets/utils/constant'
 
 const SocialFeed = ({ className, ...props }) => {
 
@@ -20,7 +20,7 @@ const SocialFeed = ({ className, ...props }) => {
     useEffect(() => {
         fetchFeeds({
             params: {
-                access_token: INSTA_ACCESS,
+                access_token: process.env.INSTA_ACCESS,
                 fields: 'caption,media_url,permalink,thumbnail_url,media_type,username'
             }
         })
