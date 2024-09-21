@@ -35,7 +35,7 @@ const Confirmation = ({
           ) : null}
           <div className="flex justify-end gap-4 mt-4">
             <AlertDialog.Cancel asChild>
-              <button type='button' className={classNames('inline-flex h-[35px] items-center justify-center rounded-[4px] bg-gray-100 px-[15px] font-medium leading-none text-gray-700 outline-none hover:bg-gray-800 hover:text-gray-200 focus:ring-0', cancelClass)}>No, Keep It</button>
+              <button type='button' className={classNames('flex h-[35px] items-center justify-center rounded-[4px] bg-gray-100 px-[15px] font-medium leading-none text-gray-700 outline-none hover:bg-gray-800 hover:text-gray-200 focus:ring-0', cancelClass)}>No, Keep It</button>
             </AlertDialog.Cancel>
             <button onClick={handleAction} disabled={loading} label={actionLabel || ''} className={classNames('flex h-[35px] items-center justify-center rounded-[4px] bg-[#ffdbdc] px-[15px] font-medium leading-none text-danger outline-none hover:bg-danger-hover focus:ring-0', actionClass)} >
               <span>{!loading ? actionLabel : "Loading"}</span>

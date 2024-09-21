@@ -105,7 +105,7 @@ const NavBar = () => {
             <button
               type="button"
               onClick={() => setMobileMenuOpen(true)}
-              className="inline-flex items-center justify-center rounded-lg p-1.5 bg-slate-200 text-text"
+              className="flex items-center justify-center rounded-lg p-1.5 bg-slate-200 text-text"
             >
               <span className="sr-only">Open main menu</span>
               <ICONS.MENU aria-hidden="true" className="w-6 h-6 text-text" />
@@ -250,7 +250,7 @@ const NavBar = () => {
               <button
                 type="button"
                 onClick={() => setMobileMenuOpen(false)}
-                className="inline-flex items-center justify-center rounded-lg p-1.5 bg-slate-200 text-text"
+                className="flex items-center justify-center rounded-lg p-1.5 bg-slate-200 text-text"
               >
                 <span className="sr-only">Open main menu</span>
                 <ICONS.CLOSE aria-hidden="true" className="w-6 h-6 text-text" />
