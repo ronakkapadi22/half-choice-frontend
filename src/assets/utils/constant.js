@@ -40,7 +40,7 @@ export const CAT_IMAGE_PATH = 'https://halfchoice.in/superadmin/public/images/ca
 
 export const BANNER_PATH = 'https://halfchoice.in/superadmin/public/images/promotion/'
 
-export const INSTA_ACCESS = 'IGQWRQVlpJeWJ3RFMtWTA0b0JhOUhaN3RDQ2RJWFhTYTFtQld6NlRjUWEycTZAyT2prM3JvdmZARMkMwNzV1aXAzdWxud2pIYW51ZADNyUk5Kam5hdzd6c0w2eHFqR1ZAyTERZAanVXOVE1WUp5WDBVd0VPZA1hHUGRKaTAZD'
+export const INSTA_ACCESS = 'IGQWRPQ3pIV0ZAqdVBnNFdmVHpXNjM5ckZApOGpFbE9xeVBzY0pSNlp1em1pMmhrZA0pZAQVcwMHF3bV9feF9FZAWx1Ty1FLWNZAdjAxSS16dTdsYTZA1STFkSHNHekRNQmdaYzZAWaHBMRDE0TUtIVEVVVEp1WVV4SjZAycHcZD'
 
 export const FEATURES = [
   {
