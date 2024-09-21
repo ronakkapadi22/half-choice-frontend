@@ -195,3 +195,16 @@ export const shiprocket = {
     }
   },
 };
+
+export const instagram = {
+  feeds: async ({ params }) => {
+    try {
+      const response = await axios.get('https://graph.instagram.com/me/media', {
+        params
+      })
+      return await response.data
+    } catch (error) {
+      console.log('error', error)
+    }
+  }
+}

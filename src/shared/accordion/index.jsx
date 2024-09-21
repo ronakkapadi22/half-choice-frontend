@@ -30,8 +30,6 @@ const CustomAccordion = ({
         setValue(getId);
     }, [getId]);
 
-    console.log("accordion", accordion);
-
     return (
         <Accordion.Root
             {...props}

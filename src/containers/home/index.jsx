@@ -8,6 +8,7 @@ import WhatWeDo from "../../components/whatWeDo";
 import PopularProducts from "./popular-products";
 import { useSelector } from "react-redux";
 import OurValues from "../../components/value-proposition";
+import SocialFeed from "../../components/social-feed";
 
 const Home = () => {
   const [fetchHome] = useDispatchWithAbort(getCommerce);
@@ -26,9 +27,10 @@ const Home = () => {
       <HomeBanner />
       <OurValues />
       <WhatWeDo />
-      <LatestArrival className="py-12" title="Latest Arrival" />
+      <LatestArrival className="py-16" title="Latest Arrival" />
       <Offers />
-      <PopularProducts className="py-12" title='Popular Products' />
+      <PopularProducts className="py-16" title='Popular Products' />
+      <SocialFeed />
     </div>
   );
 };

@@ -8,6 +8,7 @@ import cartSlice from "./cart.slice";
 import addressSlice from "./address.slice";
 import orderSlice from "./order.slice";
 import categorySlice from "./category.slice";
+import feedSlice from "./feed.slice";
 
 
 export const reducers = combineReducers({
@@ -19,5 +20,6 @@ export const reducers = combineReducers({
     cart: cartSlice,
     address: addressSlice,
     order: orderSlice,
+    feeds: feedSlice,
     category: categorySlice
 })

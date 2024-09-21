@@ -76,23 +76,6 @@ const PopularProducts = ({ title, className, ...props }) => {
             sought-after items that everyone is talking about!
           </p>
         </div>
-        {/* <div className="flex items-center justify-end">
-          <Link className="text-text text-lg mx-2" to={PAGES.HOME.path}>
-            All
-          </Link>
-          <Link
-            className="text-gray-600 hover:text-text font-normal text-lg mx-2"
-            to={PAGES.HOME.path}
-          >
-            Boys
-          </Link>
-          <Link
-            className="text-gray-600 hover:text-text font-normal text-lg mx-2"
-            to={PAGES.HOME.path}
-          >
-            Girls
-          </Link>
-        </div> */}
       </div>
       <div className="w-full mt-10 grid grid-cols-12 gap-4 lg:gap-8">
         {isLoading

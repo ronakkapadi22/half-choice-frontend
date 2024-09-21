@@ -40,6 +40,8 @@ export const CAT_IMAGE_PATH = 'https://halfchoice.in/superadmin/public/images/ca
 
 export const BANNER_PATH = 'https://halfchoice.in/superadmin/public/images/promotion/'
 
+export const INSTA_ACCESS = 'IGQWRQNXhqQkVNRnY3RXhINFhoN3R6TVl4T2dTZAlZACb2k2eE96WWJRSFV4SEc1N0hQT1Nnc25oRmZAOdG42TWdEZA3ZAwZA3hXcG9ScVpzTkQtZAHhHX3pVVWsteDR6alEwNHVLd0drNVFCX2s2bHZAjS3FFVjhhODJSRTQZD'
+
 export const FEATURES = [
   {
     name: "Free Shipping",
