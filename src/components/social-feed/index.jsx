@@ -20,7 +20,7 @@ const SocialFeed = ({ className, ...props }) => {
     useEffect(() => {
         fetchFeeds({
             params: {
-                access_token: process.env.INSTA_ACCESS,
+                access_token: import.meta.env.VITE_INSTA_ACCESS || '',
                 fields: 'caption,media_url,permalink,thumbnail_url,media_type,username'
             }
         })
