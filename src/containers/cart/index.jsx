@@ -136,7 +136,6 @@ const Cart = () => {
               ))
             ) : my_cart?.length ? (
               my_cart?.map(({ id, variantData, ...data }) => {
-                console.log('---', variantData)
                 const image = variantData?.images?.[0]?.image_file;
                 const imageAlt = variantData?.images?.[0]?.image_altertag
                 return (

@@ -41,8 +41,6 @@ const Checkout = () => {
   const [order, setOrder] = useState(null);
   const [orderLoader, setOrderLoader] = useState(false);
 
-  console.log('gatewayLoading', error)
-
   const links = useMemo(
     () => [
       {
@@ -88,8 +86,6 @@ const Checkout = () => {
     return clone || {};
   }, [isLoading, address]);
 
-
-  console.log('my_address', my_address)
 
   const getEstimationDate = async () => {
     const response = await shiprocket.auth();

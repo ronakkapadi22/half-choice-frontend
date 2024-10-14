@@ -16,8 +16,6 @@ const ProductCard = ({
 }) => {
     const navigate = useNavigate();
 
-    console.log("props", props);
-
     const handleRedirect = useCallback(
         (path = "") => {
             navigate(path);
