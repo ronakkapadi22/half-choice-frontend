@@ -115,19 +115,19 @@ export const api = {
   orders: {
     getAll: ({ data, params, ...configs }) =>
       client({
-        url: '/orders/getOrders',
+        url: "/orders/getOrders",
         method: METHODS.GET,
         data,
         params,
-        ...configs
+        ...configs,
       }),
     get: ({ data, params, ...configs }) =>
       client({
-        url: '/orders/getOrdersDetails',
+        url: "/orders/getOrdersDetails",
         method: METHODS.GET,
         data,
         params,
-        ...configs
+        ...configs,
       }),
     add: ({ data, ...configs }) =>
       client({
@@ -138,19 +138,19 @@ export const api = {
       }),
     reason: ({ data, params, ...configs }) =>
       client({
-        url: '/users/calceledReason',
+        url: "/users/calceledReason",
         method: METHODS.GET,
         data,
         params,
-        ...configs
+        ...configs,
       }),
     cancel: ({ data, ...configs }) =>
       client({
-        url: '/orders/cancelOrder',
+        url: "/orders/cancelOrder",
         method: METHODS.POST,
         data,
         ...configs,
-      })
+      }),
   },
   category: {
     getAll: ({ data, params, ...configs }) =>
@@ -160,8 +160,24 @@ export const api = {
         data,
         params,
         ...configs,
+      }),
+  },
+  payments: {
+    session: ({ data, ...configs }) =>
+      client({
+        url: "/orders/addOrderLive",
+        method: METHODS.POST,
+        data,
+        ...configs,
+      }),
+    verify: ({ data, ...configs }) =>
+      client({
+        url: "/orders/veryfyPayment",
+        method: METHODS.POST,
+        data,
+        ...configs,
       })
-  }
+  },
 };
 
 export const shiprocket = {
@@ -199,12 +215,12 @@ export const shiprocket = {
 export const instagram = {
   feeds: async ({ params }) => {
     try {
-      const response = await axios.get('https://graph.instagram.com/me/media', {
-        params
-      })
-      return await response.data
+      const response = await axios.get("https://graph.instagram.com/me/media", {
+        params,
+      });
+      return await response.data;
     } catch (error) {
-      console.log('error', error)
+      console.log("error", error);
     }
-  }
-}
+  },
+};

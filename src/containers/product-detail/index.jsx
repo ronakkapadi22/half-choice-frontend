@@ -18,6 +18,7 @@ import { api } from "../../api";
 import Modal from "../../shared/modal";
 import { PAGES } from "../../assets/utils/urls";
 import Spinner from "../..";
+import ReactHelmet from "../seo/helmet";
 
 const Product = () => {
   const ref = useRef();
@@ -62,8 +63,10 @@ const Product = () => {
   const images = useMemo(() => {
     if (isLoading) return [];
     const clone = { ...variant };
-    return clone?.image?.split(",")?.filter((val) => !!val);
+    return clone?.images?.filter((val) => !!val);
   }, [isLoading, variant]);
+
+  console.log('variant', data)
 
   const attribute = useMemo(() => {
     if (isLoading) return [];
@@ -145,210 +148,212 @@ const Product = () => {
   };
 
   return (
-    <div className="container relative p-4 mx-auto lg:px-4 max-w-7xl">
-      <div className="grid w-full grid-cols-12 gap-4">
-        <div className="col-span-12 p-2 md:col-span-5">
-          <div className="flex flex-col w-full">
-            <div className="relative w-full h-auto mb-2">
-              {attribute?.[attributeIndex]?.discount ? (
-                <div className="absolute px-2 py-1 text-xs text-white rounded-lg top-2 left-2 bg-green">
-                  {attribute?.[attributeIndex]?.discount
-                    ? `-${attribute?.[attributeIndex]?.discount}%`
-                    : null}
-                </div>
-              ) : null}
-              <img
-                className="w-full h-auto object-cover object-center rounded-xl xl:min-h-[400px]"
-                src={IMAGE_PATH + images?.[currentImageIndex]}
-              />
-            </div>
-            <div className="relative flex items-center justify-center w-full h-auto p-2">
-              <button className="z-50 flex items-center justify-center mr-1">
-                <ICONS.CHEVRON_LEFT
-                  onClick={handlePrevious}
-                  className="w-6 h-6 text-text"
+    <ReactHelmet {...{ title: data?.meta_title, description: data?.meta_description, keywords: data?.meta_keywords }} >
+      <div className="container relative p-4 mx-auto lg:px-4 max-w-7xl">
+        <div className="grid w-full grid-cols-12 gap-4">
+          <div className="col-span-12 p-2 md:col-span-5">
+            <div className="flex flex-col w-full">
+              <div className="relative w-full h-auto mb-2">
+                {attribute?.[attributeIndex]?.discount ? (
+                  <div className="absolute px-2 py-1 text-xs text-white rounded-lg top-2 left-2 bg-green">
+                    {attribute?.[attributeIndex]?.discount
+                      ? `-${attribute?.[attributeIndex]?.discount}%`
+                      : null}
+                  </div>
+                ) : null}
+                <img alt={images?.[currentImageIndex]?.image_altertag}
+                  className="w-full h-auto object-cover object-center rounded-xl xl:min-h-[400px]"
+                  src={IMAGE_PATH + images?.[currentImageIndex]?.image_file || ''}
                 />
-              </button>
-              <ReactOwlCarousel
-                items={3}
-                ref={ref}
-                className="owl-carousel owl-theme !mt-0"
-                dots={false}
-                margin={24}
-              >
-                {isLoading
-                  ? CAROUSEL_LOADER.map((id) => (
+              </div>
+              <div className="relative flex items-center justify-center w-full h-auto p-2">
+                <button className="z-50 flex items-center justify-center mr-1">
+                  <ICONS.CHEVRON_LEFT
+                    onClick={handlePrevious}
+                    className="w-6 h-6 text-text"
+                  />
+                </button>
+                <ReactOwlCarousel
+                  items={3}
+                  ref={ref}
+                  className="owl-carousel owl-theme !mt-0"
+                  dots={false}
+                  margin={24}
+                >
+                  {isLoading
+                    ? CAROUSEL_LOADER.map((id) => (
                       <div key={id} className="w-full item">
                         <div className="animate-pulse h-[180px] rounded-xl bg-slate-200" />
                       </div>
                     ))
-                  : images?.map((image, index) => (
+                    : images?.map((image, index) => (
                       <div
                         key={index}
                         className="w-full item"
                         onClick={() => setCurrentImageIndex(index)}
                       >
-                        <img
+                        <img alt={image?.image_altertag || ''}
                           key={image}
                           className={classNames(
                             "cursor-pointer rounded-md xl:max-h-[280px] object-cover object-center"
                           )}
-                          src={IMAGE_PATH + image}
+                          src={IMAGE_PATH + image?.image_file || ''}
                         />
                       </div>
                     ))}
-              </ReactOwlCarousel>
-              <button className="z-50 flex items-center justify-center ml-1">
-                <ICONS.CHEVRON_RIGHT
-                  onClick={handleNext}
-                  className="w-6 h-6 text-text"
-                />
-              </button>
+                </ReactOwlCarousel>
+                <button className="z-50 flex items-center justify-center ml-1">
+                  <ICONS.CHEVRON_RIGHT
+                    onClick={handleNext}
+                    className="w-6 h-6 text-text"
+                  />
+                </button>
+              </div>
             </div>
           </div>
-        </div>
-        <div className="col-span-12 p-2 md:col-span-7">
-          <div className="flex flex-col">
-            <h2 className="text-sm tracking-widest title-font text-less">
-              {variant?.name}
-            </h2>
-            <p className="mb-1 text-3xl font-medium text-green">
-              {data?.product_name || ""}
-            </p>
-            <div className="flex items-center justify-between w-full mt-4 mb-2">
-              <div className="w-full flex justify-start items-center my-1.5 text-2xl font-medium">
-                <ins className="no-underline">
-                  ₹ {attribute?.[attributeIndex]?.selling_price}
-                </ins>
-                <del className="ml-4 text-base line-through text-less">
-                  ₹ {attribute?.[attributeIndex]?.mrp}
-                </del>
+          <div className="col-span-12 p-2 md:col-span-7">
+            <div className="flex flex-col">
+              <h2 className="text-sm tracking-widest title-font text-less">
+                {variant?.name}
+              </h2>
+              <p className="mb-1 text-3xl font-medium text-green">
+                {data?.product_name || ""}
+              </p>
+              <div className="flex items-center justify-between w-full mt-4 mb-2">
+                <div className="w-full flex justify-start items-center my-1.5 text-2xl font-medium">
+                  <ins className="no-underline">
+                    ₹ {attribute?.[attributeIndex]?.selling_price}
+                  </ins>
+                  <del className="ml-4 text-base line-through text-less">
+                    ₹ {attribute?.[attributeIndex]?.mrp}
+                  </del>
+                </div>
+                <div className="p-2 rounded-full cursor-pointer bg-slate-100">
+                  {data?.wishlist ? (
+                    <ICONS.HEART_FILL
+                      onClick={() => handleWishlist(data.wishlist)}
+                      className="w-7 h-7 text-pink"
+                    />
+                  ) : (
+                    <ICONS.HEART_EMPTY
+                      onClick={() => handleWishlist(data.wishlist)}
+                      className="w-7 h-7 text-pink"
+                    />
+                  )}
+                </div>
               </div>
-              <div className="p-2 rounded-full cursor-pointer bg-slate-100">
-                {data?.wishlist ? (
-                  <ICONS.HEART_FILL
-                    onClick={() => handleWishlist(data.wishlist)}
-                    className="w-7 h-7 text-pink"
-                  />
-                ) : (
-                  <ICONS.HEART_EMPTY
-                    onClick={() => handleWishlist(data.wishlist)}
-                    className="w-7 h-7 text-pink"
-                  />
-                )}
+              <div className="w-full mt-4 mb-5">
+                <div className="flex flex-col justify-start w-full mb-6">
+                  <h2 className="mb-1 text-base font-medium title-font text-text">
+                    Color
+                  </h2>
+                  <div
+                    className={classNames(
+                      "w-8 items-center cursor-pointer justify-center border-text-secondary border h-8 md:w-10 md:h-10 rounded-full p-0.5"
+                    )}
+                  >
+                    <div
+                      style={{ background: variant?.color_code }}
+                      className="w-full h-full rounded-full"
+                    ></div>
+                  </div>
+                </div>
+                <div className="flex flex-col justify-start w-full">
+                  <h2 className="mb-1 text-base font-medium text-text">
+                    Select Size
+                  </h2>
+                  <div className="flex flex-wrap items-center justify-start w-full gap-3">
+                    {attribute?.map((attributeItem, i) => (
+                      <div
+                        onClick={() => setAttributeIndex(i)}
+                        className={classNames(
+                          "border py-2 px-4 text-text font-medium border-select rounded-md cursor-pointer",
+                          attributeIndex === i
+                            ? "bg-select !text-white"
+                            : "bg-transparent"
+                        )}
+                        key={i}
+                      >
+                        {attributeItem?.agegroup}
+                      </div>
+                    ))}
+                  </div>
+                </div>
               </div>
-            </div>
-            <div className="w-full mt-4 mb-5">
-              <div className="flex flex-col justify-start w-full mb-6">
-                <h2 className="mb-1 text-base font-medium title-font text-text">
-                  Color
-                </h2>
-                <div
+              <hr />
+              <div className="w-full my-4">
+                <Button
+                  disabled={loader}
+                  onClick={() => handleCartItem(attribute?.[attributeIndex])}
                   className={classNames(
-                    "w-8 items-center cursor-pointer justify-center border-text-secondary border h-8 md:w-10 md:h-10 rounded-full p-0.5"
+                    "flex w-full justify-center items-center hover:border-yellow hover:bg-yellow transition-all duration-300",
+                    loader ? "cursor-not-allowed" : ""
                   )}
                 >
+                  {loader ? (
+                    <span className="mr-2">Loading</span>
+                  ) : (
+                    <span className="mr-2">
+                      {attribute?.[attributeIndex]?.quantity
+                        ? "View to Bag"
+                        : "Add to Bag"}
+                    </span>
+                  )}
+                  {loader ? (
+                    <Spinner className="!w-4 !h-4" />
+                  ) : (
+                    <ICONS.BAG className="w-5 h-5" />
+                  )}
+                </Button>
+              </div>
+              <hr />
+              <div className="w-full my-4">
+                <div className="flex flex-col justify-start w-full ">
+                  <h2 className="mb-1 text-base font-medium title-font text-text">
+                    Product Details
+                  </h2>
                   <div
-                    style={{ background: variant?.color_code }}
-                    className="w-full h-full rounded-full"
+                    dangerouslySetInnerHTML={{ __html: data.description }}
                   ></div>
                 </div>
               </div>
-              <div className="flex flex-col justify-start w-full">
-                <h2 className="mb-1 text-base font-medium text-text">
-                  Select Size
-                </h2>
-                <div className="flex flex-wrap items-center justify-start w-full gap-3">
-                  {attribute?.map((attributeItem, i) => (
-                    <div
-                      onClick={() => setAttributeIndex(i)}
-                      className={classNames(
-                        "border py-2 px-4 text-text font-medium border-select rounded-md cursor-pointer",
-                        attributeIndex === i
-                          ? "bg-select !text-white"
-                          : "bg-transparent"
-                      )}
-                      key={i}
-                    >
-                      {attributeItem?.agegroup}
-                    </div>
-                  ))}
+              <hr />
+              <div className="w-full my-4">
+                <div className="flex flex-col justify-start w-full ">
+                  <h2 className="mb-1 text-base font-medium title-font text-text">
+                    Returns Policy
+                  </h2>
+                  <div
+                    dangerouslySetInnerHTML={{ __html: data.policy_des }}
+                  ></div>
                 </div>
-              </div>
-            </div>
-            <hr />
-            <div className="w-full my-4">
-              <Button
-                disabled={loader}
-                onClick={() => handleCartItem(attribute?.[attributeIndex])}
-                className={classNames(
-                  "flex w-full justify-center items-center hover:border-yellow hover:bg-yellow transition-all duration-300",
-                  loader ? "cursor-not-allowed" : ""
-                )}
-              >
-                {loader ? (
-                  <span className="mr-2">Loading</span>
-                ) : (
-                  <span className="mr-2">
-                    {attribute?.[attributeIndex]?.quantity
-                      ? "View to Bag"
-                      : "Add to Bag"}
-                  </span>
-                )}
-                {loader ? (
-                  <Spinner className="!w-4 !h-4" />
-                ) : (
-                  <ICONS.BAG className="w-5 h-5" />
-                )}
-              </Button>
-            </div>
-            <hr />
-            <div className="w-full my-4">
-              <div className="flex flex-col justify-start w-full ">
-                <h2 className="mb-1 text-base font-medium title-font text-text">
-                  Product Details
-                </h2>
-                <div
-                  dangerouslySetInnerHTML={{ __html: data.description }}
-                ></div>
-              </div>
-            </div>
-            <hr />
-            <div className="w-full my-4">
-              <div className="flex flex-col justify-start w-full ">
-                <h2 className="mb-1 text-base font-medium title-font text-text">
-                  Returns Policy
-                </h2>
-                <div
-                  dangerouslySetInnerHTML={{ __html: data.policy_des }}
-                ></div>
               </div>
             </div>
           </div>
         </div>
-      </div>
-      <Modal {...{ open, setOpen }}>
-        <div className="relative flex flex-col items-start justify-center w-full">
-          <Button className="!bg-slate-200 !border-none !rounded-full !p-1 !absolute right-0 top-0 !text-text">
-            <ICONS.CLOSE
-              onClick={() => setOpen(false)}
-              className="w-8 h-8 text-s"
+        <Modal {...{ open, setOpen }}>
+          <div className="relative flex flex-col items-start justify-center w-full">
+            <Button className="!bg-slate-200 !border-none !rounded-full !p-1 !absolute right-0 top-0 !text-text">
+              <ICONS.CLOSE
+                onClick={() => setOpen(false)}
+                className="w-8 h-8 text-s"
+              />
+            </Button>
+            <h3 className="mt-3 mb-4 text-xl font-medium text-text">Sign In</h3>
+            <p className="mt-1 mb-3 text-base leading-normal text-slate-400">
+              To access this feature, please sign in to your account first. Once
+              you're logged in, you can continue to add items to your wishlist
+              seamlessly.
+            </p>
+            <Button
+              label="Sign In"
+              handleClick={() => handleRedirect(PAGES.LOGIN.path)}
+              className="!rounded-full min-w-[140px] !border-green hover:!bg-pink hover:!border-pink !bg-green"
             />
-          </Button>
-          <h3 className="mt-3 mb-4 text-xl font-medium text-text">Sign In</h3>
-          <p className="mt-1 mb-3 text-base leading-normal text-slate-400">
-            To access this feature, please sign in to your account first. Once
-            you're logged in, you can continue to add items to your wishlist
-            seamlessly.
-          </p>
-          <Button
-            label="Sign In"
-            handleClick={() => handleRedirect(PAGES.LOGIN.path)}
-            className="!rounded-full min-w-[140px] !border-green hover:!bg-pink hover:!border-pink !bg-green"
-          />
-        </div>
-      </Modal>
-    </div>
+          </div>
+        </Modal>
+      </div>
+    </ReactHelmet>
   );
 };
 

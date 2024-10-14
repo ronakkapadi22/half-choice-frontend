@@ -25,12 +25,12 @@ const Home = () => {
   return (
     <div className="relative w-full">
       <HomeBanner />
-      <OurValues />
-      <WhatWeDo />
       <LatestArrival className="py-16" title="Latest Arrival" />
       <Offers />
       <PopularProducts className="py-16" title='Popular Products' />
       <SocialFeed />
+      <WhatWeDo />
+      <OurValues />
     </div>
   );
 };

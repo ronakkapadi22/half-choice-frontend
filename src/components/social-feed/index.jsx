@@ -56,12 +56,13 @@ const SocialFeed = ({ className, ...props }) => {
                         </div>
                     </div>) : feeds?.length ? feeds?.map(feed => <div className='w-full col-span-6 md:col-span-4' key={feed?.id} >
                         <div className='w-full flex flex-col items-center justify-center relative h-auto cursor-pointer' onClick={() => handleRedirect(feed?.permalink)} >
-                            <div className="w-full">
+                            <div className="w-full relative">
                                 <img
                                     alt={feed?.id}
                                     src={feed?.media_url || ''}
                                     className={classNames("rounded-xl xl:min-h-[280px] object-cover object-center hover:opacity-55 transition-all duration-300")}
                                 />
+                                <div className="absolute bottom-0 left-0 right-0 top-0 h-full w-full overflow-hidden bg-[rgba(0,0,0,0.1)] rounded-xl bg-fixed opacity-0 transition duration-300 ease-in-out hover:opacity-100"></div>
                             </div>
                         </div>
                     </div>) : <div className="w-full flex flex-col items-center justify-center" >

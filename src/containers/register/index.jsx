@@ -43,7 +43,7 @@ const Register = () => {
           login_type: 0,
           device_id: "d1",
           device_token: "testtoken",
-          device_type: "mac",
+          device_type: "web",
         },
       });
       if (response?.data) {

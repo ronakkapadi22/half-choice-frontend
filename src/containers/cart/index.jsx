@@ -136,7 +136,9 @@ const Cart = () => {
               ))
             ) : my_cart?.length ? (
               my_cart?.map(({ id, variantData, ...data }) => {
-                const image = variantData?.image?.split(",")?.[0];
+                console.log('---', variantData)
+                const image = variantData?.images?.[0]?.image_file;
+                const imageAlt = variantData?.images?.[0]?.image_altertag
                 return (
                   <div key={id} className="rounded-md py-2 px-3 mb-3 relative bg-slate-50">
                     <Button
@@ -146,7 +148,7 @@ const Cart = () => {
                       <ICONS.DELETE className="w-5 h-5 text-white" />
                     </Button>
                     <div className="w-full flex items-center justify-start">
-                      <img
+                      <img alt={imageAlt}
                         className="w-28 rounded-md xl:max-h-[280px] object-cover object-center"
                         src={IMAGE_PATH + image}
                       />

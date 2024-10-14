@@ -35,6 +35,8 @@ import { LuUnlink } from "react-icons/lu";
 import { IoIosCheckmarkCircle } from "react-icons/io";
 import { CiBoxes } from "react-icons/ci";
 import { TiHome } from "react-icons/ti";
+import { MdOutlineDone } from "react-icons/md";
+
 
 
 
@@ -78,5 +80,6 @@ export const ICONS = {
   TRUCK: MdOutlineLocalShipping,
   CHECK_CIRCLE: IoIosCheckmarkCircle,
   BOX: CiBoxes,
-  HOME: TiHome
+  HOME: TiHome,
+  DONE: MdOutlineDone
 };

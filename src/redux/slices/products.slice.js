@@ -36,7 +36,7 @@ const initialState = {
         total: 0,
         pagination: {
             pageNumber: 1,
-            pageSize: 8
+            pageSize: 16
         }
     }
 };

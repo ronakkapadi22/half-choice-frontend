@@ -57,7 +57,7 @@ const Products = () => {
       isInitial: true,
       isLoader: true,
       query: {
-        pageSize: 8,
+        pageSize: 16,
         pageNumber: 1
       },
       params: {
@@ -65,7 +65,7 @@ const Products = () => {
         cat_id: getParams('cat_id'),
         sub_sub_cat_id: getParams('sub_sub_cat_id'),
         pageNumber: 1,
-        pageSize: 8
+        pageSize: 16
       }
     })
   }, [fetchAllProducts, getParams])
@@ -92,7 +92,7 @@ const Products = () => {
           isInitial: true,
           query: {
             pageSize: products?.length,
-            pageNumber: getCurrentPage(products?.length, 8)
+            pageNumber: getCurrentPage(products?.length, 16)
           },
           isLoader: false,
           params: {
@@ -122,13 +122,13 @@ const Products = () => {
         cat_id: getParams('cat_id'),
         sub_sub_cat_id: getParams('sub_sub_cat_id'),
         pageNumber: pageNumber + 1,
-        pageSize: 8
+        pageSize: 16
       }
     })
   }
 
   const isLimitExist = useMemo(() => {
-    const value = totalPages(total, 8)
+    const value = totalPages(total, 16)
     return value === pagination.pageNumber
   }, [totalPages, pagination])
 

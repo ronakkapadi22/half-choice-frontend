@@ -23,13 +23,16 @@ import { clearDataFromLocal } from "../../assets/utils/local";
 import * as Menubar from "@radix-ui/react-menubar";
 import useDispatchWithAbort from "../../hooks/useDispatchWithAbort";
 import { getCategories } from "../../redux/slices/category.slice";
-import { letterCutting, restructureCategories } from "../../assets/utils/helper";
+import {
+  letterCutting,
+  restructureCategories,
+} from "../../assets/utils/helper";
 import { CAT_IMAGE_PATH } from "../../assets/utils/constant";
 import ProfileImage from "../../shared/avatar";
 
 const NavBar = () => {
   const dispatch = useDispatch();
-  const [fetchCategory] = useDispatchWithAbort(getCategories)
+  const [fetchCategory] = useDispatchWithAbort(getCategories);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [confirm, setConfirm] = useState(false);
   const { user } = useSelector(({ auth }) => auth);
@@ -37,19 +40,18 @@ const NavBar = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetchCategory({})
-  }, [fetchCategory])
+    fetchCategory({});
+  }, [fetchCategory]);
 
   const isUserLogged = useMemo(() => {
     return Boolean(user?.id);
   }, [user]);
 
-
   const categories = useMemo(() => {
-    if (isLoading) return []
-    const clone = [...data]
-    return restructureCategories(clone)
-  }, [isLoading, data])
+    if (isLoading) return [];
+    const clone = [...data];
+    return restructureCategories(clone);
+  }, [isLoading, data]);
 
   const handleAction = () => {
     dispatch(handleAuthInitial());
@@ -118,10 +120,10 @@ const NavBar = () => {
             >
               Home
             </Link>
-            {
-              categories?.map(cat => <Popover key={cat?.id} className="relative">
+            {categories?.map((cat) => (
+              <Popover key={cat?.id} className="relative">
                 <PopoverButton className="flex items-center text-sm font-semibold leading-6 text-gray-900 gap-x-1">
-                  {cat?.name || ''}
+                  {cat?.name || ""}
                   <ICONS.CHEVRON_DOWN
                     aria-hidden="true"
                     className="flex-none w-5 h-5 text-gray-400"
@@ -133,12 +135,20 @@ const NavBar = () => {
                 >
                   <div className="p-4">
                     {cat?.sub?.map((item, i) => (
-                      <div key={i} onClick={() => handleRedirect(`${PAGES.PRODUCTS.path}?cat_id=${item?.is_parent ? "" : cat?.id}&sub_sub_cat_id=${item?.ids ? item?.ids?.join(',') : item?.id}`)} >
-                        <div
-                          className="relative cursor-pointer flex items-center p-4 text-sm leading-6 rounded-lg group gap-x-6 hover:bg-gray-50"
-                        >
+                      <div
+                        key={i}
+                        onClick={() =>
+                          handleRedirect(
+                            `${PAGES.PRODUCTS.path}?cat_id=${item?.is_parent ? "" : cat?.id
+                            }&sub_sub_cat_id=${item?.ids ? item?.ids?.join(",") : item?.id
+                            }`
+                          )
+                        }
+                      >
+                        <div className="relative cursor-pointer flex items-center p-4 text-sm leading-6 rounded-lg group gap-x-6 hover:bg-gray-50">
                           <div className="flex items-center justify-center flex-none rounded-lg h-11 w-16 bg-gray-50 group-hover:bg-white">
-                            <img alt={item?.image}
+                            <img
+                              alt={item?.image}
                               src={CAT_IMAGE_PATH + item?.image}
                               aria-hidden="true"
                               className="w-full h-auto"
@@ -161,10 +171,10 @@ const NavBar = () => {
                     ))}
                   </div>
                 </PopoverPanel>
-              </Popover>)
-            }
+              </Popover>
+            ))}
             <Link
-              to="/"
+              to="/about"
               className="text-sm font-semibold leading-6 text-gray-900"
             >
               About Us
@@ -204,15 +214,24 @@ const NavBar = () => {
                           Hello, <br /> {username || ""}
                         </Menubar.Item>
                         <div className="w-full divide-y h-[1px] bg-gray-100"></div>
-                        <Menubar.Item onClick={() => handleRedirect(PAGES.WISHLISTS.path)} className="w-full flex items-center justify-between px-4 py-2 text-sm font-medium text-left text-gray-700 cursor-pointer hover:bg-gray-100 hover:outline-none">
+                        <Menubar.Item
+                          onClick={() => handleRedirect(PAGES.WISHLISTS.path)}
+                          className="w-full flex items-center justify-between px-4 py-2 text-sm font-medium text-left text-gray-700 cursor-pointer hover:bg-gray-100 hover:outline-none"
+                        >
                           My Wishlist
                           <ICONS.BAG className="w-5 h-5" />
                         </Menubar.Item>
-                        <Menubar.Item onClick={() => handleRedirect(PAGES.CART.path)} className="w-full flex items-center justify-between px-4 py-2 text-sm font-medium text-left text-gray-700 cursor-pointer hover:bg-gray-100 hover:outline-none">
+                        <Menubar.Item
+                          onClick={() => handleRedirect(PAGES.CART.path)}
+                          className="w-full flex items-center justify-between px-4 py-2 text-sm font-medium text-left text-gray-700 cursor-pointer hover:bg-gray-100 hover:outline-none"
+                        >
                           My Cart
                           <ICONS.CART className="w-5 h-5" />
                         </Menubar.Item>
-                        <Menubar.Item onClick={() => handleRedirect(PAGES.ORDERS.path)} className="w-full flex items-center justify-between px-4 py-2 text-sm font-medium text-left text-gray-700 cursor-pointer hover:bg-gray-100 hover:outline-none">
+                        <Menubar.Item
+                          onClick={() => handleRedirect(PAGES.ORDERS.path)}
+                          className="w-full flex items-center justify-between px-4 py-2 text-sm font-medium text-left text-gray-700 cursor-pointer hover:bg-gray-100 hover:outline-none"
+                        >
                           My Orders
                           <ICONS.BOX className="w-6 h-6" />
                         </Menubar.Item>
@@ -265,10 +284,10 @@ const NavBar = () => {
                   >
                     Home
                   </Link>
-                  {
-                    categories?.map(item => <Disclosure key={item?.id} as="div" className="-mx-3">
+                  {categories?.map((item) => (
+                    <Disclosure key={item?.id} as="div" className="-mx-3">
                       <DisclosureButton className="group flex w-full items-center justify-between rounded-lg py-2 pl-3 pr-3.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50">
-                        {item?.name || ''}
+                        {item?.name || ""}
                         <ICONS.CHEVRON_DOWN
                           aria-hidden="true"
                           className="h-5 w-5 flex-none group-data-[open]:rotate-180"
@@ -276,7 +295,16 @@ const NavBar = () => {
                       </DisclosureButton>
                       <DisclosurePanel className="mt-2 space-y-2">
                         {item?.sub?.map((val) => (
-                          <DisclosureButton key={val?.name} onClick={() => handleRedirect(`${PAGES.PRODUCTS.path}?cat_id=${item?.is_parent ? "" : item?.id}&sub_sub_cat_id=${val?.ids ? val?.ids?.join(',') : val?.id}`)}
+                          <DisclosureButton
+                            key={val?.name}
+                            onClick={() => {
+                              setMobileMenuOpen(false);
+                              handleRedirect(
+                                `${PAGES.PRODUCTS.path}?cat_id=${item?.is_parent ? "" : item?.id
+                                }&sub_sub_cat_id=${val?.ids ? val?.ids?.join(",") : val?.id
+                                }`
+                              );
+                            }}
                             as="p"
                             className="block cursor-pointer py-2 pl-6 pr-3 text-sm font-semibold leading-7 text-gray-900 rounded-lg hover:bg-gray-50"
                           >
@@ -284,10 +312,10 @@ const NavBar = () => {
                           </DisclosureButton>
                         ))}
                       </DisclosurePanel>
-                    </Disclosure>)
-                  }
+                    </Disclosure>
+                  ))}
                   <Link
-                    to={PAGES.HOME.path}
+                    to={PAGES.ABOUT.path}
                     className="block px-3 py-2 -mx-3 text-base font-semibold leading-7 text-gray-900 rounded-lg hover:bg-gray-50"
                   >
                     About Us
@@ -334,7 +362,7 @@ const NavBar = () => {
           setOpen={setConfirm}
         />
       </header>
-    </div >
+    </div>
   );
 };
 

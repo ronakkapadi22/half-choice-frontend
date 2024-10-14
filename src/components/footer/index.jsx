@@ -62,18 +62,18 @@ const Footer = () => {
               </div>
             </div>
             <div className="flex md:justify-end mr-[0px] mt-[60px] gap-3">
-              <div className="border rounded-[30px] p-3 cursor-pointer text-3xl bg-white text-green">
+              <a href="https://www.facebook.com/profile.php?id=61551765577969&mibextid=ZbWKwL" target="_blank" className="border rounded-[30px] p-3 cursor-pointer text-3xl bg-white text-green">
                 <ICONS.FACEBOOK />
-              </div>
-              <div className="border rounded-[30px] p-3 cursor-pointer text-3xl bg-white text-green">
+              </a>
+              <a href="https://www.instagram.com/half.choice/" target="_blank" className="border rounded-[30px] p-3 cursor-pointer text-3xl bg-white text-green">
                 <ICONS.INSTAGRAM />
-              </div>
-              <div className="border rounded-[30px] p-3 cursor-pointer text-3xl bg-white text-green">
+              </a>
+              <a href="https://x.com/HalfChoice01" target="_blank" className="border rounded-[30px] p-3 cursor-pointer text-3xl bg-white text-green">
                 <ICONS.TWITTER />
-              </div>
-              <div className="border rounded-[30px] p-3 cursor-pointer text-3xl bg-white text-green">
+              </a>
+              <a href="https://www.youtube.com/@halfchoice" target="_blank" className="border rounded-[30px] p-3 cursor-pointer text-3xl bg-white text-green">
                 <ICONS.YOUTUBE />
-              </div>
+              </a>
             </div>
           </div>
         </div>

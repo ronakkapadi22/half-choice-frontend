@@ -1,49 +1,62 @@
-import React, { useCallback, useEffect, useMemo, useState } from 'react'
-import { ICONS } from '../../assets/icons'
-import { getAddress } from '../../redux/slices/address.slice';
-import { useSelector } from 'react-redux';
-import useDispatchWithAbort from '../../hooks/useDispatchWithAbort';
-import { getCart } from '../../redux/slices/cart.slice';
-import { classNames, generateRandomDigitNumber } from '../../assets/utils/helper';
-import { CAROUSEL_LOADER, IMAGE_PATH } from '../../assets/utils/constant';
-import { PAGES } from '../../assets/utils/urls';
-import { useNavigate } from 'react-router-dom';
-import Button from '../../shared/button';
-import Confirmation from '../../shared/confirmation';
-import { api, shiprocket } from '../../api';
-import moment from 'moment';
-import Spinner from '../..';
-import PopUp from '../../shared/popup';
-import Breadcrumb from '../../shared/breadcrumb';
+import React, { useCallback, useEffect, useMemo, useState } from "react";
+import { ICONS } from "../../assets/icons";
+import { getAddress } from "../../redux/slices/address.slice";
+import { useSelector } from "react-redux";
+import useDispatchWithAbort from "../../hooks/useDispatchWithAbort";
+import { getCart } from "../../redux/slices/cart.slice";
+import {
+  classNames,
+  generateRandomDigitNumber,
+} from "../../assets/utils/helper";
+import {
+  CAROUSEL_LOADER,
+  IMAGE_PATH,
+  PAYMENT_OPTIONS,
+} from "../../assets/utils/constant";
+import { PAGES } from "../../assets/utils/urls";
+import { useNavigate } from "react-router-dom";
+import Button from "../../shared/button";
+import Confirmation from "../../shared/confirmation";
+import { api, shiprocket } from "../../api";
+import moment from "moment";
+import Spinner from "../..";
+import PopUp from "../../shared/popup";
+import Breadcrumb from "../../shared/breadcrumb";
+import { useRazorpay } from "react-razorpay";
 
 const Checkout = () => {
-
-  const navigate = useNavigate()
+  const { error, isLoading: gatewayLoading, Razorpay } = useRazorpay()
+  const navigate = useNavigate();
   const user = useSelector(({ auth }) => auth.user);
   const { isLoading, default: address } = useSelector(({ address }) => address);
   const { isLoading: isCartLoading, cart } = useSelector(({ cart }) => cart);
   const [fetchAddress] = useDispatchWithAbort(getAddress);
   const [fetchCart] = useDispatchWithAbort(getCart);
 
+  const [paymentOption, setPaymentOption] = useState('COD')
   const [confirm, setConfirm] = useState(null);
   const [loading, setLoading] = useState(false);
   const [estimationDate, setEstimationDate] = useState(null);
 
-  const [order, setOrder] = useState(null)
+  const [order, setOrder] = useState(null);
   const [orderLoader, setOrderLoader] = useState(false);
 
-  const links = useMemo(() => [
-    {
-      id: 'cart',
-      label: 'Cart',
-      redirect: PAGES.CART.path
-    },
-    {
-      id: 'checkout',
-      label: 'Checkout'
-    }
-  ], [])
+  console.log('gatewayLoading', error)
 
+  const links = useMemo(
+    () => [
+      {
+        id: "cart",
+        label: "Cart",
+        redirect: PAGES.CART.path,
+      },
+      {
+        id: "checkout",
+        label: "Checkout",
+      },
+    ],
+    []
+  );
 
   useEffect(() => {
     fetchAddress({
@@ -75,32 +88,37 @@ const Checkout = () => {
     return clone || {};
   }, [isLoading, address]);
 
+
+  console.log('my_address', my_address)
+
   const getEstimationDate = async () => {
-    const response = await shiprocket.auth()
-    const token = await response?.token
+    const response = await shiprocket.auth();
+    const token = await response?.token;
     const estimate = await shiprocket.estimate({
       pin: my_address?.pincode,
-      token
-    })
-    return await estimate
-  }
+      token,
+    });
+    return await estimate;
+  };
 
   useEffect(() => {
     if (my_address) {
       getEstimationDate().then(({ data }) => {
-        setEstimationDate(data?.available_courier_companies?.[0]?.etd)
-      })
+        setEstimationDate(data?.available_courier_companies?.[0]?.etd);
+      });
     }
-  }, [my_address])
+  }, [my_address]);
 
-  const handleRedirect = useCallback((path) => {
-    navigate(path)
-  }, [navigate])
+  const handleRedirect = useCallback(
+    (path) => {
+      navigate(path);
+    },
+    [navigate]
+  );
 
   const handleDelete = ({ ...data }) => {
     setConfirm(data);
   };
-
 
   const summary = useMemo(() => {
     if (isCartLoading)
@@ -154,6 +172,58 @@ const Checkout = () => {
     }
   }, [user?.id, fetchCart, confirm]);
 
+  // payment intent
+  const handlePaymentIntent = async (payload) => {
+    const options = {
+      key: "rzp_live_KzXWN8L7Gj7FXA",
+      // key: "rzp_test_kLGh3w0NxTm39x",
+      amount: Number(payload?.amount) || 0, // Amount in paise
+      currency: payload?.currency || "INR",
+      name: "Halfchoice",
+      description: "HalfChoice | Stylish, comfy clothes for growing kids.",
+      order_id: payload?.orderPaymentId, // Generate order_id on server
+      modal: {
+        ondismiss: async () => {
+          const response = await api.payments.verify({
+            data: {
+              orderId: payload?.order_no,
+              paymentStatus: 'Failed',
+              user_id: user?.id
+            }
+          })
+          if (response?.data) {
+            setOrder({ ...payload, orderId: payload?.order_no, type: 'failed' })
+          }
+        }
+      },
+      handler: async (fetcher) => {
+        const response = await api.payments.verify({
+          data: {
+            orderId: payload?.order_no,
+            paymentStatus: 'Success',
+            user_id: user?.id
+          }
+        })
+        if (response?.data) {
+          setOrder({ ...payload, orderId: payload?.order_no, type: 'failed' })
+        }
+      },
+      prefill: {
+        name: payload?.name || '',
+        contact: payload?.mobile,
+      },
+      theme: {
+        color: "#E2218F",
+      },
+    };
+
+    const razorpayInstance = new Razorpay(options);
+    razorpayInstance.open();
+    razorpayInstance.on('payment.failed', (response) => {
+      console.log('failed', response)
+    })
+  }
+
   const handleOrder = async () => {
     const payload = {
       address_city: my_address?.city,
@@ -168,39 +238,50 @@ const Checkout = () => {
       address_state: my_address?.state,
       delivery_charge: "60",
       delivery_date: estimationDate,
-      orderItems: cart?.map(({ user_id, attribute_id, product_id, quantity, variant_id }) => ({
-        user_id: String(user_id), attribute_id: String(attribute_id), product_id: String(product_id), quantity: String(quantity), variant_id: String(variant_id), delivery_date: estimationDate
-      })),
+      orderItems: cart?.map(
+        ({ user_id, attribute_id, product_id, quantity, variant_id }) => ({
+          user_id: String(user_id),
+          attribute_id: String(attribute_id),
+          product_id: String(product_id),
+          quantity: String(quantity),
+          variant_id: String(variant_id),
+          delivery_date: estimationDate,
+        })
+      ),
       order_discount: Number(summary.total_discount).toFixed(1),
       order_no: `${user?.id}_${generateRandomDigitNumber()}`,
-      order_sub_total: Number(summary.subtotal).toFixed(1),
-      order_total: Number(summary.total).toFixed(1),
-      payment_method: 'COD',
-      return_policy: '7 day return policy',
-      status: 'PENDING',
+      order_sub_total: Number(summary?.subtotal).toFixed(1),
+      order_total: Number(summary?.total).toFixed(1),
+      payment_method: paymentOption,
+      return_policy: "7 day return policy",
+      status: "PENDING",
       store_id: String(2),
-      tax_slab: '',
-      tax_total: '',
-      transaction_id: '',
-      user_id: String(user?.id)
-    }
-    setOrderLoader(true)
+      tax_slab: "",
+      tax_total: "",
+      transaction_id: "",
+      user_id: String(user?.id),
+    };
+    setOrderLoader(true);
     try {
-      const response = await api.orders.add({ data: payload })
+      const response = paymentOption === 'COD' ? await api.orders.add({ data: payload }) : await api.payments.session({ data: payload })
       if (response?.data) {
-        setOrderLoader(false)
-        setOrder({ ...response?.data?.data, estimationDate })
+        setOrderLoader(false);
+        if (paymentOption === 'COD') {
+          setOrder({ ...response?.data?.data, estimationDate });
+        } else {
+          await handlePaymentIntent({ ...response?.data?.data, name: my_address?.full_name, phone: my_address?.phone, estimationDate })
+        }
       }
     } catch (error) {
-      setOrderLoader(false)
-      setOrder(null)
-      console.log('error', error)
+      setOrderLoader(false);
+      setOrder(null);
+      console.log("error", error);
     }
-  }
+  };
 
   return (
-    <div className='relative container mx-auto lg:px-4 p-4 max-w-7xl' >
-      <div className="w-full" >
+    <div className="relative container mx-auto lg:px-4 p-4 max-w-7xl">
+      <div className="w-full">
         <Breadcrumb links={links} />
       </div>
       <div className="w-full flex flex-col items-start justify-start my-9">
@@ -208,40 +289,70 @@ const Checkout = () => {
           Review and Complete Your Purchase
         </h2>
         <p className="text-slate-400 text-md">
-          Securely review your items, enter your shipping details, and choose your payment method to complete your purchase. Your cart is just a few steps away from being yours!
+          Securely review your items, enter your shipping details, and choose
+          your payment method to complete your purchase. Your cart is just a few
+          steps away from being yours!
         </p>
         <div className="w-full mt-16 grid grid-cols-12 gap-4 lg:gap-8">
-          <div className='col-span-12 md:col-span-7' >
-            <div className='w-full' >
-              <h2 className='font-medium text-text text-lg' >Shipping Information</h2>
-              <div className='mt-4 w-full rounded-lg p-4 bg-slate-50 relative' >
-                <p onClick={() => handleRedirect(`${PAGES.ADDRESS.path}?from=checkout`)} className='text-sm text-pink font-medium cursor-pointer absolute top-4 right-4' >Choose another address</p>
-                <div className='w-full flex justify-between items-center' >
-                  <div className='flex items-start justify-start' >
-                    <ICONS.LOCATION className='w-5 h-5 mt-1 mr-1 text-pink ' />
-                    <div className='w-auto' >
-                      <h2 className="text-text text-lg title-font font-medium">{my_address?.full_name || ''}</h2>
-                      <p className="text-slate-400 text-sm title-font font-medium">{my_address?.phone || ''}</p>
+          <div className="col-span-12 md:col-span-7">
+            <div className="w-full">
+              <h2 className="font-medium text-text text-lg">
+                Shipping Information
+              </h2>
+              <div className="mt-4 w-full rounded-lg p-4 bg-slate-50 relative">
+                <p
+                  onClick={() =>
+                    handleRedirect(`${PAGES.ADDRESS.path}?from=checkout`)
+                  }
+                  className="text-sm text-pink font-medium cursor-pointer absolute top-4 right-4"
+                >
+                  Choose another address
+                </p>
+                <div className="w-full flex justify-between items-center">
+                  <div className="flex items-start justify-start">
+                    <ICONS.LOCATION className="w-5 h-5 mt-1 mr-1 text-pink " />
+                    <div className="w-auto">
+                      <h2 className="text-text text-lg title-font font-medium">
+                        {my_address?.full_name || ""}
+                      </h2>
+                      <p className="text-slate-400 text-sm title-font font-medium">
+                        {my_address?.phone || ""}
+                      </p>
                     </div>
                   </div>
                 </div>
-                <div className='w-full mb-6 mt-3 ml-6' >
-                  <p>{my_address?.address_line_1}, {my_address?.address_line_2}</p>
-                  <p>{my_address?.city}, {my_address?.state} - {my_address?.pincode}</p>
+                <div className="w-full mb-6 mt-3 ml-6">
+                  <p>
+                    {my_address?.address_line_1}, {my_address?.address_line_2}
+                  </p>
+                  <p>
+                    {my_address?.city}, {my_address?.state} -{" "}
+                    {my_address?.pincode}
+                  </p>
                   <p>{my_address?.country}</p>
                 </div>
-                <div className='w-full flex item justify-between text-green' >
-                  {
-                    estimationDate ? <p className='flex items-center' ><ICONS.TRUCK className='w-5 h-5 mr-2' /> Delivery By {moment(estimationDate).format('DD MMM, YYYY')}</p> : null
-                  }
+                <div className="w-full flex item justify-between text-green">
+                  {estimationDate ? (
+                    <p className="flex items-center">
+                      <ICONS.TRUCK className="w-5 h-5 mr-2" /> Delivery By{" "}
+                      {moment(estimationDate).format("DD MMM, YYYY")}
+                    </p>
+                  ) : null}
                 </div>
               </div>
             </div>
-            <div className='w-full mt-12' >
-              <div className='w-full flex items-center justify-between' >
-                <h2 className='font-medium text-text text-lg' >Your Cart <span className='text-slate-400 text-sm'>{`(${my_cart?.length || 0} items)`}</span></h2>
-                <p onClick={() => handleRedirect(PAGES.WISHLISTS.path)} className='flex items-center text-sm text-pink font-medium cursor-pointer'>
-                  <ICONS.PLUS className='w-5 h-5 mr-1' /> Add from wishlist
+            <div className="w-full mt-12">
+              <div className="w-full flex items-center justify-between">
+                <h2 className="font-medium text-text text-lg">
+                  Your Cart{" "}
+                  <span className="text-slate-400 text-sm">{`(${my_cart?.length || 0
+                    } items)`}</span>
+                </h2>
+                <p
+                  onClick={() => handleRedirect(PAGES.WISHLISTS.path)}
+                  className="flex items-center text-sm text-pink font-medium cursor-pointer"
+                >
+                  <ICONS.PLUS className="w-5 h-5 mr-1" /> Add from wishlist
                 </p>
               </div>
               <div
@@ -259,9 +370,13 @@ const Checkout = () => {
                   ))
                 ) : my_cart?.length ? (
                   my_cart?.map(({ id, variantData, ...data }) => {
-                    const image = variantData?.image?.split(",")?.[0];
+                    const image = variantData?.images?.[0]?.image_file;
+                    const imageAlt = variantData?.images?.[0]?.image_altertag;
                     return (
-                      <div key={id} className="rounded-lg py-2 px-3 mb-3 relative bg-slate-50 ">
+                      <div
+                        key={id}
+                        className="rounded-lg py-2 px-3 mb-3 relative bg-slate-50 "
+                      >
                         <Button
                           handleClick={() => handleDelete({ id, ...data })}
                           className="absolute !bg-red-500 !border-red-500 !py-1.5 !px-2 top-4 right-4 !text-whie flex justify-center items-end"
@@ -269,7 +384,7 @@ const Checkout = () => {
                           <ICONS.DELETE className="w-5 h-5 text-white" />
                         </Button>
                         <div className="w-full flex items-center justify-start">
-                          <img
+                          <img alt={imageAlt}
                             className="w-28 rounded-lg xl:max-h-[280px] object-cover object-center"
                             src={IMAGE_PATH + image}
                           />
@@ -303,7 +418,9 @@ const Checkout = () => {
                                 )}
                               >
                                 <div
-                                  style={{ background: variantData?.color_code }}
+                                  style={{
+                                    background: variantData?.color_code,
+                                  }}
                                   className="w-full h-full rounded-full"
                                 ></div>
                               </div>
@@ -344,9 +461,9 @@ const Checkout = () => {
               </div>
             </div>
           </div>
-          <div className='col-span-12 md:col-span-5' >
-            <h2 className='font-medium text-text text-lg' >Order Summary</h2>
-            <div className='mt-4 w-full rounded-lg p-4 bg-slate-50 relative' >
+          <div className="col-span-12 md:col-span-5">
+            <h2 className="font-medium text-text text-lg">Order Summary</h2>
+            <div className="mt-4 w-full rounded-lg p-4 bg-slate-50 relative">
               <div className="flex justify-between mb-3">
                 <span className="text-slate-400">Total</span>
                 <span className="text-text">
@@ -373,38 +490,39 @@ const Checkout = () => {
                 </span>
               </div>
             </div>
-            <div className='w-full mt-16' >
-              <div className='w-full flex items-center justify-between' >
-                <h2 className='font-medium text-text text-lg' >Payment Methods</h2>
+            <div className="w-full mt-16">
+              <div className="w-full flex items-center justify-between">
+                <h2 className="font-medium text-text text-lg">
+                  Payment Methods
+                </h2>
               </div>
-              <div className='w-full mt-4 p-4 rounded-lg bg-slate-50 grid grid-cols-12 gap-4' >
-                <div className='cursor-pointer col-span-12 border flex items-center justify-start p-4 bg-white rounded-lg' >
-                  <ICONS.CARD className='w-5 h-5 text-text mr-2' />
-                  <p className='text-text font-medium text-sm' >Credit / Debit</p>
-                </div>
-                <div className='cursor-pointer col-span-12 md:col-span-7 border flex items-center justify-start p-4 bg-white rounded-lg' >
-                  <ICONS.BANK className='w-5 h-5 text-text mr-2' />
-                  <p className='text-text font-medium text-sm' >Net Banking</p>
-                </div>
-                <div className='cursor-pointer col-span-12 md:col-span-5 border flex items-center justify-start p-4 bg-white rounded-lg' >
-                  <ICONS.LINK className='w-5 h-5 text-text mr-2' />
-                  <p className='text-text font-medium text-sm' >UPI</p>
-                </div>
-                <div className='cursor-pointer col-span-12 border border-select flex items-center justify-start p-4 bg-select rounded-lg' >
-                  <ICONS.CASH className='w-5 h-5 text-white mr-2' />
-                  <p className='text-white font-medium text-sm' >Cash on Delivery</p>
-                </div>
+              <div className="w-full mt-4 p-4 rounded-lg bg-slate-50 grid grid-cols-12 gap-4">
+                {PAYMENT_OPTIONS.map(({ id, label, className, icon: ICON }) => (
+                  <div onClick={() => setPaymentOption(id)}
+                    key={id}
+                    className={classNames(
+                      "cursor-pointer border text-text flex items-center justify-start p-4 bg-white rounded-lg",
+                      className, id === paymentOption ? '!bg-select !text-white border-select' : ''
+                    )}
+                  >
+                    <ICON className="w-5 h-5 mr-2" />
+                    <p className="font-medium text-sm">
+                      {label || ""}
+                    </p>
+                  </div>
+                ))}
               </div>
             </div>
-            <div className='w-full mt-8' >
-              <Button handleClick={handleOrder}
+            <div className="w-full mt-8">
+              <Button
+                handleClick={handleOrder}
                 disabled={orderLoader}
                 className={classNames(
                   "!w-full flex min-w-28 items-center justify-center hover:border-yellow hover:bg-yellow transition-all duration-300",
                   orderLoader ? "cursor-not-allowed" : ""
                 )}
               >
-                <span>{!orderLoader ? 'Place Order' : "Loading"}</span>
+                <span>{!orderLoader ? "Place Order" : "Loading"}</span>
                 {orderLoader ? <Spinner className="ml-1 !w-4 !h-4" /> : null}
               </Button>
             </div>
@@ -423,9 +541,11 @@ const Checkout = () => {
         setOpen={setConfirm}
       />
 
-      <PopUp {...{ order, handleClose: setOrder, open: Boolean(order?.orderId) }} />
+      <PopUp
+        {...{ order, handleClose: setOrder, open: Boolean(order?.orderId) }}
+      />
     </div>
-  )
-}
+  );
+};
 
-export default Checkout
+export default Checkout;

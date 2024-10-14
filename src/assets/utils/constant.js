@@ -34,9 +34,9 @@ export const ADDRESS_TYPE = ['HOME', 'OFFICE', 'OTHERS']
 export const CAROUSEL_LOADER = [1, 2, 3, 4]
 export const PRODUCTS_LOADER = [1, 2, 3, 4, 5, 6, 7, 8]
 
-export const IMAGE_PATH = 'https://halfchoice.in/superadmin/public/images/variant/'
+export const IMAGE_PATH = 'https://admin.halfchoice.in/images/variant/'
 
-export const CAT_IMAGE_PATH = 'https://halfchoice.in/superadmin/public/images/category/'
+export const CAT_IMAGE_PATH = 'https://admin.halfchoice.in/images/category/'
 
 export const BANNER_PATH = 'https://halfchoice.in/superadmin/public/images/promotion/'
 
@@ -103,6 +103,33 @@ export const ORDER_STATUS = [
   {
     id: 4,
     label: 'Calcelled'
+  }
+]
+
+export const PAYMENT_OPTIONS = [
+  {
+    id: 'card',
+    icon: ICONS.CARD,
+    label: 'Credit / Debit',
+    className: 'col-span-12'
+  },
+  {
+    id: 'net_banking',
+    icon: ICONS.BANK,
+    label: 'Net Banking',
+    className: 'col-span-12 md:col-span-7'
+  },
+  {
+    id: 'UPI',
+    icon: ICONS.LINK,
+    label: 'UPI',
+    className: 'col-span-12 md:col-span-5'
+  },
+  {
+    id: 'COD',
+    icon: ICONS.CASH,
+    label: 'Cash On Delivery',
+    className: 'col-span-12'
   }
 ]
 
