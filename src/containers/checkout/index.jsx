@@ -289,7 +289,7 @@ const Checkout = () => {
           your payment method to complete your purchase. Your cart is just a few
           steps away from being yours!
         </p>
-        <div className="w-full mt-16 grid grid-cols-12 gap-4 lg:gap-8">
+        {my_cart?.length ? <div className="w-full mt-16 grid grid-cols-12 gap-4 lg:gap-8">
           <div className="col-span-12 md:col-span-7">
             <div className="w-full">
               <h2 className="font-medium text-text text-lg">
@@ -523,7 +523,24 @@ const Checkout = () => {
               </Button>
             </div>
           </div>
-        </div>
+        </div> : <div className="w-full mt-16 grid grid-cols-12 gap-4 lg:gap-8" >
+          <div className="col-span-12">
+            <div className="w-full flex flex-col items-center justify-center">
+              <div className="mt-10 flex flex-col items-center justify-center">
+                <h2 className="text-center text-2xl text-text mb-1 font-semibold">
+                  Your Bag is empty !!
+                </h2>
+                <p className="text-center text-slate-400 text-md my-0.5">
+                  Explore more and shortlist some items.
+                </p>
+                <Button handleClick={() => handleRedirect('/')}
+                  label="Explore"
+                  className="!w-auto mt-6 !min-w-36 !rounded-full mb-1 flex items-center justify-center !bg-pink !border-pink hover:!border-yellow hover:!bg-yellow transition-all duration-300"
+                />
+              </div>
+            </div>
+          </div>
+        </div>}
       </div>
       <Confirmation
         handleAction={handleAction}

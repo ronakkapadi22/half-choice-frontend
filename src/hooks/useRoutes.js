@@ -59,7 +59,7 @@ const useRoutes = () => {
         isPublic: true,
       },
       {
-        path: PAGES.PRODUCTS.path + "/:product_id",
+        path: PAGES.PRODUCTS.path + "/:product_id" + "/:title",
         name: "Product Details",
         element: ProductDetails,
         isPublic: true,
@@ -68,7 +68,6 @@ const useRoutes = () => {
         ...PAGES.SEARCH,
         element: ProductSearch,
         isPublic: true,
-        layout: 'plan'
       },
       {
         ...PAGES.WISHLISTS,

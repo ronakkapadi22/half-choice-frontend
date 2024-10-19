@@ -24,6 +24,17 @@ export const getProduct = createAsyncThunk(
     }
 );
 
+export const getSearchProducts = createAsyncThunk(
+    "products/getSearchProducts",
+    async (data, { rejectWithValue }) => {
+        try {
+            return await api.product.search(data);
+        } catch (error) {
+            return rejectWithValue(error);
+        }
+    }
+);
+
 const initialState = {
     product: {
         isLoading: false,
@@ -38,6 +49,10 @@ const initialState = {
             pageNumber: 1,
             pageSize: 16
         }
+    },
+    search: {
+        isLoading: false,
+        data: [],
     }
 };
 
@@ -64,6 +79,21 @@ export const productsSlice = createSlice({
                     return;
                 }
                 state.product.isLoading = false
+            });
+        builder
+            .addCase(getSearchProducts.pending, (state) => {
+                state.search.isLoading = true;
+            })
+            .addCase(getSearchProducts.fulfilled, (state, action) => {
+                state.search.isLoading = false;
+                const { data } = action.payload;
+                state.search.data = data?.data || [];
+            })
+            .addCase(getSearchProducts.rejected, (state, action) => {
+                if (axios.isCancel(action.payload)) {
+                    return;
+                }
+                state.search.isLoading = false
             });
         builder
             .addCase(getProducts.pending, (state, action) => {

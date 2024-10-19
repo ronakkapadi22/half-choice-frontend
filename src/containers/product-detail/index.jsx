@@ -66,8 +66,6 @@ const Product = () => {
     return clone?.images?.filter((val) => !!val);
   }, [isLoading, variant]);
 
-  console.log('variant', data)
-
   const attribute = useMemo(() => {
     if (isLoading) return [];
     const clone = { ...data };

@@ -11,7 +11,7 @@ import {
   IMAGE_PATH,
   ORDER_COLORS,
 } from "../../../assets/utils/constant";
-import { classNames, convertOrderStatus } from "../../../assets/utils/helper";
+import { classNames, convertOrderStatus, getTitle } from "../../../assets/utils/helper";
 import Button from "../../../shared/button";
 import Modal from "../../../shared/modal";
 import { ICONS } from "../../../assets/icons";
@@ -250,7 +250,7 @@ const OrderDetails = () => {
                               handleRedirect(
                                 PAGES.PRODUCTS.path +
                                 "/" +
-                                product?.product_id
+                                product?.product_id + "/" + getTitle(product?.product_name)
                               )
                             }
                             className="flex cursor-pointer justify-between text-base font-medium text-text"

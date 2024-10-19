@@ -5,7 +5,7 @@ import { getCart } from "../../redux/slices/cart.slice";
 import Button from "../../shared/button";
 import { CAROUSEL_LOADER, IMAGE_PATH } from "../../assets/utils/constant";
 import cart_image from "../../assets/images/cart.svg";
-import { classNames } from "../../assets/utils/helper";
+import { classNames, getTitle } from "../../assets/utils/helper";
 import { ICONS } from "../../assets/icons";
 import Confirmation from "../../shared/confirmation";
 import { api } from "../../api";
@@ -155,7 +155,7 @@ const Cart = () => {
                         <h2
                           onClick={() =>
                             handleRedirect(
-                              PAGES.PRODUCTS.path + "/" + data?.product_id
+                              PAGES.PRODUCTS.path + "/" + data?.product_id + '/' + getTitle(data?.product_name)
                             )
                           }
                           className="flex cursor-pointer justify-between text-base font-medium text-text"
@@ -217,7 +217,7 @@ const Cart = () => {
                   <p className="text-center text-slate-400 text-md my-0.5">
                     Explore more and shortlist some items.
                   </p>
-                  <Button
+                  <Button handleClick={() => handleRedirect('/')}
                     label="Explore"
                     className="!w-auto mt-6 !min-w-36 !rounded-full mb-1 flex items-center justify-center !bg-pink !border-pink hover:!border-yellow hover:!bg-yellow transition-all duration-300"
                   />

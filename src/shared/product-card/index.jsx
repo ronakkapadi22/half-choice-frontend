@@ -1,5 +1,5 @@
 import React, { useCallback, useMemo } from "react";
-import { classNames } from "../../assets/utils/helper";
+import { classNames, getTitle } from "../../assets/utils/helper";
 import { IMAGE_PATH } from "../../assets/utils/constant";
 import { ICONS } from "../../assets/icons";
 import { useNavigate } from "react-router-dom";
@@ -56,29 +56,20 @@ const ProductCard = ({
             }}
         >
             <div
-                onClick={() => handleRedirect(`${PAGES.PRODUCTS.path}/${id}?title=${props?.meta_title}`)}
+                onClick={() => handleRedirect(`${PAGES.PRODUCTS.path}/${id}/${getTitle(props?.meta_title || variant?.name)}`)}
                 className={classNames(
-                    "w-full flex flex-col cursor-pointer items-center justify-center relative h-auto",
+                    "w-full productItem01 flex flex-col cursor-pointer items-center justify-center relative h-auto",
                     className
                 )}
             >
-                <div className="absolute z-10 top-2 right-2 cursor-pointer bg-slate-100 rounded-full p-2">
+                <div onClick={(e) => {
+                    e.stopPropagation();
+                    handleWishlist(id, props.wishlist);
+                }} className="absolute z-10 top-2 right-2 cursor-pointer bg-slate-100 rounded-full p-2">
                     {props.wishlist ? (
-                        <ICONS.HEART_FILL
-                            onClick={(e) => {
-                                e.stopPropagation();
-                                handleWishlist(id, props.wishlist);
-                            }}
-                            className="w-6 h-6 text-pink"
-                        />
+                        <ICONS.HEART_FILL className="w-6 h-6 text-pink" />
                     ) : (
-                        <ICONS.HEART_EMPTY
-                            onClick={(e) => {
-                                e.stopPropagation();
-                                handleWishlist(id, props.wishlist);
-                            }}
-                            className="w-6 h-6 text-pink"
-                        />
+                        <ICONS.HEART_EMPTY className="w-6 h-6 text-pink" />
                     )}
                 </div>
                 {attribute?.discount ? (
@@ -86,7 +77,7 @@ const ProductCard = ({
                         {attribute?.discount ? `-${attribute?.discount}%` : null}
                     </div>
                 ) : null}
-                <div className="w-full relative">
+                <div className="w-full relative pi01Thumb">
                     <img
                         alt={imageAlterTag}
                         src={renderImages}
@@ -95,11 +86,11 @@ const ProductCard = ({
                             imgClass
                         )}
                     />
-                    {/* <img
-                    alt={id}
-                    src={renderImages}
-                    className={classNames("absolute bottom-0 left-[100%] opacity-0 hover:opacity-100 hover:left-0 overflow-hidden rounded-xl xl:min-h-[400px] object-cover object-center transition duration-300 ease-in-out -scale-x-100", imgClass)}
-                /> */}
+                    <img
+                        alt={id}
+                        src={renderImages}
+                        className={classNames("absolute bottom-0 left-[100%] opacity-0 hover:opacity-100 hover:left-0 overflow-hidden rounded-xl xl:min-h-[400px] object-cover object-center transition duration-300 ease-in-out -scale-x-100", imgClass)}
+                    />
                 </div>
                 <div className="mt-3 w-full flex flex-col justify-start">
                     <p className="text-text text-base max-w-xs overflow-hidden text-ellipsis whitespace-nowrap cursor-pointer">

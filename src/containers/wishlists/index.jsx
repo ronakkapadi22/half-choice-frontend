@@ -10,8 +10,10 @@ import Button from "../../shared/button";
 import Confirmation from "../../shared/confirmation";
 import { api } from "../../api";
 import Breadcrumb from "../../shared/breadcrumb";
+import { useNavigate } from "react-router-dom";
 
 const Wishlists = () => {
+  const navigate = useNavigate()
   const user = useSelector(({ auth }) => auth.user);
   const { isLoading, wishlist } = useSelector(({ wishlist }) => wishlist);
   const [fetchWishlist] = useDispatchWithAbort(getWishlist);
@@ -42,6 +44,10 @@ const Wishlists = () => {
   const handleWishlist = useCallback((id) => {
     setConfirm(id)
   }, [])
+
+  const handleRedirect = useCallback((path = '') => {
+    navigate(path)
+  }, [navigate])
 
   const handleAction = useCallback(async () => {
     setLoading(true)
@@ -116,7 +122,7 @@ const Wishlists = () => {
                   <p className="text-center text-slate-400 text-md my-0.5">
                     Explore more and shortlist some items.
                   </p>
-                  <Button
+                  <Button handleClick={() => handleRedirect('/')}
                     label="Explore"
                     className="!w-auto mt-6 !min-w-36 !rounded-full mb-1 flex items-center justify-center !bg-pink !border-pink hover:!border-yellow hover:!bg-yellow transition-all duration-300"
                   />

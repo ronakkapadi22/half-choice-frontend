@@ -36,6 +36,22 @@ export const convertOrderStatus = (inputString = '') => {
   return convertedString;
 }
 
+export const debounce = (callback, wait) => {
+  // initialize the timer
+  let timer;
+  const debouncedFunc = () => {
+    // checking whether the waiting time has passed
+    if (shouldCallCallback(Date.now())) {
+      callback();
+    } else {
+      // if time hasn't passed yet, restart the timer
+      timer = startTimer(callback);
+    }
+  }
+
+  return debouncedFunc;
+}
+
 const handleItems = (data = []) => {
   if (!data || !data.length) return []
   const groupedMap = new Map();
@@ -119,4 +135,12 @@ export const totalPages = (totalCount, pageLimit) => {
 export const getCurrentPage = (offset, pageLimit) => {
   return Math.ceil(offset / pageLimit);
 }
+
+export const getTitle = (str = '') => {
+  if (!str) return ''
+  const modifiedStr = str.toLowerCase().replace(/\s+/g, '-');
+  return modifiedStr
+}
+
+
 

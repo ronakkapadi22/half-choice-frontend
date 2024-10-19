@@ -99,7 +99,7 @@ const Footer = () => {
               About us
             </Link>
             <Link
-              to={PAGES.CONTACT_US.path}
+              to={PAGES.ABOUT.path}
               className="px-3 text-white hover:text-pink"
             >
               contact us

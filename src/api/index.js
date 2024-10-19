@@ -63,6 +63,14 @@ export const api = {
         params,
         ...configs,
       }),
+    search: ({ data, params, ...configs }) =>
+      client({
+        url: '/product/productSearch',
+        method: METHODS.GET,
+        data,
+        params,
+        ...configs,
+      })
   },
   cart: {
     getAll: ({ data, params, ...configs }) =>

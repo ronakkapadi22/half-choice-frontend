@@ -24,6 +24,7 @@ import * as Menubar from "@radix-ui/react-menubar";
 import useDispatchWithAbort from "../../hooks/useDispatchWithAbort";
 import { getCategories } from "../../redux/slices/category.slice";
 import {
+  getTitle,
   letterCutting,
   restructureCategories,
 } from "../../assets/utils/helper";
@@ -59,6 +60,7 @@ const NavBar = () => {
     setConfirm(false);
     setMobileMenuOpen(false);
   };
+
 
   const username = useMemo(() => {
     if (user.fname || user.lname) return `${user.fname} ${user.lname}`;
@@ -131,7 +133,7 @@ const NavBar = () => {
                 </PopoverButton>
                 <PopoverPanel
                   transition
-                  className="absolute -left-8 top-full z-10 mt-3 w-screen max-w-md overflow-hidden rounded-3xl bg-white shadow-lg ring-1 ring-gray-900/5 transition data-[closed]:translate-y-1 data-[closed]:opacity-0 data-[enter]:duration-200 data-[leave]:duration-150 data-[enter]:ease-out data-[leave]:ease-in"
+                  className="absolute -left-8 top-full z-[99] mt-3 w-screen max-w-md overflow-hidden rounded-3xl bg-white shadow-lg ring-1 ring-gray-900/5 transition data-[closed]:translate-y-1 data-[closed]:opacity-0 data-[enter]:duration-200 data-[leave]:duration-150 data-[enter]:ease-out data-[leave]:ease-in"
                 >
                   <div className="p-4">
                     {cat?.sub?.map((item, i) => (
@@ -141,7 +143,7 @@ const NavBar = () => {
                           handleRedirect(
                             `${PAGES.PRODUCTS.path}?cat_id=${item?.is_parent ? "" : cat?.id
                             }&sub_sub_cat_id=${item?.ids ? item?.ids?.join(",") : item?.id
-                            }`
+                            }&name=${getTitle(item?.name)}`
                           )
                         }
                       >
@@ -302,7 +304,7 @@ const NavBar = () => {
                               handleRedirect(
                                 `${PAGES.PRODUCTS.path}?cat_id=${item?.is_parent ? "" : item?.id
                                 }&sub_sub_cat_id=${val?.ids ? val?.ids?.join(",") : val?.id
-                                }`
+                                }&name=${getTitle(val?.name)}`
                               );
                             }}
                             as="p"

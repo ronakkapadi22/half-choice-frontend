@@ -12,7 +12,7 @@ import Modal from '../../shared/modal'
 import Button from '../../shared/button'
 import { ICONS } from '../../assets/icons'
 import { api } from '../../api'
-import { classNames, getCurrentPage, restructureCategories, totalPages } from '../../assets/utils/helper'
+import { classNames, getCurrentPage, getTitle, restructureCategories, totalPages } from '../../assets/utils/helper'
 import Spinner from '../..'
 import CustomAccordion from '../../shared/accordion'
 import { PAGES } from '../../assets/utils/urls'
@@ -52,23 +52,6 @@ const Products = () => {
     return clone || []
   }, [isLoading, data])
 
-  useEffect(() => {
-    fetchAllProducts({
-      isInitial: true,
-      isLoader: true,
-      query: {
-        pageSize: 16,
-        pageNumber: 1
-      },
-      params: {
-        user_id: user?.id,
-        cat_id: getParams('cat_id'),
-        sub_sub_cat_id: getParams('sub_sub_cat_id'),
-        pageNumber: 1,
-        pageSize: 16
-      }
-    })
-  }, [fetchAllProducts, getParams])
 
   const isUserLogged = useMemo(() => {
     return Boolean(user?.id);
@@ -145,6 +128,27 @@ const Products = () => {
     }))
   }, [categoryLoading, data])
 
+  useEffect(() => {
+    const params = {
+      user_id: user?.id,
+      pageNumber: 1,
+      pageSize: 16
+    }
+    if ((getParams('name')) !== 'apparel') {
+      params['cat_id'] = getParams('cat_id')
+      params['sub_sub_cat_id'] = getParams('sub_sub_cat_id')
+    }
+    fetchAllProducts({
+      isInitial: true,
+      isLoader: true,
+      query: {
+        pageSize: 16,
+        pageNumber: 1
+      },
+      params
+    })
+  }, [fetchAllProducts, getParams])
+
   return (
     <div className="relative container mx-auto lg:px-4 p-4 max-w-7xl">
       <div className="w-full" >
@@ -157,7 +161,9 @@ const Products = () => {
         </p>
         <div className='w-full mt-16 grid grid-cols-12 gap-6' >
           <div className='col-span-3' >
-            <CustomAccordion {...{ cat_id: getParams('cat_id'), sub_sub_cat_id: getParams('sub_sub_cat_id') }} handleValue={(main, sub) => handleRedirect(`${PAGES.PRODUCTS.path}/?cat_id=${main?.is_parent ? "" : main?.id}&sub_sub_cat_id=${sub?.ids ? sub?.ids?.join(',') : sub?.id}`)} accordion={categories} />
+            <CustomAccordion {...{ cat_id: getParams('cat_id'), sub_sub_cat_id: getParams('sub_sub_cat_id') }} handleValue={(main, sub) => {
+              handleRedirect(`${PAGES.PRODUCTS.path}/?cat_id=${main?.is_parent ? "" : main?.id}&sub_sub_cat_id=${sub?.ids ? sub?.ids?.join(',') : sub?.id}&name=${getTitle(sub?.label)}`)
+            }} accordion={categories} />
           </div>
           <div className='col-span-9' >
             <div className="w-full grid grid-cols-12 gap-4">
