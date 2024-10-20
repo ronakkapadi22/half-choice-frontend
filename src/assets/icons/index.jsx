@@ -80,6 +80,5 @@ export const ICONS = {
   CHECK_CIRCLE: IoIosCheckmarkCircle,
   BOX: CiBoxes,
   HOME: TiHome,
-  DONE: MdOutlineDone,
-  LOCATION: MdLocationPin
+  DONE: MdOutlineDone
 };
