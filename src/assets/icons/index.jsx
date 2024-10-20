@@ -5,12 +5,13 @@ import {
   HiChevronLeft,
   HiChevronRight,
   HiOutlineShoppingCart,
+  HiOutlineUserCircle,
 } from "react-icons/hi2";
 import { HiUserAdd, HiOutlineSearch, HiChevronDown } from "react-icons/hi";
 import { MdOutlineLocalShipping } from "react-icons/md";
 import { IoIosClose } from "react-icons/io";
 import {
-  FaUserCircle,
+  FaUser,
   FaShippingFast,
   FaShieldAlt,
   FaUserClock,
@@ -35,9 +36,7 @@ import { LuUnlink } from "react-icons/lu";
 import { IoIosCheckmarkCircle } from "react-icons/io";
 import { CiBoxes } from "react-icons/ci";
 import { TiHome } from "react-icons/ti";
-import { MdOutlineDone } from "react-icons/md";
-
-
+import { MdOutlineDone, MdLocationPin } from "react-icons/md";
 
 
 export const ICONS = {
@@ -53,7 +52,7 @@ export const ICONS = {
   CHEVRON_LEFT: HiChevronLeft,
   CHEVRON_RIGHT: HiChevronRight,
   CLOSE: IoIosClose,
-  USER: FaUserCircle,
+  USER: HiOutlineUserCircle,
   TWITTER: FaXTwitter,
   INSTAGRAM: FaInstagram,
   FACEBOOK: FiFacebook,
@@ -81,5 +80,6 @@ export const ICONS = {
   CHECK_CIRCLE: IoIosCheckmarkCircle,
   BOX: CiBoxes,
   HOME: TiHome,
-  DONE: MdOutlineDone
+  DONE: MdOutlineDone,
+  LOCATION: MdLocationPin
 };

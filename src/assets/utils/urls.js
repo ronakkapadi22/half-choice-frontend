@@ -59,6 +59,11 @@ export const PAGES = {
         path: '/search',
         name: 'Search'
     },
+    PROFILE: {
+        id: 'profile',
+        path: '/profile',
+        name: 'Profile'
+    },
     ADDRESS: {
         id: 'address',
         path: '/address',

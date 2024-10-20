@@ -1,10 +1,12 @@
 import React from 'react'
 import { Outlet } from 'react-router-dom'
+import NavBar from '../components/navbar'
 
-const PLanLayout = ({...props}) => {
+const PLanLayout = ({ ...props }) => {
   return (
     <section className="relative w-full" {...props}>
-        <Outlet {...props} />
+      <NavBar />
+      <Outlet {...props} />
     </section>
   )
 }

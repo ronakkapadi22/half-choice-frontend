@@ -2,7 +2,7 @@ import React from "react";
 import CustomInput from "../input";
 import { classNames } from "../../assets/utils/helper";
 
-const FormControl = ({ label, className, error, ...props }) => {
+const FormControl = ({ label, className, error, isError, ...props }) => {
   return (
     <div className={classNames("w-full flex flex-col justify-start", className)}>
       {label ? (
@@ -11,8 +11,8 @@ const FormControl = ({ label, className, error, ...props }) => {
         </label>
       ) : null}
       <CustomInput {...props} {...{ error }} />
-      {error ? (
-        <span className="my-1 font-medium text-red-500">
+      {error || isError ? (
+        <span className="my-1 font-medium text-sm text-red-500">
           {error || ""}
         </span>
       ) : null}

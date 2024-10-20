@@ -204,7 +204,7 @@ const NavBar = () => {
                 <Menubar.Root>
                   <Menubar.Menu>
                     <Menubar.Trigger>
-                      <ProfileImage name={letterCutting(username)} />
+                      <ProfileImage name={letterCutting(username)} url={user?.profile || ''} />
                     </Menubar.Trigger>
                     <Menubar.Portal>
                       <Menubar.Content
@@ -217,11 +217,11 @@ const NavBar = () => {
                         </Menubar.Item>
                         <div className="w-full divide-y h-[1px] bg-gray-100"></div>
                         <Menubar.Item
-                          onClick={() => handleRedirect(PAGES.WISHLISTS.path)}
+                          onClick={() => handleRedirect(PAGES.PROFILE.path)}
                           className="w-full flex items-center justify-between px-4 py-2 text-sm font-medium text-left text-gray-700 cursor-pointer hover:bg-gray-100 hover:outline-none"
                         >
-                          My Wishlist
-                          <ICONS.BAG className="w-5 h-5" />
+                          My Profile
+                          <ICONS.USER className="w-5 h-5" />
                         </Menubar.Item>
                         <Menubar.Item
                           onClick={() => handleRedirect(PAGES.CART.path)}
@@ -229,13 +229,6 @@ const NavBar = () => {
                         >
                           My Cart
                           <ICONS.CART className="w-5 h-5" />
-                        </Menubar.Item>
-                        <Menubar.Item
-                          onClick={() => handleRedirect(PAGES.ORDERS.path)}
-                          className="w-full flex items-center justify-between px-4 py-2 text-sm font-medium text-left text-gray-700 cursor-pointer hover:bg-gray-100 hover:outline-none"
-                        >
-                          My Orders
-                          <ICONS.BOX className="w-6 h-6" />
                         </Menubar.Item>
                         <div className="w-full divide-y h-[1px] bg-gray-100"></div>
                         <Menubar.Item

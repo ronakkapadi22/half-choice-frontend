@@ -54,7 +54,7 @@ input[type="number"] {
   object-fit: cover !important;
   border-radius: 2px !important;
   min-width: 150px !important;
-  width: 90% !important;
+  width: 100% !important;
 }
 .slick-slide div div span {
   margin-top: 10px;
@@ -95,13 +95,13 @@ input[type="number"] {
 .slick-slide.slick-active.slick-current {
   position: relative;
   z-index: 999;
-  transform: scale(1.6);
+  transform: scale(1.8);
   transition: 0.25s;
 }
 .slick-slide.slick-active:not(.slick-current) .image,
 .slick-slide.slick-active.slick-current .image,
 .slick-slide:not(.slick-active) .image {
-  width: 100% !important;
+  width: 90% !important;
 }
 .slick-prev,
 .slick-next {

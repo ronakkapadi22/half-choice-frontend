@@ -17,6 +17,7 @@ import { useSelector } from "react-redux";
 import Login from "../containers/login";
 import ProductSearch from "../containers/search";
 import Address from "../containers/address";
+import Profile from "../containers/profile";
 
 const useRoutes = () => {
   const { role } = useSelector(({ auth }) => auth?.user);
@@ -106,6 +107,13 @@ const useRoutes = () => {
         isPrivate: true,
         roles: [ROLES.USER],
       },
+      {
+        ...PAGES.PROFILE,
+        element: Profile,
+        isPrivate: true,
+        roles: [ROLES.USER, ROLES.ADMIN],
+        layout: 'plan'
+      },
     ],
     []
   );
@@ -123,7 +131,7 @@ const useRoutes = () => {
   }, [routes]);
 
   const planRoutes = useMemo(() => {
-    return routes.filter(val => val?.isPublic && val.layout === 'plan')
+    return routes.filter(val => val.layout === 'plan')
   }, [routes])
 
   const privateRoutes = useMemo(() => {

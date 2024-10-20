@@ -18,6 +18,13 @@ export const api = {
         data,
         ...configs,
       }),
+    profile: ({ data, ...configs }) =>
+      client({
+        url: "/users/updateUser",
+        method: METHODS.POST,
+        data,
+        ...configs,
+      }),
   },
   home: {
     getAll: ({ data, params, ...configs }) =>
