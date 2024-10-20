@@ -68,5 +68,10 @@ export const PAGES = {
         id: 'address',
         path: '/address',
         name: 'Address'
+    },
+    PRIVACY_POLICY: {
+        id: 'privacy-policy',
+        path: '/privacy-policy',
+        name: 'Privacy Policy'
     }
 }

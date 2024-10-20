@@ -98,12 +98,12 @@ const Footer = () => {
             >
               About us
             </Link>
-            <Link
-              to={PAGES.ABOUT.path}
+            <a href="https://mail.google.com/mail/?view=cm&fs=1&tf=1&to=halfchoice2023@gmail.com" target="_blank"
+
               className="px-3 text-white hover:text-pink"
             >
               contact us
-            </Link>
+            </a>
             <Link
               to={PAGES.HOME.path}
               className="px-3 text-white hover:text-pink"
