@@ -1,5 +1,6 @@
 import React from "react";
 import logo_transparent from "../../assets/images/logo_transparent.svg";
+import play_store from "../../assets/images/play_store.png";
 import Button from "../../shared/button";
 import { Link } from "react-router-dom";
 import { PAGES } from "../../assets/utils/urls";
@@ -9,7 +10,7 @@ import moment from "moment";
 const Footer = () => {
   return (
     <footer className="p-3 text-white md:p-10 bg-green lg:p-20">
-      <div className="container flex items-center justify-start px-0 mx-auto mb-8 md:px-4 max-w-7xl">
+      <div className="container flex items-center justify-between px-0 mx-auto mb-8 md:px-4 max-w-7xl">
         <div className="p-4 rounded-full">
           <Link to={PAGES.HOME.path}>
             <img
@@ -18,6 +19,15 @@ const Footer = () => {
               className="h-16 w-fit"
             />
           </Link>
+        </div>
+        <div className="p-4 rounded-full">
+          <a href="https://play.google.com/store/apps/details?id=com.half.choice" target="_blank">
+            <img
+              src={play_store}
+              alt="Play Store Logo"
+              className="h-auto w-auto"
+            />
+          </a>
         </div>
       </div>
       <div className="container px-0 mx-auto md:px-4 max-w-7xl">

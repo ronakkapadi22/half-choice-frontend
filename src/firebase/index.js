@@ -4,6 +4,7 @@ import {
   signInWithPhoneNumber,
   RecaptchaVerifier,
 } from "firebase/auth";
+import { getAnalytics } from "firebase/analytics";
 
 const firebaseConfig = {
   apiKey: "AIzaSyDLzDWKrSq2yEHDazMMbI22yVd2_Gt_d2Y",
@@ -29,6 +30,7 @@ const firebaseConfig = {
 
 
 const app = initializeApp(firebaseConfig);
+const analytics = getAnalytics(app);
 const auth = getAuth(app);
 
 
