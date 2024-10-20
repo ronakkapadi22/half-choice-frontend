@@ -38,7 +38,7 @@ export const IMAGE_PATH = 'https://admin.halfchoice.in/images/variant/'
 
 export const CAT_IMAGE_PATH = 'https://admin.halfchoice.in/images/category/'
 
-export const BANNER_PATH = 'https://halfchoice.in/superadmin/public/images/promotion/'
+export const BANNER_PATH = 'https://admin.halfchoice.in/images/promotion/'
 
 export const FEATURES = [
   {
