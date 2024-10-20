@@ -6,11 +6,14 @@ import { ICONS } from "../../assets/icons";
 import { useSelector } from "react-redux";
 import useDispatchWithAbort from "../../hooks/useDispatchWithAbort";
 import { getSearchProducts } from "../../redux/slices/products.slice";
-import { debounce } from "../../assets/utils/helper";
+import { debounce, getTitle } from "../../assets/utils/helper";
+import { useNavigate } from "react-router-dom";
+import { PAGES } from "../../assets/utils/urls";
 
 const ProductSearch = () => {
   const [searchValue, setSearchValue] = useState("");
   const { isLoading, data } = useSelector(({ products }) => products?.search);
+  const navigate = useNavigate()
 
   const [fetchAllProducts] = useDispatchWithAbort(getSearchProducts);
 
@@ -102,7 +105,7 @@ const ProductSearch = () => {
                 ))
               ) : productData?.length ? (
                 productData?.map((value, i) => (
-                  <div
+                  <div onClick={() => navigate(`${PAGES.PRODUCTS.path}/${value?.id}/${getTitle(value?.name)}`)}
                     className="w-full mb-2 rounded-full py-[10px] px-4 border cursor-pointer text-sm border-slate-200"
                     key={i}
                   >
