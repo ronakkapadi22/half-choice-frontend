@@ -150,3 +150,90 @@ input[type="number"] {
 .productItem01:hover .pi01Thumb img:nth-child(2) {
   left: 0% !important;
 }
+
+/* banner slider css */
+
+.slide {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  height: calc(100vh);
+  background-color: #ecf5f4;
+}
+
+.slide {
+  opacity: 1;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(500px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeGlow {
+  from {
+    opacity: 0;
+    scale: 1;
+  }
+  to {
+    opacity: 1;
+    scale: 1;
+  }
+}
+
+.fade-up {
+  animation: fadeInUp 1.2s ease forwards;
+  animation-delay: 0.2s;
+}
+
+.fade-up-delay {
+  animation: fadeInUp 1.4s ease forwards;
+  animation-delay: 0.2s;
+}
+
+.fade-up-delay-btn {
+  animation: fadeInUp 1.6s ease forwards;
+  animation-delay: 0.2s;
+}
+
+.fade-up-delay-image {
+  animation: fadeGlow 2.5s ease forwards;
+  animation-delay: 0.2s;
+}
+
+.slide h1,
+.slide h2,
+.slide button {
+  font-family: "Concert One", sans-serif;
+}
+
+/* new styles added */
+.swiper-button {
+  display: flex;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10;
+  cursor: pointer;
+}
+.swiper-button svg {
+  width: 1.5rem;
+  height: 1.5rem;
+}
+.image-swiper-button-prev {
+  left: 28px;
+}
+.image-swiper-button-next {
+  right: 28px;
+}
+.swiper-button-disabled {
+  opacity: 0.5;
+  pointer-events: none;
+}
