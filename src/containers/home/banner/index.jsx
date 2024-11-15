@@ -6,6 +6,10 @@ import 'swiper/css/pagination';
 import { classNames } from "../../../assets/utils/helper";
 import Button from "../../../shared/button";
 import { ICONS } from "../../../assets/icons";
+import banner1 from "../../../assets/images/banner1.png";
+import banner2 from "../../../assets/images/banner2.png";
+import banner3 from "../../../assets/images/banner3.png";
+import banner4 from "../../../assets/images/banner4.png";
 
 const HomeBanner = () => {
   const [activeIndex, setActiveIndex] = useState(0);
@@ -24,7 +28,7 @@ const HomeBanner = () => {
   };
 
   return (
-    <div className="w-full h-screen relative">
+    <div className="w-full h-[calc(100vh-122px)] relative">
       <div onClick={goNext} className="swiper-button image-swiper-button-next border p-3 rounded-full border-text">
         <ICONS.CHEVRON_RIGHT />
       </div>
@@ -49,23 +53,23 @@ const HomeBanner = () => {
         onSlideChange={(swiper) => setActiveIndex(swiper.realIndex)}
       >
         <SwiperSlide>
-          <Slide image='https://uiuxom.com/ulina/html/images/slider/person_3.png' isActive={activeIndex === 0} />
+          <Slide image={banner1} message="Stylish and Trendy Kidswear Online" isActive={activeIndex === 0} />
         </SwiperSlide>
         <SwiperSlide>
-          <Slide image='https://uiuxom.com/ulina/html/images/slider/person_1.png' isActive={activeIndex === 1} />
+          <Slide image={banner2} message="Affordable Fashion for Kids in India" isActive={activeIndex === 1} />
         </SwiperSlide>
         <SwiperSlide>
-          <Slide image='https://uiuxom.com/ulina/html/images/slider/person_2.png' isActive={activeIndex === 2} />
+          <Slide image={banner3} message="Shop Latest Kids Clothing Online" isActive={activeIndex === 2} />
         </SwiperSlide>
         <SwiperSlide>
-          <Slide image='https://uiuxom.com/ulina/html/images/slider/person_3.png' isActive={activeIndex === 3} />
+          <Slide image={banner4} message="Trendy Dresses for Girls and Boys" isActive={activeIndex === 3} />
         </SwiperSlide>
       </Swiper>
     </div>
   );
 };
 
-const Slide = ({ isActive, image }) => {
+const Slide = ({ isActive, image, message }) => {
   const [imagePosition, setImagePosition] = useState({ x: 0, y: 0 });
 
   const handleMouseMove = (event) => {
@@ -84,8 +88,8 @@ const Slide = ({ isActive, image }) => {
       <div className="col-span-6" >
         <div className="flex h-full justify-center items-center" >
           <div className="w-full pl-8" >
-            <h2 className={isActive ? 'fade-up mb-6 text-4xl font-medium text-pink' : ''}>Summer Sale is On</h2>
-            <h1 className={isActive ? 'fade-up-delay text-7xl !leading-[74px]' : ''}>Discover Men's Latest Fashion</h1>
+            <h2 className={isActive ? 'fade-up mb-6 text-4xl font-medium text-pink' : ''}>Winter Sale is On</h2>
+            <h1 className={isActive ? 'fade-up-delay text-7xl !leading-[74px]' : ''}>{message || ''}</h1>
             <Button
               className={classNames(
                 "!w-auto mt-10 text-xl flex items-center !min-w-40 !rounded-full justify-center !bg-green !border-green hover:!border-pink hover:!bg-pink transition-all duration-300",
@@ -98,9 +102,9 @@ const Slide = ({ isActive, image }) => {
         </div>
       </div>
       <div className="col-span-6 relative" >
-        <div className="absolute left-0 rounded-full z-10 top-[200px] bottom-0 bg-white w-[740px] h-[740px]" >
+        <div className="absolute left-0 rounded-full z-10 top-[150px] bottom-0 bg-white w-[700px] h-[700px]" >
           <div className="relative" >
-            <img className={classNames(isActive ? "fade-up-delay-image" : "", "z-20 absolute -top-[100px]")}
+            <img className={classNames(isActive ? "fade-up-delay-image" : "", "z-20 absolute w-[620px] -top-[140px] ")}
               src={image}
               alt="Fashion Model"
               style={{

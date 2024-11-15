@@ -214,9 +214,9 @@ const Product = () => {
               <h2 className="text-sm tracking-widest title-font text-less">
                 {variant?.name}
               </h2>
-              <p className="mb-1 text-3xl font-medium text-green">
+              <h1 className="mb-1 text-3xl font-medium text-green">
                 {data?.product_name || ""}
-              </p>
+              </h1>
               <div className="flex items-center justify-between w-full mt-4 mb-2">
                 <div className="w-full flex justify-start items-center my-1.5 text-2xl font-medium">
                   <ins className="no-underline">

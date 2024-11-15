@@ -173,7 +173,7 @@ const Checkout = () => {
     const options = {
       key: "rzp_live_KzXWN8L7Gj7FXA",
       // key: "rzp_test_kLGh3w0NxTm39x",
-      amount: Number(payload?.amount) || 0, // Amount in paise
+      amount: '420.0', // Amount in paise
       currency: payload?.currency || "INR",
       name: "Halfchoice",
       description: "HalfChoice | Stylish, comfy clothes for growing kids.",
@@ -246,8 +246,8 @@ const Checkout = () => {
       ),
       order_discount: Number(summary.total_discount).toFixed(1),
       order_no: `${user?.id}_${generateRandomDigitNumber()}`,
-      order_sub_total: Number(summary?.subtotal).toFixed(1),
-      order_total: Number(summary?.total).toFixed(1),
+      order_sub_total: "420.0",
+      order_total: "420.0",
       payment_method: paymentOption,
       return_policy: "7 day return policy",
       status: "PENDING",
