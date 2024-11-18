@@ -9,7 +9,13 @@ import { ICONS } from "../../../assets/icons";
 import banner1 from "../../../assets/images/banner1.png";
 import banner2 from "../../../assets/images/banner2.png";
 import banner3 from "../../../assets/images/banner3.png";
-import banner4 from "../../../assets/images/banner4.png";
+import banner4 from "../../../assets/images/banner7.png";
+import banner5 from "../../../assets/images/banner5.png";
+import banner6 from "../../../assets/images/banner6.png";
+import banner7 from "../../../assets/images/banner4.png";
+import banner8 from "../../../assets/images/banner8.png";
+import banner9 from "../../../assets/images/banner9.png";
+import banner10 from "../../../assets/images/banner10.png";
 
 const HomeBanner = () => {
   const [activeIndex, setActiveIndex] = useState(0);
@@ -36,7 +42,7 @@ const HomeBanner = () => {
         <ICONS.CHEVRON_LEFT />
       </div>
       <Swiper ref={swiperRef}
-        modules={[Pagination, Autoplay]}
+        modules={[Autoplay, Pagination]}
         spaceBetween={50}
         slidesPerView={1}
         loop={true}
@@ -49,27 +55,47 @@ const HomeBanner = () => {
           prevEl: ".image-swiper-button-prev",
           disabledClass: "swiper-button-disabled"
         }}
-        pagination={{ clickable: true }}
+        pagination={{
+          clickable: true
+        }}
         onSlideChange={(swiper) => setActiveIndex(swiper.realIndex)}
       >
         <SwiperSlide>
-          <Slide image={banner1} message="Stylish and Trendy Kidswear Online" isActive={activeIndex === 0} />
+          <Slide image={banner1} small='Shop Trendy Kids’ Fashion' message="From Stylish Dresses to Ethnic Wear, Find Everything Your Little One Needs!" btn='Shop Now' isActive={activeIndex === 0} />
         </SwiperSlide>
         <SwiperSlide>
-          <Slide image={banner2} message="Affordable Fashion for Kids in India" isActive={activeIndex === 1} />
+          <Slide image={banner2} small='Explore a Wide Range of Kids’ Clothes' message="Casual, Party, and Ethnic Wear for Boys and Girls at the Best Prices!" btn='Browse Collection' isActive={activeIndex === 1} />
         </SwiperSlide>
         <SwiperSlide>
-          <Slide image={banner3} message="Shop Latest Kids Clothing Online" isActive={activeIndex === 2} />
+          <Slide image={banner3} small='Find the Perfect Outfit for Your Child' message="Trendy Dresses, Ethnic Wear, T-shirts & More, All in One Place!" btn='Explore Now' isActive={activeIndex === 2} />
         </SwiperSlide>
         <SwiperSlide>
-          <Slide image={banner4} message="Trendy Dresses for Girls and Boys" isActive={activeIndex === 3} />
+          <Slide image={banner4} small="Buy Stylish & Comfortable Kids' Clothes" message="Discover Fashionable & Comfortable Clothes for Your Kids" btn="Shop Stylish Outfits" isActive={activeIndex === 3} />
+        </SwiperSlide>
+        <SwiperSlide>
+          <Slide image={banner6} small="Trendy, High-Quality Kids' Clothing at Affordable Prices" message="Shop Dresses, Casuals, Ethnic Wear, and More!" btn="Start Shopping" isActive={activeIndex === 4} />
+        </SwiperSlide>
+        <SwiperSlide>
+          <Slide image={banner5} small="Celebrate Every Occasion with Kids’ Fashion" message="Celebrate in style! Our kids' collection has perfect outfits for every occasion." btn="Shop for Occasions" isActive={activeIndex === 5} />
+        </SwiperSlide>
+        <SwiperSlide>
+          <Slide image={banner7} small="Comfort & Style, Kids’ Fashion You’ll Love" message="Shop Comfortable and Stylish Kids’ Clothing for Boys and Girls" btn="Discover Comfort" isActive={activeIndex === 6} />
+        </SwiperSlide>
+        <SwiperSlide>
+          <Slide image={banner8} small="Ethnic Wear for Kids to Celebrate in Style" message="Shop Traditional and Trendy Ethnic Wear for Boys and Girls" btn="Explore Ethnic Wear" isActive={activeIndex === 7} />
+        </SwiperSlide>
+        <SwiperSlide>
+          <Slide image={banner9} small="From Elegant Party Dresses to Fun Casual Frocks" message="Find the Best Dresses for Your Little One!" btn="Shop Dresses Now" isActive={activeIndex === 8} />
+        </SwiperSlide>
+        <SwiperSlide>
+          <Slide small="Get Ready for the Season with Kids' Fashion" image={banner10} message="Shop Fresh Arrivals in Kids’ Fashion. Dresses, T-shirts, Ethnic Wear & More!" btn="Shop Fresh Styles" isActive={activeIndex === 9} />
         </SwiperSlide>
       </Swiper>
     </div>
   );
 };
 
-const Slide = ({ isActive, image, message }) => {
+const Slide = ({ isActive, image, message, btn, small }) => {
   const [imagePosition, setImagePosition] = useState({ x: 0, y: 0 });
 
   const handleMouseMove = (event) => {
@@ -88,7 +114,7 @@ const Slide = ({ isActive, image, message }) => {
       <div className="col-span-6" >
         <div className="flex h-full justify-center items-center" >
           <div className="w-full pl-8" >
-            <h2 className={isActive ? 'fade-up mb-6 text-4xl font-medium text-pink' : ''}>Winter Sale is On</h2>
+            <h2 className={isActive ? 'fade-up mb-6 text-4xl font-medium text-pink' : ''}>{small}</h2>
             <h1 className={isActive ? 'fade-up-delay text-7xl !leading-[74px]' : ''}>{message || ''}</h1>
             <Button
               className={classNames(
@@ -96,7 +122,7 @@ const Slide = ({ isActive, image, message }) => {
                 isActive ? 'fade-up-delay-btn' : ''
               )}
             >
-              Explore Now
+              {btn || 'Explore Now'}
             </Button>
           </div>
         </div>
