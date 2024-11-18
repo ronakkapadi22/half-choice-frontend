@@ -206,11 +206,11 @@ const NavBar = () => {
                     <Menubar.Trigger>
                       <ProfileImage name={letterCutting(username)} url={user?.profile || ''} />
                     </Menubar.Trigger>
-                    <Menubar.Portal>
+                    <Menubar.Portal >
                       <Menubar.Content
                         align="end"
                         sideOffset={10}
-                        className="flex w-40 flex-col items-center justify-center overflow-hidden rounded-md bg-white align-middle !drop-shadow-lg"
+                        className="flex w-40 flex-col items-center justify-center overflow-hidden rounded-md bg-white align-middle !z-[999999] !drop-shadow-lg"
                       >
                         <Menubar.Item className="w-full px-4 py-2 text-sm font-medium text-left text-gray-700 cursor-pointer hover:bg-gray-100 hover:outline-none">
                           Hello, <br /> {username || ""}
