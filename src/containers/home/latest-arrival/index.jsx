@@ -14,7 +14,7 @@ import { PAGES } from "../../../assets/utils/urls";
 import { useNavigate } from "react-router-dom";
 import { api } from "../../../api";
 
-const LatestArrival = ({ title, className, ...props }) => {
+const LatestArrival = ({ title, className, disabledMeta, ...props }) => {
   const ref = useRef();
   const navigate = useNavigate()
   const [open, setOpen] = useState(false)
@@ -132,7 +132,7 @@ const LatestArrival = ({ title, className, ...props }) => {
             isLoading ? CAROUSEL_LOADER.map(id => <div key={id} className="item w-full" >
               <ProductSkeleton />
             </div>) : latest.map(product => <div key={product?.id} className="w-full item" >
-              <ProductCard {...product} handleWishlist={handleWishlist} {...{ id: product?.id, variant: product?.variantData?.[0] }} />
+              <ProductCard {...product} handleWishlist={handleWishlist} {...{ id: product?.id, variant: product?.variantData?.[0], disabledMeta }} />
             </div>)
           }
         </ReactOwlCarousel>

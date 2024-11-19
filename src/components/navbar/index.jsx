@@ -230,6 +230,13 @@ const NavBar = () => {
                           My Cart
                           <ICONS.CART className="w-5 h-5" />
                         </Menubar.Item>
+                        <Menubar.Item
+                          onClick={() => handleRedirect(PAGES.ORDERS.path)}
+                          className="w-full flex items-center justify-between px-4 py-2 text-sm font-medium text-left text-gray-700 cursor-pointer hover:bg-gray-100 hover:outline-none"
+                        >
+                          My Orders
+                          <ICONS.BAG className="w-5 h-5" />
+                        </Menubar.Item>
                         <div className="w-full divide-y h-[1px] bg-gray-100"></div>
                         <Menubar.Item
                           onClick={() => setConfirm(true)}

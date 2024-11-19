@@ -5,6 +5,7 @@ import { ICONS } from "../../assets/icons";
 import { useNavigate } from "react-router-dom";
 import { PAGES } from "../../assets/utils/urls";
 import ReactHelmet from "../../containers/seo/helmet";
+import DUMMY_IMAGE from "../../assets/images/skeleton.jpeg"
 
 const ProductCard = ({
     id,
@@ -12,6 +13,7 @@ const ProductCard = ({
     className,
     variant,
     handleWishlist,
+    disabledMeta,
     ...props
 }) => {
     const navigate = useNavigate();
@@ -27,7 +29,7 @@ const ProductCard = ({
         if (variant?.images?.length) {
             const clone = [...variant?.images];
             return IMAGE_PATH + clone?.[0]?.image_file;
-        } else return "";
+        } else return DUMMY_IMAGE;
     }, [variant]);
 
     const imageAlterTag = useMemo(() => {
@@ -38,11 +40,13 @@ const ProductCard = ({
     }, []);
 
     const attribute = useMemo(() => {
+        if (!variant) return {}
         const clone = [...variant?.attributeData];
-        return clone.length ? clone?.[0] : {};
+        return clone?.length ? clone?.[0] : {};
     }, [variant]);
 
     const sizes = useMemo(() => {
+        if (!variant) return []
         const clone = [...variant?.attributeData];
         return [...new Set(clone.map((val) => val.size))];
     }, [variant]);
@@ -52,7 +56,7 @@ const ProductCard = ({
             {...{
                 title: props?.meta_title,
                 description: props?.meta_description,
-                keywords: props?.meta_keywords,
+                keywords: props?.meta_keywords, disabledMeta
             }}
         >
             <div
@@ -64,9 +68,9 @@ const ProductCard = ({
             >
                 <div onClick={(e) => {
                     e.stopPropagation();
-                    handleWishlist(id, props.wishlist);
+                    handleWishlist(id, props?.wishlist);
                 }} className="absolute z-10 top-2 right-2 cursor-pointer bg-slate-100 rounded-full p-2">
-                    {props.wishlist ? (
+                    {props?.wishlist ? (
                         <ICONS.HEART_FILL className="w-6 h-6 text-pink" />
                     ) : (
                         <ICONS.HEART_EMPTY className="w-6 h-6 text-pink" />

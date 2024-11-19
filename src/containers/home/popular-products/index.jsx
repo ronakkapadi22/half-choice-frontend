@@ -13,7 +13,7 @@ import Modal from "../../../shared/modal";
 import Button from "../../../shared/button";
 import { ICONS } from "../../../assets/icons";
 
-const PopularProducts = ({ title, className, ...props }) => {
+const PopularProducts = ({ title, className, disabledMeta, ...props }) => {
   const navigate = useNavigate()
   const [fetchHome] = useDispatchWithAbort(getCommerce);
   const { isLoading, data } = useSelector(({ commerce }) => commerce);
@@ -94,7 +94,7 @@ const PopularProducts = ({ title, className, ...props }) => {
             >
               <ProductCard handleWishlist={handleWishlist}
                 {...product}
-                {...{ id: product?.id, variant: product?.variantData?.[0] }}
+                {...{ id: product?.id, variant: product?.variantData?.[0], disabledMeta }}
               />
             </div>
           )) : <div className="w-full col-span-12" >

@@ -16,8 +16,6 @@ const PopUp = ({ handleClose, open, order, ...props }) => {
     handleClose(false)
   }, [navigate])
 
-  console.log('order', order)
-
   return (
     <Modal {...props} rootClass=''
       className="p-0 transition-all duration-700"

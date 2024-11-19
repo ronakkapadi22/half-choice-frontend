@@ -1,14 +1,14 @@
 import React from "react";
 import { Helmet } from "react-helmet";
 
-const ReactHelmet = ({ children, title, description, keywords }) => {
+const ReactHelmet = ({ children, title, description, keywords, disabledMeta }) => {
     return (
         <>
-            <Helmet>
+            {!disabledMeta ? <Helmet>
                 <title>{title || ''}</title>
                 <meta name="description" content={description || ''} />
                 <meta name="keywords" content={keywords || ''} />
-            </Helmet>
+            </Helmet> : null}
             {children}
         </>
     );

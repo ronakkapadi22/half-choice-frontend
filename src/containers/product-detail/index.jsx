@@ -19,6 +19,7 @@ import Modal from "../../shared/modal";
 import { PAGES } from "../../assets/utils/urls";
 import Spinner from "../..";
 import ReactHelmet from "../seo/helmet";
+import DUMMY_IMAGE from "../../assets/images/skeleton.jpeg";
 
 const Product = () => {
   const ref = useRef();
@@ -145,6 +146,8 @@ const Product = () => {
     }
   };
 
+  console.log(images)
+
   return (
     <ReactHelmet {...{ title: data?.meta_title, description: data?.meta_description, keywords: data?.meta_keywords }} >
       <div className="container relative p-4 mx-auto lg:px-4 max-w-7xl">
@@ -161,17 +164,17 @@ const Product = () => {
                 ) : null}
                 <img alt={images?.[currentImageIndex]?.image_altertag}
                   className="w-full h-auto object-cover object-center rounded-xl xl:min-h-[400px]"
-                  src={IMAGE_PATH + images?.[currentImageIndex]?.image_file || ''}
+                  src={images?.[currentImageIndex]?.image_file ? (IMAGE_PATH + images?.[currentImageIndex]?.image_file) : DUMMY_IMAGE}
                 />
               </div>
-              <div className="relative flex items-center justify-center w-full h-auto p-2">
+              {images?.length ? <div className="relative flex items-center justify-center w-full h-auto p-2">
                 <button className="z-50 flex items-center justify-center mr-1">
                   <ICONS.CHEVRON_LEFT
                     onClick={handlePrevious}
                     className="w-6 h-6 text-text"
                   />
                 </button>
-                <ReactOwlCarousel
+                {images?.length ? <ReactOwlCarousel
                   items={3}
                   ref={ref}
                   className="owl-carousel owl-theme !mt-0"
@@ -195,18 +198,18 @@ const Product = () => {
                           className={classNames(
                             "cursor-pointer rounded-md xl:max-h-[280px] object-cover object-center"
                           )}
-                          src={IMAGE_PATH + image?.image_file || ''}
+                          src={image?.image_file ? (IMAGE_PATH + image?.image_file) : DUMMY_IMAGE}
                         />
                       </div>
                     ))}
-                </ReactOwlCarousel>
+                </ReactOwlCarousel> : null}
                 <button className="z-50 flex items-center justify-center ml-1">
                   <ICONS.CHEVRON_RIGHT
                     onClick={handleNext}
                     className="w-6 h-6 text-text"
                   />
                 </button>
-              </div>
+              </div> : null}
             </div>
           </div>
           <div className="col-span-12 p-2 md:col-span-7">

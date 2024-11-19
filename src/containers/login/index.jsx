@@ -17,6 +17,7 @@ import { useNavigate } from "react-router-dom";
 import { PAGES } from "../../assets/utils/urls";
 import { handleAuthSlice } from "../../redux/slices/auth.slice";
 import { setDataFromLocal } from "../../assets/utils/local";
+import ReactHelmet from "../seo/helmet";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -268,15 +269,21 @@ const Login = () => {
   };
 
   return (
-    <div className="grid w-full h-full grid-cols-12">
-      <div className="items-center justify-center hidden col-span-12 md:col-span-7 bg-background md:flex">
-        <img className="w-4/5" src={logo} alt="logo" />
+    <ReactHelmet {...{
+      title: "Login to Your Account - Access Your Halfchoice Kids Fashion Shopping Account",
+      description: "Login to your Halfchoice account for easy access to your orders, personalized recommendations, and exclusive deals on trendy kids' clothes",
+      keywords: "Login page, kids fashion account, Halfchoice login, kids clothing orders, personalized kids fashion"
+    }} >
+      <div className="grid w-full h-full grid-cols-12">
+        <div className="items-center justify-center hidden col-span-12 md:col-span-7 bg-background md:flex">
+          <img className="w-4/5" src={logo} alt="logo" />
+        </div>
+        <div className="col-span-12 md:col-span-5">
+          {handleFormProvider(common.ui_key)}
+          <div id="recaptcha-container"></div>
+        </div>
       </div>
-      <div className="col-span-12 md:col-span-5">
-        {handleFormProvider(common.ui_key)}
-        <div id="recaptcha-container"></div>
-      </div>
-    </div>
+    </ReactHelmet>
   );
 };
 

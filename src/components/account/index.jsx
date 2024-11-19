@@ -96,7 +96,7 @@ const Account = ({ ...props }) => {
             <div className='w-full mt-8'>
                 <Form {...{ handleSubmit }} className='w-full mt-4 grid grid-cols-12 gap-4' >
                     <div className='col-span-12' >
-                        <ProfileImage className='!w-[80px] !h-[80px]' name={letterCutting(username)} url={user?.profile || ''} />
+                        <ProfileImage className='!w-[120px] !h-[120px]' name={letterCutting(username)} url={user?.profile || ''} />
                     </div>
                     <div className='col-span-12 md:col-span-6' >
                         <FormControl

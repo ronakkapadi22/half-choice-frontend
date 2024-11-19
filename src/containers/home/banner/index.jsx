@@ -61,34 +61,34 @@ const HomeBanner = () => {
         onSlideChange={(swiper) => setActiveIndex(swiper.realIndex)}
       >
         <SwiperSlide>
-          <Slide image={banner1} small='Shop Trendy Kids’ Fashion' message="From Stylish Dresses to Ethnic Wear, Find Everything Your Little One Needs!" btn='Shop Now' isActive={activeIndex === 0} />
+          <Slide image={banner1} small="Trendy Kids' Fashion" message="Shop Trendy Kids' Fashion - Stylish Dresses to Ethnic Wear!" btn='Shop Now' isActive={activeIndex === 0} />
         </SwiperSlide>
         <SwiperSlide>
-          <Slide image={banner2} small='Explore a Wide Range of Kids’ Clothes' message="Casual, Party, and Ethnic Wear for Boys and Girls at the Best Prices!" btn='Browse Collection' isActive={activeIndex === 1} />
+          <Slide image={banner2} small="One-Stop Kids' Clothes" message="Explore Kids' Clothes - Casual, Party & Ethnic Wear at Best Prices!" btn='Browse Collection' isActive={activeIndex === 1} />
         </SwiperSlide>
         <SwiperSlide>
-          <Slide image={banner3} small='Find the Perfect Outfit for Your Child' message="Trendy Dresses, Ethnic Wear, T-shirts & More, All in One Place!" btn='Explore Now' isActive={activeIndex === 2} />
+          <Slide image={banner3} small="Kids' Clothing for Every Occasion" message="Find Trendy Outfits - Dresses, Ethnic Wear, T-shirts & More!" btn='Explore Now' isActive={activeIndex === 2} />
         </SwiperSlide>
         <SwiperSlide>
-          <Slide image={banner4} small="Buy Stylish & Comfortable Kids' Clothes" message="Discover Fashionable & Comfortable Clothes for Your Kids" btn="Shop Stylish Outfits" isActive={activeIndex === 3} />
+          <Slide image={banner4} small="Stylish & Comfortable Kids' Clothes" message="Fashionable & Comfortable Kids' Clothes - T-shirts, Dresses & More!" btn="Shop Stylish Outfits" isActive={activeIndex === 3} />
         </SwiperSlide>
         <SwiperSlide>
-          <Slide image={banner6} small="Trendy, High-Quality Kids' Clothing at Affordable Prices" message="Shop Dresses, Casuals, Ethnic Wear, and More!" btn="Start Shopping" isActive={activeIndex === 4} />
+          <Slide image={banner6} small="Affordable Kids' Fashion" message="Affordable, High-Quality Kids' Clothing - Dresses, Casuals & Ethnic Wear!" btn="Start Shopping" isActive={activeIndex === 4} />
         </SwiperSlide>
         <SwiperSlide>
-          <Slide image={banner5} small="Celebrate Every Occasion with Kids’ Fashion" message="Celebrate in style! Our kids' collection has perfect outfits for every occasion." btn="Shop for Occasions" isActive={activeIndex === 5} />
+          <Slide image={banner5} small="Kids' Fashion for Celebrations" message="Perfect Kids' Fashion for Birthdays, Festivals & Celebrations!" btn="Shop for Occasions" isActive={activeIndex === 5} />
         </SwiperSlide>
         <SwiperSlide>
-          <Slide image={banner7} small="Comfort & Style, Kids’ Fashion You’ll Love" message="Shop Comfortable and Stylish Kids’ Clothing for Boys and Girls" btn="Discover Comfort" isActive={activeIndex === 6} />
+          <Slide image={banner7} small="Comfort & Style for Kids" message="Stylish & Comfortable Kids' Clothing for Boys & Girls!" btn="Discover Comfort" isActive={activeIndex === 6} />
         </SwiperSlide>
         <SwiperSlide>
-          <Slide image={banner8} small="Ethnic Wear for Kids to Celebrate in Style" message="Shop Traditional and Trendy Ethnic Wear for Boys and Girls" btn="Explore Ethnic Wear" isActive={activeIndex === 7} />
+          <Slide image={banner8} small="Ethnic Wear for Kids" message="Shop Trendy Ethnic Wear for Kids - Perfect for Festivities!" btn="Explore Ethnic Wear" isActive={activeIndex === 7} />
         </SwiperSlide>
         <SwiperSlide>
-          <Slide image={banner9} small="From Elegant Party Dresses to Fun Casual Frocks" message="Find the Best Dresses for Your Little One!" btn="Shop Dresses Now" isActive={activeIndex === 8} />
+          <Slide image={banner9} small="Perfect Dresses for Kids" message="Elegant Party Dresses & Fun Frocks for Your Little One!" btn="Shop Dresses Now" isActive={activeIndex === 8} />
         </SwiperSlide>
         <SwiperSlide>
-          <Slide small="Get Ready for the Season with Kids' Fashion" image={banner10} message="Shop Fresh Arrivals in Kids’ Fashion. Dresses, T-shirts, Ethnic Wear & More!" btn="Shop Fresh Styles" isActive={activeIndex === 9} />
+          <Slide small="Seasonal Kids' Fashion" image={banner10} message="New Styles in Kids' Fashion - Dresses, T-shirts & Ethnic Wear!" btn="Shop Fresh Styles" isActive={activeIndex === 9} />
         </SwiperSlide>
       </Swiper>
     </div>
@@ -115,7 +115,7 @@ const Slide = ({ isActive, image, message, btn, small }) => {
         <div className="flex h-full justify-center items-center" >
           <div className="w-full pl-8" >
             <h2 className={isActive ? 'fade-up mb-6 text-4xl font-medium text-pink' : ''}>{small}</h2>
-            <h1 className={isActive ? 'fade-up-delay text-7xl !leading-[74px]' : ''}>{message || ''}</h1>
+            <h1 className={isActive ? 'fade-up-delay text-5xl !leading-[74px]' : ''}>{message || ''}</h1>
             <Button
               className={classNames(
                 "!w-auto mt-10 text-xl flex items-center !min-w-40 !rounded-full justify-center !bg-green !border-green hover:!border-pink hover:!bg-pink transition-all duration-300",
@@ -132,7 +132,7 @@ const Slide = ({ isActive, image, message, btn, small }) => {
           <div className="relative" >
             <img className={classNames(isActive ? "fade-up-delay-image" : "", "z-20 absolute w-[620px] -top-[140px] ")}
               src={image}
-              alt="Fashion Model"
+              alt={small}
               style={{
                 transform: `translate(${imagePosition.x}px, ${imagePosition.y}px)`,
                 transition: 'transform 0.1s ease-out',

@@ -19,6 +19,7 @@ import Form from "../../../shared/form";
 import { CancelReasonSchema } from "../../../assets/utils/validation";
 import { useFormik } from "formik";
 import Spinner from "../../..";
+import DUMMY_IMAGE from "../../../assets/images/skeleton.jpeg";
 import { api } from "../../../api";
 
 const OrderDetails = () => {
@@ -242,7 +243,7 @@ const OrderDetails = () => {
                       <div className="w-full flex items-center justify-start">
                         <img
                           className="w-28 rounded-md xl:max-h-[280px] object-cover object-center"
-                          src={IMAGE_PATH + image}
+                          src={image ? (IMAGE_PATH + image) : DUMMY_IMAGE}
                         />
                         <div className="w-full ml-4">
                           <h2
