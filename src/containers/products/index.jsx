@@ -12,7 +12,7 @@ import Modal from '../../shared/modal'
 import Button from '../../shared/button'
 import { ICONS } from '../../assets/icons'
 import { api } from '../../api'
-import { classNames, getCurrentPage, getTitle, restructureCategories, totalPages } from '../../assets/utils/helper'
+import { classNames, getCurrentPage, getTitle, isTokenActivated, restructureCategories, totalPages } from '../../assets/utils/helper'
 import Spinner from '../..'
 import CustomAccordion from '../../shared/accordion'
 import { PAGES } from '../../assets/utils/urls'
@@ -52,9 +52,8 @@ const Products = () => {
     return clone || []
   }, [isLoading, data])
 
-
   const isUserLogged = useMemo(() => {
-    return Boolean(user?.id);
+    return Boolean(user?.id) && isTokenActivated(user?.authtoken);
   }, [user]);
 
   const handleWishlist = useCallback(async (id, isWishlist) => {

@@ -25,6 +25,7 @@ import useDispatchWithAbort from "../../hooks/useDispatchWithAbort";
 import { getCategories } from "../../redux/slices/category.slice";
 import {
   getTitle,
+  isTokenActivated,
   letterCutting,
   restructureCategories,
 } from "../../assets/utils/helper";
@@ -45,7 +46,7 @@ const NavBar = () => {
   }, [fetchCategory]);
 
   const isUserLogged = useMemo(() => {
-    return Boolean(user?.id);
+    return Boolean(user?.id) && isTokenActivated(user?.authtoken);
   }, [user]);
 
   const categories = useMemo(() => {
@@ -94,7 +95,7 @@ const NavBar = () => {
       <header className="bg-white">
         <nav
           aria-label="Global"
-          className="flex items-center justify-between py-2 mx-auto max-w-7xl lg:px-4"
+          className="flex items-center justify-between py-2 mx-auto max-w-7xl px-4"
         >
           <div className="flex lg:flex-1">
             <div
@@ -253,6 +254,8 @@ const NavBar = () => {
             )}
           </div>
         </nav>
+
+        {/* side drawer */}
         <Dialog
           open={mobileMenuOpen}
           onClose={setMobileMenuOpen}
@@ -279,16 +282,29 @@ const NavBar = () => {
             </div>
             <div className="flow-root mt-6">
               <div className="-my-6 divide-y divide-gray-500/10">
+                {isUserLogged ? <div className="py-6 space-y-2 flex items-center justify-between">
+                  <div className="flex items-center" >
+                    <ProfileImage className='!w-14 !h-14' name={letterCutting(username)} url={user?.profile || ''} />
+                    <div className="ml-2">
+                      <p className="w-full py-1 text-sm font-medium text-left text-gray-700">
+                        Hello, <br /> {username || ""}
+                      </p>
+                    </div>
+                  </div>
+                  <div onClick={() => handleRedirect(PAGES.PROFILE.path)} className="cursor-pointer">
+                    <ICONS.EDIT className="text-2xl text-yellow" />
+                  </div>
+                </div> : null}
                 <div className="py-6 space-y-2">
                   <Link
                     to={PAGES.HOME.path}
-                    className="block px-3 py-2 -mx-3 text-base font-semibold leading-7 text-gray-900 rounded-lg hover:bg-gray-50"
+                    className="block px-3 py-2 -mx-3 text-base font-medium leading-7 text-gray-900 rounded-lg hover:bg-gray-50"
                   >
                     Home
                   </Link>
                   {categories?.map((item) => (
                     <Disclosure key={item?.id} as="div" className="-mx-3">
-                      <DisclosureButton className="group flex w-full items-center justify-between rounded-lg py-2 pl-3 pr-3.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50">
+                      <DisclosureButton className="group flex w-full items-center justify-between rounded-lg py-2 pl-3 pr-3.5 text-base font-medium leading-7 text-gray-900 hover:bg-gray-50">
                         {item?.name || ""}
                         <ICONS.CHEVRON_DOWN
                           aria-hidden="true"
@@ -308,7 +324,7 @@ const NavBar = () => {
                               );
                             }}
                             as="p"
-                            className="block cursor-pointer py-2 pl-6 pr-3 text-sm font-semibold leading-7 text-gray-900 rounded-lg hover:bg-gray-50"
+                            className="block cursor-pointer py-2 pl-6 pr-3 text-sm font-medium leading-7 text-gray-900 rounded-lg hover:bg-gray-50"
                           >
                             {val.name}
                           </DisclosureButton>
@@ -318,37 +334,31 @@ const NavBar = () => {
                   ))}
                   <Link
                     to={PAGES.ABOUT.path}
-                    className="block px-3 py-2 -mx-3 text-base font-semibold leading-7 text-gray-900 rounded-lg hover:bg-gray-50"
+                    className="block px-3 py-2 -mx-3 text-base font-medium leading-7 text-gray-900 rounded-lg hover:bg-gray-50"
                   >
                     About Us
                   </Link>
                   <Link
                     to={PAGES.HOME.path}
-                    className="block px-3 py-2 -mx-3 text-base font-semibold leading-7 text-gray-900 rounded-lg hover:bg-gray-50"
-                  >
-                    Orders
-                  </Link>
-                  <Link
-                    to={PAGES.HOME.path}
-                    className="block px-3 py-2 -mx-3 text-base font-semibold leading-7 text-gray-900 rounded-lg hover:bg-gray-50"
+                    className="block px-3 py-2 -mx-3 text-base font-medium leading-7 text-gray-900 rounded-lg hover:bg-gray-50"
                   >
                     Blogs
                   </Link>
                 </div>
-                <div className="py-6">
+                <div className="py-4">
                   {!isUserLogged ? (
                     <Link
                       to={PAGES.LOGIN.path}
-                      className="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
+                      className="-mx-3 block rounded-lg px-3 py-2.5 text-base font-medium leading-7 text-gray-900 hover:bg-gray-50"
                     >
                       Log in
                     </Link>
                   ) : (
                     <Button
                       handleClick={() => setConfirm(true)}
-                      className="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 !border-none !bg-transparent !text-gray-900 hover:bg-gray-50"
+                      className="-mx-3 flex items-center rounded-lg px-3 py-2.5 text-base font-medium leading-7 !border-none !bg-transparent !text-gray-900 hover:bg-gray-50"
                       label="Log out"
-                    />
+                    >Log out <ICONS.LOGOUT className="ml-2 text-lg font-bold" /></Button>
                   )}
                 </div>
               </div>

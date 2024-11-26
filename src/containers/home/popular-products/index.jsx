@@ -1,7 +1,7 @@
 import React, { useCallback, useMemo, useState } from "react";
 import { useSelector } from "react-redux";
-import { classNames } from "../../../assets/utils/helper";
-import { Link, useNavigate } from "react-router-dom";
+import { classNames, isTokenActivated } from "../../../assets/utils/helper";
+import { useNavigate } from "react-router-dom";
 import { PAGES } from "../../../assets/utils/urls";
 import { PRODUCTS_LOADER } from "../../../assets/utils/constant";
 import ProductSkeleton from "../../../shared/product-skeleton";
@@ -28,7 +28,7 @@ const PopularProducts = ({ title, className, disabledMeta, ...props }) => {
   }, [isLoading, data.trendings]);
 
   const isUserLogged = useMemo(() => {
-    return Boolean(user?.id);
+    return Boolean(user?.id) && isTokenActivated(user?.authtoken);
   }, [user]);
 
   const handleWishlist = useCallback(async (id, isWishlist) => {

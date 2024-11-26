@@ -1,5 +1,5 @@
 import React, { useCallback, useMemo, useRef, useState } from "react";
-import { classNames } from "../../../assets/utils/helper";
+import { classNames, isTokenActivated } from "../../../assets/utils/helper";
 import { ICONS } from "../../../assets/icons";
 import ReactOwlCarousel from "react-owl-carousel";
 import { CAROUSEL_LOADER } from "../../../assets/utils/constant";
@@ -50,7 +50,7 @@ const LatestArrival = ({ title, className, disabledMeta, ...props }) => {
   }, [ref]);
 
   const isUserLogged = useMemo(() => {
-    return Boolean(user?.id);
+    return Boolean(user?.id) && isTokenActivated(user?.authtoken);
   }, [user]);
 
   const latest = useMemo(() => {

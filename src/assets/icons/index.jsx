@@ -11,7 +11,6 @@ import { HiUserAdd, HiOutlineSearch, HiChevronDown } from "react-icons/hi";
 import { MdOutlineLocalShipping } from "react-icons/md";
 import { IoIosClose } from "react-icons/io";
 import {
-  FaUser,
   FaShippingFast,
   FaShieldAlt,
   FaUserClock,
@@ -36,7 +35,8 @@ import { LuUnlink } from "react-icons/lu";
 import { IoIosCheckmarkCircle } from "react-icons/io";
 import { CiBoxes } from "react-icons/ci";
 import { TiHome } from "react-icons/ti";
-import { MdOutlineDone, MdLocationPin } from "react-icons/md";
+import { MdOutlineDone } from "react-icons/md";
+
 
 
 export const ICONS = {

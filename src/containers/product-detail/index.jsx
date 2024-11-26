@@ -12,7 +12,7 @@ import { useSelector } from "react-redux";
 import { CAROUSEL_LOADER, IMAGE_PATH } from "../../assets/utils/constant";
 import { ICONS } from "../../assets/icons";
 import ReactOwlCarousel from "react-owl-carousel";
-import { classNames } from "../../assets/utils/helper";
+import { classNames, isTokenActivated } from "../../assets/utils/helper";
 import Button from "../../shared/button";
 import { api } from "../../api";
 import Modal from "../../shared/modal";
@@ -82,7 +82,7 @@ const Product = () => {
   );
 
   const isUserLogged = useMemo(() => {
-    return Boolean(user?.id);
+    return Boolean(user?.id) && isTokenActivated(user?.authtoken);
   }, [user]);
 
   const handleWishlist = useCallback(
