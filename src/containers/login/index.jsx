@@ -168,7 +168,7 @@ const Login = () => {
         return (
           <Form
             handleSubmit={handleSubmit}
-            className="w-full flex-col md:max-w-[480px] mx-auto p-4 md:p-8 h-full flex justify-center"
+            className="w-full flex-col sm:max-w-[420px] md:max-w-[480px] mx-auto p-4 md:p-8 h-full flex justify-center"
           >
             <h1 className="mb-1 text-2xl font-medium text-text">
               Welcome Back!
@@ -213,7 +213,7 @@ const Login = () => {
       case "otp_screen":
         return (
           <Form
-            className="w-full flex-col md:max-w-[480px] mx-auto p-4 md:p-8 h-full flex justify-center"
+            className="w-full flex-col sm:max-w-[420px] md:max-w-[480px] mx-auto p-4 md:p-8 h-full flex justify-center"
             {...{ handleSubmit: handleOTPSubmit }}
           >
             <h1 className="mb-1 text-2xl font-medium text-text">
@@ -231,7 +231,7 @@ const Login = () => {
                 containerStyle="w-full flex justify-between items-center my-4 last:!mr-0"
                 inputType="number"
                 inputStyle={classNames(
-                  "!border !rounded-xl outline-none !w-auto max-w-[64px] focus:border-green md:max-w-[52px] h-[64px] md:!h-[52px] !p-1",
+                  "!border !rounded-xl outline-none focus:border-green !w-[48px] !h-[48px] sm:!w-[56px] sm:!h-[56px] !p-1",
                   otpError ? "!border-red-500" : ""
                 )}
                 renderInput={(props) => (

@@ -69,7 +69,7 @@ const ProductCard = ({
                 <div onClick={(e) => {
                     e.stopPropagation();
                     handleWishlist(id, props?.wishlist);
-                }} className="absolute z-10 top-2 right-2 cursor-pointer bg-slate-100 rounded-full p-2">
+                }} className="absolute z-[9] top-2 right-2 cursor-pointer bg-slate-100 rounded-full p-2">
                     {props?.wishlist ? (
                         <ICONS.HEART_FILL className="w-6 h-6 text-pink" />
                     ) : (
@@ -77,7 +77,7 @@ const ProductCard = ({
                     )}
                 </div>
                 {attribute?.discount ? (
-                    <div className="absolute top-2 left-2 bg-green z-10 text-white text-xs rounded-lg px-2 py-1">
+                    <div className="absolute top-2 left-2 bg-green z-[9] text-white text-xs rounded-lg px-2 py-1">
                         {attribute?.discount ? `-${attribute?.discount}%` : null}
                     </div>
                 ) : null}

@@ -85,6 +85,8 @@ const Product = () => {
     return Boolean(user?.id) && isTokenActivated(user?.authtoken);
   }, [user]);
 
+  console.log('isUserLogged', isUserLogged)
+
   const handleWishlist = useCallback(
     async (isWishlist) => {
       if (!isUserLogged) {
@@ -117,6 +119,10 @@ const Product = () => {
   const handleCartItem = async (attributeItem) => {
     if (attributeItem?.quantity) {
       handleRedirect(PAGES.CART.path);
+      return;
+    }
+    if (!isUserLogged) {
+      setOpen(true);
       return;
     }
     setLoader(true);

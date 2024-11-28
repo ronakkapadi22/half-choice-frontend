@@ -5,8 +5,6 @@ import { PAGES } from "../../assets/utils/urls";
 import logo from "../../assets/images/logo.png";
 import { ICONS } from "../../assets/icons";
 import {
-  Dialog,
-  DialogPanel,
   Disclosure,
   DisclosureButton,
   DisclosurePanel,
@@ -256,13 +254,21 @@ const NavBar = () => {
         </nav>
 
         {/* side drawer */}
-        <Dialog
-          open={mobileMenuOpen}
-          onClose={setMobileMenuOpen}
-          className="lg:hidden"
-        >
-          <div className="fixed inset-0 z-10" />
-          <DialogPanel className="fixed inset-y-0 right-0 z-10 w-full px-6 py-6 overflow-y-auto bg-white sm:max-w-sm sm:ring-1 sm:ring-gray-900/10">
+
+        <div>
+          {/* Backdrop Overlay */}
+          {mobileMenuOpen && (
+            <div
+              className="fixed inset-0 z-10 bg-black bg-opacity-50 transition-opacity duration-300"
+              onClick={() => setMobileMenuOpen(false)}
+            />
+          )}
+
+          {/* Mobile Menu */}
+          <div
+            className={`fixed inset-y-0 z-10 right-0 w-full max-w-sm px-6 py-6 overflow-y-auto bg-white transform !transition-transform !duration-300 !ease-in-out sm:ring-1 sm:ring-gray-900/10 ${mobileMenuOpen ? "!translate-x-0 right-0" : "!translate-x-full"
+              }`}
+          >
             <div className="flex items-center justify-between">
               <div
                 onClick={() => handleRedirect(PAGES.HOME.path)}
@@ -282,19 +288,28 @@ const NavBar = () => {
             </div>
             <div className="flow-root mt-6">
               <div className="-my-6 divide-y divide-gray-500/10">
-                {isUserLogged ? <div className="py-6 space-y-2 flex items-center justify-between">
-                  <div className="flex items-center" >
-                    <ProfileImage className='!w-14 !h-14' name={letterCutting(username)} url={user?.profile || ''} />
-                    <div className="ml-2">
-                      <p className="w-full py-1 text-sm font-medium text-left text-gray-700">
-                        Hello, <br /> {username || ""}
-                      </p>
+                {isUserLogged ? (
+                  <div className="py-6 space-y-2 flex items-center justify-between">
+                    <div className="flex items-center">
+                      <ProfileImage
+                        className="!w-14 !h-14"
+                        name={letterCutting(username)}
+                        url={user?.profile || ''}
+                      />
+                      <div className="ml-2">
+                        <p className="w-full py-1 text-sm font-medium text-left text-gray-700">
+                          Hello, <br /> {username || ''}
+                        </p>
+                      </div>
+                    </div>
+                    <div
+                      onClick={() => handleRedirect(PAGES.PROFILE.path)}
+                      className="cursor-pointer"
+                    >
+                      <ICONS.EDIT className="text-2xl text-yellow" />
                     </div>
                   </div>
-                  <div onClick={() => handleRedirect(PAGES.PROFILE.path)} className="cursor-pointer">
-                    <ICONS.EDIT className="text-2xl text-yellow" />
-                  </div>
-                </div> : null}
+                ) : null}
                 <div className="py-6 space-y-2">
                   <Link
                     to={PAGES.HOME.path}
@@ -305,7 +320,7 @@ const NavBar = () => {
                   {categories?.map((item) => (
                     <Disclosure key={item?.id} as="div" className="-mx-3">
                       <DisclosureButton className="group flex w-full items-center justify-between rounded-lg py-2 pl-3 pr-3.5 text-base font-medium leading-7 text-gray-900 hover:bg-gray-50">
-                        {item?.name || ""}
+                        {item?.name || ''}
                         <ICONS.CHEVRON_DOWN
                           aria-hidden="true"
                           className="h-5 w-5 flex-none group-data-[open]:rotate-180"
@@ -318,8 +333,8 @@ const NavBar = () => {
                             onClick={() => {
                               setMobileMenuOpen(false);
                               handleRedirect(
-                                `${PAGES.PRODUCTS.path}?cat_id=${item?.is_parent ? "" : item?.id
-                                }&sub_sub_cat_id=${val?.ids ? val?.ids?.join(",") : val?.id
+                                `${PAGES.PRODUCTS.path}?cat_id=${item?.is_parent ? '' : item?.id
+                                }&sub_sub_cat_id=${val?.ids ? val?.ids?.join(',') : val?.id
                                 }&name=${getTitle(val?.name)}`
                               );
                             }}
@@ -358,13 +373,19 @@ const NavBar = () => {
                       handleClick={() => setConfirm(true)}
                       className="-mx-3 flex items-center rounded-lg px-3 py-2.5 text-base font-medium leading-7 !border-none !bg-transparent !text-gray-900 hover:bg-gray-50"
                       label="Log out"
-                    >Log out <ICONS.LOGOUT className="ml-2 text-lg font-bold" /></Button>
+                    >
+                      Log out{' '}
+                      <ICONS.LOGOUT className="ml-2 text-lg font-bold" />
+                    </Button>
                   )}
                 </div>
               </div>
             </div>
-          </DialogPanel>
-        </Dialog>
+          </div>
+        </div>
+
+
+
         <Confirmation
           handleAction={handleAction}
           actionLabel="Yes, Sign out"

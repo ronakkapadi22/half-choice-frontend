@@ -13,7 +13,7 @@ const SocialFeed = ({ className, ...props }) => {
 
     const feeds = useMemo(() => {
         if (isLoading) return [];
-        const clone = [...data];
+        const clone = [...data].filter(val => val?.media_type === 'IMAGE');
         return clone?.slice(0, 6) || [];
     }, [isLoading, data]);
 
