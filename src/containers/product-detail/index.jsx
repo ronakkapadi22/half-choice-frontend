@@ -36,6 +36,7 @@ const Product = () => {
 
   useEffect(() => {
     fetchProduct({
+      isInitial: true,
       params: {
         product_id,
         user_id: user?.id,
@@ -85,8 +86,6 @@ const Product = () => {
     return Boolean(user?.id) && isTokenActivated(user?.authtoken);
   }, [user]);
 
-  console.log('isUserLogged', isUserLogged)
-
   const handleWishlist = useCallback(
     async (isWishlist) => {
       if (!isUserLogged) {
@@ -103,6 +102,7 @@ const Product = () => {
         });
         if (response?.data) {
           fetchProduct({
+            isInitial: false,
             params: {
               product_id,
               user_id: user?.id,
@@ -158,7 +158,7 @@ const Product = () => {
     <ReactHelmet {...{ title: data?.meta_title, description: data?.meta_description, keywords: data?.meta_keywords }} >
       <div className="container relative p-4 mx-auto lg:px-4 max-w-7xl">
         <div className="grid w-full grid-cols-12 gap-4">
-          <div className="col-span-12 p-2 md:col-span-5">
+          <div className="col-span-12 px-0 md:p-2 md:col-span-5">
             <div className="flex flex-col w-full">
               <div className="relative w-full h-auto mb-2">
                 {attribute?.[attributeIndex]?.discount ? (
@@ -223,10 +223,10 @@ const Product = () => {
               <h2 className="text-sm tracking-widest title-font text-less">
                 {variant?.name}
               </h2>
-              <h1 className="mb-1 text-3xl font-medium text-green">
+              <h1 className="mb-1 text-xl md:text-3xl font-medium text-green">
                 {data?.product_name || ""}
               </h1>
-              <div className="flex items-center justify-between w-full mt-4 mb-2">
+              <div className="flex items-center justify-between w-full md:mt-4 mb-2">
                 <div className="w-full flex justify-start items-center my-1.5 text-2xl font-medium">
                   <ins className="no-underline">
                     ₹ {attribute?.[attributeIndex]?.selling_price}
@@ -274,7 +274,7 @@ const Product = () => {
                       <div
                         onClick={() => setAttributeIndex(i)}
                         className={classNames(
-                          "border py-2 px-4 text-text font-medium border-select rounded-md cursor-pointer",
+                          "border md:py-2 py-1 px-2 md:px-4 text-sm md:text-base text-text font-medium border-select rounded-md cursor-pointer",
                           attributeIndex === i
                             ? "bg-select !text-white"
                             : "bg-transparent"

@@ -34,12 +34,12 @@ const Breadcrumb = ({ className, links, ...props }) => {
         <nav className='flex items-center justify-start' >
             <ol className='flex items-center list-none' >
                 {
-                    breadcrumb?.map(({ id, icon: ICON, ...item }, i) => <li onClick={() => handleRedirect(item?.redirect)} className={classNames('w-auto', item?.label ? 'ml-4' : '', breadcrumb?.length === i + 1 ? '' : 'cursor-pointer')} key={id} >
+                    breadcrumb?.map(({ id, icon: ICON, ...item }, i) => <li onClick={() => handleRedirect(item?.redirect)} className={classNames('w-auto', item?.label ? 'ml-2' : '', breadcrumb?.length === i + 1 ? '' : 'cursor-pointer')} key={id} >
                         <div className='flex items-center' >
                             {ICON ? <ICON className='w-5 h-5 text-text' /> : null}
                             {item.label ? <div className='flex items-center' >
                                 <IoChevronForwardOutline className='w-4 h-4 text-gray-400' />
-                                <p className='ml-4 text-sm text-gray-400' >{item?.label || ''}</p>
+                                <p className='ml-2 text-sm text-gray-400' >{item?.label || ''}</p>
                             </div> : null}
                         </div>
                     </li>)

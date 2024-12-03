@@ -12,10 +12,13 @@ import { PAGES } from '../../assets/utils/urls'
 import { useDispatch, useSelector } from 'react-redux'
 import ProfileImage from '../../shared/avatar'
 import { api } from '../../api'
-import { handleAuthSlice } from '../../redux/slices/auth.slice'
+import { handleAuthInitial, handleAuthSlice } from '../../redux/slices/auth.slice'
+import Confirmation from '../../shared/confirmation'
+import { clearDataFromLocal } from '../../assets/utils/local'
 
 const Account = ({ ...props }) => {
 
+    const [confirm, setConfirm] = useState(false);
     const navigate = useNavigate()
     const user = useSelector(({ auth }) => auth?.user)
     const dispatch = useDispatch()
@@ -88,9 +91,15 @@ const Account = ({ ...props }) => {
         if (user.fname || user.lname) return `${user.fname} ${user.lname}`;
     }, [user]);
 
+    const handleAction = () => {
+        dispatch(handleAuthInitial());
+        clearDataFromLocal();
+        setConfirm(false);
+        navigate(PAGES.HOME.path || '/')
+    };
 
     return (
-        <div className="w-full rounded-[6px] p-4" {...props}>
+        <div className="w-full rounded-[6px] px-0 py-4 md:p-4" {...props}>
             <p className='mb-2 font-medium'>Profile Information</p>
             <hr />
             <div className='w-full mt-8'>
@@ -179,26 +188,45 @@ const Account = ({ ...props }) => {
                 <p className='mb-2 font-medium'>Account Information</p>
                 <hr />
                 <div className='w-full grid grid-cols-12 gap-4 mt-4' >
-                    <div className='col-span-12 md:col-span-6 lg:col-span-4' >
+                    <div className='col-span-6 lg:col-span-4' >
                         <div onClick={() => handleRedirect(PAGES.ORDERS.path)} className='w-full hover:text-white hover:bg-green text-green border-green flex cursor-pointer items-center px-4 py-2 rounded-lg border' >
                             <ICONS.BOX style={{ fontSize: 24 }} />
-                            <p className='font-medium ml-2' >My Orders</p>
+                            <p className='font-medium text-sm md:text-base ml-2' >My Orders</p>
                         </div>
                     </div>
-                    <div className='col-span-12 md:col-span-6 lg:col-span-4' >
+                    <div className='col-span-6 lg:col-span-4' >
                         <div onClick={() => handleRedirect(PAGES.ADDRESS.path)} className='w-full hover:text-white hover:bg-green text-green border-green cursor-pointer flex items-center px-4 py-2 rounded-lg border' >
                             <ICONS.LOCATION style={{ fontSize: 24 }} />
-                            <p className='font-medium ml-2' >Address</p>
+                            <p className='font-medium text-sm md:text-base ml-2' >Address</p>
                         </div>
                     </div>
-                    <div className='col-span-12 md:col-span-6 lg:col-span-4' >
+                    <div className='col-span-6 lg:col-span-4' >
                         <div onClick={() => handleRedirect(PAGES.WISHLISTS.path)} className='w-full text-green hover:text-white hover:bg-green border-green cursor-pointer flex items-center px-4 py-2 rounded-lg border' >
                             <ICONS.CART style={{ fontSize: 24 }} />
-                            <p className='font-medium ml-2' >My Wishlists</p>
+                            <p className='font-medium text-sm md:text-base ml-2' >My Wishlists</p>
                         </div>
                     </div>
                 </div>
             </div>
+            <div className='block md:hidden w-full mt-8' >
+                <hr />
+                <div
+                    onClick={() => setConfirm(true)}
+                    className="w-auto py-2 text-base flex items-center font-medium text-left text-gray-700 cursor-pointer"
+                >
+                    Sign out
+                    <ICONS.LOGOUT className="ml-2 w-5 h-5" />
+                </div>
+            </div>
+
+            <Confirmation
+                handleAction={handleAction}
+                actionLabel="Yes, Sign out"
+                title="Sign Out"
+                description="Are you sure you want to sign out of your account?"
+                open={confirm}
+                setOpen={setConfirm}
+            />
         </div>
     )
 }

@@ -153,7 +153,7 @@ const OrderDetails = () => {
         <Breadcrumb links={links} />
       </div>
       <div className="w-full flex flex-col items-start justify-start my-9">
-        <h2 className="text-3xl text-text mb-1.5 font-semibold">
+        <h2 className="text-xl md:text-3xl text-text mb-1.5 font-semibold">
           Order Details
         </h2>
         <p className="text-slate-400 text-md">
@@ -165,16 +165,18 @@ const OrderDetails = () => {
           {isLoading ? (
             <div className="animate-pulse w-full rounded-lg h-20 bg-gray-100"></div>
           ) : data ? (
-            <div className="w-full bg-gray-100 rounded-lg p-5 flex items-center justify-between">
-              <div className="flex items-center justify-start">
-                <div className="flex flex-col justify-start items-start">
+            <div className="w-full bg-gray-100 flex-col sm:flex-row rounded-lg p-5 flex items-start md:items-center justify-start md:justify-between">
+              <div className="w-full md:w-auto flex flex-col sm:flex-row items-center justify-start p-4 space-y-4 sm:space-y-0 sm:space-x-6">
+                <div className="flex flex-col justify-start items-start text-center sm:text-left w-full sm:w-auto">
                   <p className="font-medium text-base text-text">
                     Order ID: {data?.order_no}
                   </p>
-                  <p className="text-slate-400 text-sm mt-1 ">2 Items</p>
+                  <p className="text-slate-400 text-sm mt-1">2 Items</p>
                 </div>
-                <div className="w-[1px] bg-slate-300 h-10 mx-6" />
-                <div className="flex flex-col justify-start items-start">
+
+                <div className="hidden sm:block w-[1px] bg-slate-300 h-10 mx-6" />
+
+                <div className="flex flex-col justify-start items-start text-center sm:text-left w-full sm:w-auto">
                   <p className="font-medium mb-1 text-base text-text">
                     ₹ {Number(summary?.total || 0).toFixed(2)}
                   </p>
@@ -182,21 +184,23 @@ const OrderDetails = () => {
                     You saved: ₹ {Number(summary?.discount || 0).toFixed(2)}
                   </p>
                 </div>
-                <div className="w-[1px] bg-slate-300 h-10 mx-6" />
-                <div>
+
+                <div className="hidden sm:block w-[1px] bg-slate-300 h-10 mx-6" />
+
+                <div className="w-full sm:w-auto text-left">
                   <p className="text-slate-400 text-sm">
                     {moment(data?.created_at).format("DD MMM, YYYY")}
                   </p>
                 </div>
               </div>
-              <div className="flex items-end flex-col justify-end">
+              <div className="w-full md:w-auto flex items-end flex-col justify-end">
                 <div
                   style={{
                     background: ORDER_COLORS?.[data?.status]?.bg,
                     color: ORDER_COLORS?.[data?.status]?.fill,
                     borderColor: ORDER_COLORS?.[data?.status]?.fill,
                   }}
-                  className="cursor-pointer flex items-center font-medium justify-center text-danger rounded-lg border border-danger bg-danger-hover py-1 px-3 text-sm"
+                  className="cursor-pointer flex items-center font-medium justify-center text-danger rounded-lg border border-danger bg-danger-hover py-1 px-3 text-xs md:text-sm"
                 >
                   <div
                     style={{
@@ -254,7 +258,7 @@ const OrderDetails = () => {
                                 product?.product_id + "/" + getTitle(product?.product_name)
                               )
                             }
-                            className="flex cursor-pointer justify-between text-base font-medium text-text"
+                            className="flex cursor-pointer justify-between text-base font-medium text-text !line-clamp-1"
                           >
                             {product?.product_name || ""}
                           </h2>

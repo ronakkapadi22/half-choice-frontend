@@ -108,24 +108,24 @@ const AddressForm = ({ id, open, setOpen, ...props }) => {
   );
 
   return (
-    <div className="w-full h-auto">
-      <div className="flex items-center justify-between w-full">
-        <h2 className="mt-3 mb-4 text-xl font-medium text-text">
+    <div className="w-full h-auto p-0 md:p-4">
+      <div className="flex items-center justify-between w-full mb-4">
+        <h2 className="text-lg sm:text-xl font-medium text-text">
           {id ? "Edit Address" : "Add Address"}
         </h2>
         <Button className="!bg-slate-200 !border-none !rounded-full !p-1 !text-text">
           <ICONS.CLOSE
             onClick={() => setOpen(null)}
-            className="w-8 h-8 text-s"
+            className="w-6 h-6 sm:w-8 sm:h-8 text-s"
           />
         </Button>
       </div>
       <Form
         {...{ handleSubmit }}
-        className="grid w-full grid-cols-12 gap-4 mt-4"
+        className="grid w-full grid-cols-12 gap-3 sm:gap-4"
       >
         <FormControl
-          className="col-span-12 md:col-span-6"
+          className="col-span-12 sm:col-span-6"
           placeholder="Enter Full Name"
           label="Full Name"
           {...{
@@ -136,7 +136,7 @@ const AddressForm = ({ id, open, setOpen, ...props }) => {
           }}
         />
         <FormControl
-          className="col-span-12 md:col-span-6"
+          className="col-span-12 sm:col-span-6"
           isPhone
           placeholder="Enter Phone Number"
           type="number"
@@ -149,7 +149,7 @@ const AddressForm = ({ id, open, setOpen, ...props }) => {
           }}
         />
         <FormControl
-          className="col-span-12 md:col-span-6"
+          className="col-span-12 sm:col-span-6"
           placeholder="Block / House / Building"
           label="Block / House / Building"
           {...{
@@ -160,9 +160,9 @@ const AddressForm = ({ id, open, setOpen, ...props }) => {
           }}
         />
         <FormControl
-          className="col-span-12 md:col-span-6"
+          className="col-span-12 sm:col-span-6"
           placeholder="Road / Area colony"
-          label="Road / Area colony "
+          label="Road / Area colony"
           {...{
             name: "address_line_2",
             value: values.address_line_2,
@@ -217,13 +217,16 @@ const AddressForm = ({ id, open, setOpen, ...props }) => {
           />
         </div>
         <div className="w-full col-span-12">
-          <label className="mb-1 font-medium text-text ">Address Type</label>
-          <div className="flex flex-wrap items-center justify-start w-full gap-3 mt-2">
+          <label className="mb-1 text-sm sm:text-base font-medium text-text">
+            Address Type
+          </label>
+          <div className="flex flex-wrap items-center justify-start w-full gap-2 sm:gap-3 mt-2">
             {ADDRESS_TYPE?.map((type) => (
               <div
+                key={type}
                 onClick={() => setValues({ ...values, address_type: type })}
                 className={classNames(
-                  "border py-2 px-4 text-text font-medium border-select rounded-md cursor-pointer",
+                  "border py-1.5 sm:py-2 px-3 sm:px-4 text-xs sm:text-sm text-text font-medium border-select rounded-md cursor-pointer",
                   values.address_type === type
                     ? "bg-select !text-white"
                     : "bg-transparent"
@@ -234,16 +237,18 @@ const AddressForm = ({ id, open, setOpen, ...props }) => {
             ))}
           </div>
         </div>
-        <div className="flex items-end justify-end col-span-12 mt-2">
+        <div className="flex items-end justify-end col-span-12 mt-4">
           <Button
             type="submit"
             disabled={loader}
             className={classNames(
-              "!w-auto mb-1 flex min-w-28 items-center justify-center !bg-pink !border-pink hover:border-yellow hover:bg-yellow transition-all duration-300",
+              "!w-full sm:!w-auto mb-1 flex min-w-full sm:min-w-28 items-center justify-center !bg-pink !border-pink hover:border-yellow hover:bg-yellow transition-all duration-300",
               loader ? "cursor-not-allowed" : ""
             )}
           >
-            <span>{!loader ? (id ? "Update" : "Save") : "Loading"}</span>
+            <span className="text-sm sm:text-base">
+              {!loader ? (id ? "Update" : "Save") : "Loading"}
+            </span>
             {loader ? <Spinner className="ml-1 !w-4 !h-4" /> : null}
           </Button>
         </div>

@@ -68,7 +68,7 @@ const Orders = () => {
           <Breadcrumb links={links} />
         </div>
         <div className="w-full flex flex-col items-start justify-start my-9">
-          <h2 className="text-3xl text-text mb-1.5 font-semibold">My Orders</h2>
+          <h2 className="text-xl md:text-3xl text-text mb-1.5 font-semibold">My Orders</h2>
           <p className="text-slate-400 text-md">
             A list of my recent purchases, featuring a variety of items I've added
             to my wardrobe. From everyday essentials to statement pieces, these
@@ -80,7 +80,7 @@ const Orders = () => {
                 {ORDER_STATUS.map((status) => (
                   <div
                     key={status.id}
-                    className="cursor-pointer flex items-center justify-center rounded-lg border border-slate-400 py-1 px-4 text-sm"
+                    className="cursor-pointer flex items-center justify-center rounded-lg border border-slate-400 py-1 px-4 text-xs md:text-sm"
                   >
                     {status.label || ""}
                   </div>
@@ -97,8 +97,8 @@ const Orders = () => {
               orders?.map((order) => {
                 return (
                   <div onClick={() => handleRedirect(PAGES.ORDERS.path + '/' + order?.id)} key={order?.id} className="col-span-12 md:col-span-6">
-                    <div className="border relative border-slate-300 flex flex-col items-start justify-start rounded-lg p-4 cursor-pointer">
-                      <ICONS.RIGHT className="absolute text-slate-400 w-8 h-8 right-2 top-1/2 -translate-y-1/2" />
+                    <div className="border relative border-slate-300 flex flex-col items-start justify-start rounded-lg p-4 cursor-pointer h-full">
+                      <ICONS.RIGHT className="absolute text-slate-400 w-8 h-8 right-2 top-7 md:top-1/2 -translate-y-1/2" />
                       <div className="w-full flex items-center">
                         <div
                           style={{
@@ -106,7 +106,7 @@ const Orders = () => {
                             color: ORDER_COLORS?.[order?.status]?.fill,
                             borderColor: ORDER_COLORS?.[order?.status]?.fill,
                           }}
-                          className="cursor-pointer flex items-center font-medium justify-center text-danger rounded-lg border border-danger bg-danger-hover py-1 px-3 text-sm"
+                          className="cursor-pointer flex items-center font-medium justify-center text-danger rounded-lg border border-danger bg-danger-hover py-1 px-3 text-xs md:text-sm"
                         >
                           <div
                             style={{
@@ -158,10 +158,10 @@ const Orders = () => {
                   <img
                     alt="cart_image"
                     src={cart_image}
-                    className="object-cover max-w-[280px] w-auto"
+                    className="object-cover max-w-[180px] md:max-w-[280px] w-auto"
                   />
                   <div className="mt-10 flex flex-col items-center justify-center">
-                    <h2 className="text-center text-2xl text-text mb-1 font-semibold">
+                    <h2 className="text-center text-xl md:text-2xl text-text mb-1 font-semibold">
                       No Orders!
                     </h2>
                     <p className="text-center text-slate-400 text-md my-0.5">
@@ -169,7 +169,7 @@ const Orders = () => {
                     </p>
                     <Button
                       label="Explore"
-                      className="!w-auto mt-6 !min-w-36 !rounded-full mb-1 flex items-center justify-center !bg-pink !border-pink hover:!border-yellow hover:!bg-yellow transition-all duration-300"
+                      className="!w-auto mt-4 md:mt-6 !min-w-36 !rounded-full mb-1 flex items-center justify-center !bg-pink !border-pink hover:!border-yellow hover:!bg-yellow transition-all duration-300"
                     />
                   </div>
                 </div>

@@ -80,8 +80,8 @@ const Wishlists = () => {
         <Breadcrumb links={links} />
       </div>
       <div className="w-full flex flex-col items-start justify-start my-9">
-        <h2 className="text-3xl text-text mb-1.5 font-semibold">My Wishlist</h2>
-        <p className="text-slate-400 text-md">
+        <h2 className="text-xl md:text-3xl text-text mb-1.5 font-semibold">My Wishlist</h2>
+        <p className="text-slate-400 text-base">
           A collection of favorite items saved for future purchase or
           inspiration.
         </p>
@@ -113,10 +113,10 @@ const Wishlists = () => {
                 <img
                   alt="cart_image"
                   src={cart_image}
-                  className="object-cover max-w-[280px] w-auto"
+                  className="object-cover max-w-[180px] md:max-w-[280px] w-auto"
                 />
                 <div className="mt-10 flex flex-col items-center justify-center">
-                  <h2 className="text-center text-2xl text-text mb-1 font-semibold">
+                  <h2 className="text-center text-xl md:text-2xl text-text mb-1 font-semibold">
                     Your wishlist is empty !!
                   </h2>
                   <p className="text-center text-slate-400 text-md my-0.5">
@@ -124,7 +124,7 @@ const Wishlists = () => {
                   </p>
                   <Button handleClick={() => handleRedirect('/')}
                     label="Explore"
-                    className="!w-auto mt-6 !min-w-36 !rounded-full mb-1 flex items-center justify-center !bg-pink !border-pink hover:!border-yellow hover:!bg-yellow transition-all duration-300"
+                    className="!w-auto mt-4 md:mt-6 !min-w-36 !rounded-full mb-1 flex items-center justify-center !bg-pink !border-pink hover:!border-yellow hover:!bg-yellow transition-all duration-300"
                   />
                 </div>
               </div>

@@ -16,8 +16,8 @@ const AboutDetails = ({ className }) => {
                 </div>
                 <div className='col-span-12 md:col-span-7' >
                     <div className="w-full h-full flex flex-col justify-center">
-                        <h2 className="text-xl font-semibold text-pink">About</h2>
-                        <h3 className="mb-6 text-4xl font-bold">HalfChoice</h3>
+                        <h2 className="text-lg md:text-xl font-semibold text-pink">About</h2>
+                        <h3 className="mb-4 md:mb-6 text-2xl md:text-4xl font-bold">HalfChoice</h3>
                         <p className="mb-4 text-lg text-gray-600">
                             Half Choice: Where Kids' Fashion Meets Adventure
                         </p>

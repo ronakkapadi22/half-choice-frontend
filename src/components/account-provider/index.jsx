@@ -38,7 +38,7 @@ const Provider = ({ activeKey, handleTab, ...props }) => {
                     key={id}
                     onClick={() => handleTab(tabKey)}
                     className={classNames(
-                        'w-full cursor-pointer xl:w-[300px] rounded-[6px]',
+                        'w-full hidden md:block cursor-pointer xl:w-[300px] rounded-[6px]',
                         activeKey === tabKey ? 'bg-slate-100' : ''
                     )}
                 >
@@ -48,7 +48,7 @@ const Provider = ({ activeKey, handleTab, ...props }) => {
             <div
                 onClick={() => setConfirm(true)}
                 className={classNames(
-                    'w-full cursor-pointer xl:w-[300px] ml-1 md:mt-2 rounded-[6px]',
+                    'w-full hidden md:block cursor-pointer xl:w-[300px] ml-1 md:ml-0 md:mt-2 rounded-[6px]',
                     'hover:bg-slate-100'
                 )}
             >

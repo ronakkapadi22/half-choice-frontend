@@ -175,7 +175,7 @@ const Checkout = () => {
     const options = {
       key: "rzp_live_KzXWN8L7Gj7FXA",
       // key: "rzp_test_kLGh3w0NxTm39x",
-      amount: '420.0', // Amount in paise
+      amount: Number(payload?.amount) || 0, // Amount in paise
       currency: payload?.currency || "INR",
       name: "Halfchoice",
       description: "HalfChoice | Stylish, comfy clothes for growing kids.",
@@ -248,8 +248,8 @@ const Checkout = () => {
       ),
       order_discount: Number(summary.total_discount).toFixed(1),
       order_no: `${user?.id}_${generateRandomDigitNumber()}`,
-      order_sub_total: "420.0",
-      order_total: "420.0",
+      order_sub_total: Number(summary?.subtotal).toFixed(1),
+      order_total: Number(summary?.total).toFixed(1),
       payment_method: paymentOption,
       return_policy: "7 day return policy",
       status: "PENDING",
@@ -288,7 +288,7 @@ const Checkout = () => {
           <Breadcrumb links={links} />
         </div>
         <div className="w-full flex flex-col items-start justify-start my-9">
-          <h2 className="text-3xl text-text mb-1.5 font-semibold">
+          <h2 className="text-xl md:text-3xl text-text mb-1.5 font-semibold">
             Review and Complete Your Purchase
           </h2>
           <p className="text-slate-400 text-md">
@@ -299,45 +299,44 @@ const Checkout = () => {
           {my_cart?.length ? <div className="w-full mt-16 grid grid-cols-12 gap-4 lg:gap-8">
             <div className="col-span-12 md:col-span-7">
               <div className="w-full">
-                <h2 className="font-medium text-text text-lg">
+                <h2 className="font-medium text-text text-base md:text-lg">
                   Shipping Information
                 </h2>
-                <div className="mt-4 w-full rounded-lg p-4 bg-slate-50 relative">
+                <div className="mt-4 w-full rounded-lg p-3 md:p-4 bg-slate-50 relative">
                   <p
                     onClick={() =>
                       handleRedirect(`${PAGES.ADDRESS.path}?from=checkout`)
                     }
-                    className="text-sm text-pink font-medium cursor-pointer absolute top-4 right-4"
+                    className="text-xs md:text-sm text-pink font-medium cursor-pointer absolute top-2 md:top-4 right-2 md:right-4"
                   >
                     Choose another address
                   </p>
                   <div className="w-full flex justify-between items-center">
                     <div className="flex items-start justify-start">
-                      <ICONS.LOCATION className="w-5 h-5 mt-1 mr-1 text-pink " />
+                      <ICONS.LOCATION className="w-4 h-4 md:w-5 md:h-5 mt-1 mr-1 text-pink" />
                       <div className="w-auto">
-                        <h2 className="text-text text-lg title-font font-medium">
+                        <h2 className="text-text text-base md:text-lg title-font font-medium truncate max-w-[250px]">
                           {my_address?.full_name || ""}
                         </h2>
-                        <p className="text-slate-400 text-sm title-font font-medium">
+                        <p className="text-slate-400 text-xs md:text-sm title-font font-medium">
                           {my_address?.phone || ""}
                         </p>
                       </div>
                     </div>
                   </div>
-                  <div className="w-full mb-6 mt-3 ml-6">
-                    <p>
+                  <div className="w-full mb-4 md:mb-6 mt-2 md:mt-3 ml-4 md:ml-6 text-xs md:text-base">
+                    <p className="truncate max-w-full">
                       {my_address?.address_line_1}, {my_address?.address_line_2}
                     </p>
-                    <p>
-                      {my_address?.city}, {my_address?.state} -{" "}
-                      {my_address?.pincode}
+                    <p className="truncate max-w-full">
+                      {my_address?.city}, {my_address?.state} - {my_address?.pincode}
                     </p>
-                    <p>{my_address?.country}</p>
+                    <p className="truncate max-w-full">{my_address?.country}</p>
                   </div>
-                  <div className="w-full flex item justify-between text-green">
+                  <div className="w-full flex items-center justify-between text-green">
                     {estimationDate ? (
-                      <p className="flex items-center">
-                        <ICONS.TRUCK className="w-5 h-5 mr-2" /> Delivery By{" "}
+                      <p className="flex items-center text-xs md:text-sm">
+                        <ICONS.TRUCK className="w-4 h-4 md:w-5 md:h-5 mr-2" /> Delivery By{" "}
                         {moment(estimationDate).format("DD MMM, YYYY")}
                       </p>
                     ) : null}
@@ -378,66 +377,63 @@ const Checkout = () => {
                       return (
                         <div
                           key={id}
-                          className="rounded-lg py-2 px-3 mb-3 relative bg-slate-50 "
+                          className="rounded-lg py-2 px-3 mb-3 relative bg-slate-50"
                         >
                           <Button
                             handleClick={() => handleDelete({ id, ...data })}
-                            className="absolute !bg-red-500 !border-red-500 !py-1.5 !px-2 top-4 right-4 !text-whie flex justify-center items-end"
+                            className="absolute !bg-red-500 !border-red-500 !py-1.5 !px-2 top-2 md:top-4 right-2 md:right-4 !text-white flex justify-center items-center z-10"
                           >
-                            <ICONS.DELETE className="w-5 h-5 text-white" />
+                            <ICONS.DELETE className="w-4 h-4 md:w-5 md:h-5 text-white" />
                           </Button>
-                          <div className="w-full flex items-center justify-start">
-                            <img alt={imageAlt}
-                              className="w-28 rounded-lg xl:max-h-[280px] object-cover object-center"
+                          <div className="w-full flex flex-col md:flex-row items-start md:items-center justify-start space-y-3 md:space-y-0 md:space-x-4">
+                            <img
+                              alt={imageAlt}
+                              className="md:w-28 h-40 md:h-auto rounded-md object-cover object-cente"
                               src={image ? (IMAGE_PATH + image) : DUMMY_IMAGE}
                             />
-                            <div className="w-full ml-4">
+                            <div className="w-full">
                               <h2
                                 onClick={() =>
                                   handleRedirect(
                                     PAGES.PRODUCTS.path + "/" + data?.product_id
                                   )
                                 }
-                                className="flex cursor-pointer justify-between text-base font-medium text-text"
+                                className="flex cursor-pointer justify-between text-base font-medium text-text !line-clamp-1"
                               >
                                 {variantData?.name || ""}
                               </h2>
-                              <div className="w-full flex justify-start items-center my-1.5 text-base font-medium">
-                                <ins className="no-underline">
-                                  ₹ {variantData?.selling_price}
-                                </ins>
-                                <del className="ml-2 line-through text-sm text-less">
-                                  ₹ {variantData?.mrp}
-                                </del>
-                                <div className="ml-2 py-0.5 px-1.5 text-xs text-white font-medium bg-green rounded-md">
+                              <div className="w-full flex flex-wrap items-center my-1.5 text-base font-medium space-x-2">
+                                <ins className="no-underline">₹ {variantData?.selling_price}</ins>
+                                <del className="line-through text-sm text-less">₹ {variantData?.mrp}</del>
+                                <div className="py-0.5 px-1.5 text-xs text-white font-medium bg-green rounded-md">
                                   {`-${variantData?.discount}%` || ""}
                                 </div>
                               </div>
-                              <div className="w-full flex items-center mt-2 text-sm text-gray-500 justify-start">
-                                <p>Color:</p>
-                                <div
-                                  className={classNames(
-                                    "w-4 ml-2 items-center cursor-pointer justify-center border-text-secondary border h-4 md:w-5 md:h-5 rounded-full p-0.5"
-                                  )}
-                                >
+                              <div className="w-full space-y-2">
+                                <div className="flex items-center text-sm text-gray-500">
+                                  <p className="mr-2">Color:</p>
                                   <div
-                                    style={{
-                                      background: variantData?.color_code,
-                                    }}
-                                    className="w-full h-full rounded-full"
-                                  ></div>
+                                    className={classNames(
+                                      "w-4 h-4 md:w-5 md:h-5 rounded-full p-0.5 border border-text-secondary"
+                                    )}
+                                  >
+                                    <div
+                                      style={{ background: variantData?.color_code }}
+                                      className="w-full h-full rounded-full"
+                                    ></div>
+                                  </div>
                                 </div>
-                              </div>
-                              <div className="w-full flex items-center mt-2 text-sm text-gray-500 justify-start">
-                                <p>Size:</p>
-                                <div className="ml-2 py-0.5 px-1.5 text-xs text-white font-medium bg-select rounded-md">
-                                  {variantData?.agegroup || ""}
+                                <div className="flex items-center text-sm text-gray-500">
+                                  <p className="mr-2">Size:</p>
+                                  <div className="py-0.5 px-1.5 text-xs text-white font-medium bg-select rounded-md">
+                                    {variantData?.agegroup || ""}
+                                  </div>
                                 </div>
-                              </div>
-                              <div className="w-full flex items-center mt-2 text-sm text-gray-500 justify-start">
-                                <p>Qty:</p>
-                                <div className="ml-2 font-medium">
-                                  {variantData?.qty || ""}
+                                <div className="flex items-center text-sm text-gray-500">
+                                  <p className="mr-2">Qty:</p>
+                                  <div className="font-medium">
+                                    {variantData?.qty || ""}
+                                  </div>
                                 </div>
                               </div>
                             </div>
@@ -448,7 +444,7 @@ const Checkout = () => {
                   ) : (
                     <div className="w-full flex flex-col items-center justify-center">
                       <div className="mt-10 flex flex-col items-center justify-center">
-                        <h2 className="text-center text-2xl text-text mb-1 font-semibold">
+                        <h2 className="text-center text-xl md:text-2xl text-text mb-1 font-semibold">
                           Your Bag is empty !!
                         </h2>
                         <p className="text-center text-slate-400 text-md my-0.5">
@@ -456,7 +452,7 @@ const Checkout = () => {
                         </p>
                         <Button
                           label="Explore"
-                          className="!w-auto mt-6 !min-w-36 !rounded-full mb-1 flex items-center justify-center !bg-pink !border-pink hover:!border-yellow hover:!bg-yellow transition-all duration-300"
+                          className="!w-auto mt-4 md:mt-6 !min-w-36 !rounded-full mb-1 flex items-center justify-center !bg-pink !border-pink hover:!border-yellow hover:!bg-yellow transition-all duration-300"
                         />
                       </div>
                     </div>
@@ -534,7 +530,7 @@ const Checkout = () => {
             <div className="col-span-12">
               <div className="w-full flex flex-col items-center justify-center">
                 <div className="mt-10 flex flex-col items-center justify-center">
-                  <h2 className="text-center text-2xl text-text mb-1 font-semibold">
+                  <h2 className="text-center text-xl md:text-2xl text-text mb-1 font-semibold">
                     Your Bag is empty !!
                   </h2>
                   <p className="text-center text-slate-400 text-md my-0.5">
@@ -542,7 +538,7 @@ const Checkout = () => {
                   </p>
                   <Button handleClick={() => handleRedirect('/')}
                     label="Explore"
-                    className="!w-auto mt-6 !min-w-36 !rounded-full mb-1 flex items-center justify-center !bg-pink !border-pink hover:!border-yellow hover:!bg-yellow transition-all duration-300"
+                    className="!w-auto mt-4 md:mt-6 !min-w-36 !rounded-full mb-1 flex items-center justify-center !bg-pink !border-pink hover:!border-yellow hover:!bg-yellow transition-all duration-300"
                   />
                 </div>
               </div>

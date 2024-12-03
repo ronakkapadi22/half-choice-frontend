@@ -69,7 +69,7 @@ const ProductCard = ({
                 <div onClick={(e) => {
                     e.stopPropagation();
                     handleWishlist(id, props?.wishlist);
-                }} className="absolute z-[9] top-2 right-2 cursor-pointer bg-slate-100 rounded-full p-2">
+                }} className="absolute z-[9] top-1 md;top-2 right-1 md:right-2 cursor-pointer bg-slate-100 rounded-full p-2">
                     {props?.wishlist ? (
                         <ICONS.HEART_FILL className="w-6 h-6 text-pink" />
                     ) : (
@@ -77,7 +77,7 @@ const ProductCard = ({
                     )}
                 </div>
                 {attribute?.discount ? (
-                    <div className="absolute top-2 left-2 bg-green z-[9] text-white text-xs rounded-lg px-2 py-1">
+                    <div className="absolute top-1 left-1 md:top-2 md:left-2 bg-green z-[9] text-white text-xs rounded-md md:rounded-lg px-2 py-1">
                         {attribute?.discount ? `-${attribute?.discount}%` : null}
                     </div>
                 ) : null}
@@ -96,13 +96,13 @@ const ProductCard = ({
                         className={classNames("absolute bottom-0 left-[100%] opacity-0 hover:opacity-100 hover:left-0 overflow-hidden rounded-xl xl:min-h-[400px] object-cover object-center transition duration-300 ease-in-out -scale-x-100", imgClass)}
                     />
                 </div>
-                <div className="mt-3 w-full flex flex-col justify-start">
+                <div className="mt-1 md:mt-3 w-full flex flex-col justify-start">
                     <p className="text-text text-base max-w-xs overflow-hidden text-ellipsis whitespace-nowrap cursor-pointer">
                         {variant?.name || ""}
                     </p>
-                    <div className="w-full flex justify-start items-center my-1.5 text-xl font-medium">
+                    <div className="w-full flex justify-start items-center my-1.5 text-lg md:text-xl font-medium">
                         <ins className="no-underline">₹ {attribute?.selling_price}</ins>
-                        <del className="ml-4 line-through text-base text-less">
+                        <del className="ml-4 line-through text-sm md:text-base text-less">
                             ₹ {attribute?.mrp}
                         </del>
                     </div>

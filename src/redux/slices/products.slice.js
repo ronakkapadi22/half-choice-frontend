@@ -15,9 +15,10 @@ export const getProducts = createAsyncThunk(
 );
 export const getProduct = createAsyncThunk(
     "products/getProduct",
-    async (data, { rejectWithValue }) => {
+    async ({ isInitial, ...data }, { rejectWithValue }) => {
         try {
-            return await api.product.get(data);
+            const response = await api.product.get(data);
+            return { response, isInitial }
         } catch (error) {
             return rejectWithValue(error);
         }
@@ -66,13 +67,13 @@ export const productsSlice = createSlice({
     },
     extraReducers: (builder) => {
         builder
-            .addCase(getProduct.pending, (state) => {
-                state.product.isLoading = true;
+            .addCase(getProduct.pending, (state, action) => {
+                state.product.isLoading = action.meta.arg.isInitial ? true : false;
             })
             .addCase(getProduct.fulfilled, (state, action) => {
                 state.product.isLoading = false;
-                const { data } = action.payload;
-                state.product.data = data?.data || {};
+                const { response } = action.payload;
+                state.product.data = response?.data?.data || {};
             })
             .addCase(getProduct.rejected, (state, action) => {
                 if (axios.isCancel(action.payload)) {

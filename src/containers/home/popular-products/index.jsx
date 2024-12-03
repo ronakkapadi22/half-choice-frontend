@@ -67,10 +67,10 @@ const PopularProducts = ({ title, className, disabledMeta, ...props }) => {
         className
       )}
     >
-      <div className="flex items-end mb-12 justify-between w-full">
+      <div className="flex items-start md:items-end mb-12 justify-between w-full">
         <div className="flex flex-col">
-          <h3 className="text-xl font-semibold text-pink">Our</h3>
-          <h2 className="mb-6 text-4xl font-bold">{title || ""}</h2>
+          <h3 className="text-lg md:text-xl font-semibold text-pink">Our</h3>
+          <h2 className="mb-4 md:mb-6 text-2xl md:text-4xl font-bold">{title || ""}</h2>
           <p className="text-gray-600 text-lg">
             Explore our range of Popular Products to find the latest and most
             sought-after items that everyone is talking about!

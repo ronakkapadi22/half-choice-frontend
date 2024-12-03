@@ -39,7 +39,7 @@ const SocialFeed = ({ className, ...props }) => {
         >
             <div className="flex items-end mb-12 justify-between w-full">
                 <div className="flex flex-col">
-                    <h2 className="mb-6 text-4xl font-bold">Follow Us in Instagram <a target='_blank' href='https://www.instagram.com/half.choice' className='text-pink no-underline' >@halfchoice</a></h2>
+                    <h2 className="mb-4 md:mb-6 text-2xl md:text-4xl font-bold">Follow Us in Instagram <a target='_blank' href='https://www.instagram.com/half.choice' className='text-pink no-underline' >@halfchoice</a></h2>
                     <p className="text-gray-600 text-lg">
                         Discover trendy and comfortable kids' wear at @halfchoice – where style meets playtime!
                     </p>

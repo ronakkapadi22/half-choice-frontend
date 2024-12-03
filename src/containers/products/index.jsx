@@ -154,17 +154,17 @@ const Products = () => {
         <Breadcrumb links={links} />
       </div>
       <div className="w-full flex flex-col items-start justify-start my-9">
-        <h2 className="text-3xl text-text mb-1.5 font-semibold">Products</h2>
+        <h2 className="text-xl md:text-3xl text-text mb-1.5 font-semibold">Products</h2>
         <p className="text-slate-400 text-md">
           Vibrant and durable clothing for kids of all ages, designed to inspire play and comfort. From cozy pajamas to adventure-ready outfits, we dress young imaginations with style and practicality.
         </p>
-        <div className='w-full mt-16 grid grid-cols-12 gap-6' >
-          <div className='col-span-3' >
+        <div className='w-full mt-8 md:mt-16 grid grid-cols-12 gap-6' >
+          <div className='col-span-12 md:col-span-3' >
             <CustomAccordion {...{ cat_id: getParams('cat_id'), sub_sub_cat_id: getParams('sub_sub_cat_id') }} handleValue={(main, sub) => {
               handleRedirect(`${PAGES.PRODUCTS.path}/?cat_id=${main?.is_parent ? "" : main?.id}&sub_sub_cat_id=${sub?.ids ? sub?.ids?.join(',') : sub?.id}&name=${getTitle(sub?.label)}`)
             }} accordion={categories} />
           </div>
-          <div className='col-span-9' >
+          <div className='col-span-12 md:col-span-9' >
             <div className="w-full grid grid-cols-12 gap-4">
               {isLoading ? (
                 PRODUCTS_LOADER.map((id) => (
@@ -205,10 +205,10 @@ const Products = () => {
                     <img
                       alt="cart_image"
                       src={cart_image}
-                      className="object-cover max-w-[280px] w-auto"
+                      className="object-cover max-w-[180px] md:max-w-[280px] w-auto"
                     />
                     <div className="mt-10 flex flex-col items-center justify-center">
-                      <h2 className="text-center text-2xl text-text mb-1 font-semibold">
+                      <h2 className="text-center text-xl md:text-2xl text-text mb-1 font-semibold">
                         Products not found!!
                       </h2>
                       <p className="text-center text-slate-400 text-md my-0.5">

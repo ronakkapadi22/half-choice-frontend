@@ -16,7 +16,7 @@ const Footer = () => {
             <img
               src={logo_transparent}
               alt="HalfChoice Logo"
-              className="h-16 w-fit"
+              className="h-12 md:h-16 w-fit"
             />
           </Link>
         </div>
@@ -91,7 +91,7 @@ const Footer = () => {
         {/* Footer Bottom Section */}
         <div className="flex flex-col-reverse justify-between gap-2 mt-8 md:items-center md:flex-row">
           <div className="pl-2 md:pl-0 md:text-left">
-            <p className="text-base">
+            <p className="text-sm md:text-base">
               Copyright © {moment().year()} HalfChoice. All Rights Reserved.
             </p>
           </div>

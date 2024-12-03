@@ -104,7 +104,11 @@ const NavBar = () => {
               <img alt="logo" src={logo} className="w-auto h-8 md:h-14" />
             </div>
           </div>
-          <div className="flex lg:hidden">
+          <div className="flex items-center lg:hidden">
+            <ICONS.SEARCH
+              onClick={() => handleRedirect(PAGES.SEARCH.path)}
+              className="w-6 h-6 text-gray-600 cursor-pointer mr-4"
+            />
             <button
               type="button"
               onClick={() => setMobileMenuOpen(true)}

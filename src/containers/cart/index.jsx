@@ -120,7 +120,7 @@ const Cart = () => {
           <Breadcrumb links={links} />
         </div>
         <div className="w-full flex flex-col items-start justify-start my-9">
-          <h2 className="text-3xl text-text mb-1.5 font-semibold">
+          <h2 className="text-xl md:text-3xl text-text mb-1.5 font-semibold">
             Shopping Bag
           </h2>
           <p className="text-slate-400 text-md">
@@ -146,63 +146,62 @@ const Cart = () => {
                   const image = variantData?.images?.[0]?.image_file;
                   const imageAlt = variantData?.images?.[0]?.image_altertag
                   return (
-                    <div key={id} className="rounded-md py-2 px-3 mb-3 relative bg-slate-50">
+                    <div key={id} className="rounded-md py-2 px-3 mb-3 relative bg-slate-50 w-full">
                       <Button
                         handleClick={() => handleDelete({ id, ...data })}
-                        className="absolute !bg-red-500 !border-red-500 !py-1.5 !px-2 top-4 right-4 !text-whie flex justify-center items-end"
+                        className="absolute !rounded !bg-red-500 !border-red-500 !py-1.5 !px-2 top-4 right-4 !text-white flex justify-center items-center z-10"
                       >
-                        <ICONS.DELETE className="w-5 h-5 text-white" />
+                        <ICONS.DELETE className="w-4 h-4 md:w-5 md:h-5 text-white" />
                       </Button>
-                      <div className="w-full flex items-center justify-start">
-                        <img alt={imageAlt}
-                          className="w-28 rounded-md xl:max-h-[280px] object-cover object-center"
+                      <div className="w-full flex flex-col md:flex-row items-start md:items-center justify-start space-y-3 md:space-y-0 md:space-x-4">
+                        <img
+                          alt={imageAlt}
+                          className="md:w-28 h-40 md:h-auto rounded-md object-cover object-center"
                           src={image ? (IMAGE_PATH + image) : DUMMY_IMAGE}
                         />
-                        <div className="w-full ml-4">
+                        <div className="w-full">
                           <h2
                             onClick={() =>
                               handleRedirect(
                                 PAGES.PRODUCTS.path + "/" + data?.product_id + '/' + getTitle(data?.product_name)
                               )
                             }
-                            className="flex cursor-pointer justify-between text-base font-medium text-text"
+                            className="flex cursor-pointer justify-between text-base font-medium text-text !line-clamp-1"
                           >
                             {variantData?.name || ""}
                           </h2>
-                          <div className="w-full flex justify-start items-center my-1.5 text-base font-medium">
-                            <ins className="no-underline">
-                              ₹ {variantData?.selling_price}
-                            </ins>
-                            <del className="ml-2 line-through text-sm text-less">
-                              ₹ {variantData?.mrp}
-                            </del>
-                            <div className="ml-2 py-0.5 px-1.5 text-xs text-white font-medium bg-green rounded-md">
+                          <div className="w-full flex flex-wrap items-center my-1.5 text-base font-medium space-x-2">
+                            <ins className="no-underline">₹ {variantData?.selling_price}</ins>
+                            <del className="line-through text-sm text-less">₹ {variantData?.mrp}</del>
+                            <div className="py-0.5 px-1.5 text-xs text-white font-medium bg-green rounded-md">
                               {`-${variantData?.discount}%` || ""}
                             </div>
                           </div>
-                          <div className="w-full flex items-center mt-2 text-sm text-gray-500 justify-start">
-                            <p>Color:</p>
-                            <div
-                              className={classNames(
-                                "w-4 ml-2 items-center cursor-pointer justify-center border-text-secondary border h-4 md:w-5 md:h-5 rounded-full p-0.5"
-                              )}
-                            >
+                          <div className="w-full space-y-2">
+                            <div className="flex items-center text-sm text-gray-500">
+                              <p className="mr-2">Color:</p>
                               <div
-                                style={{ background: variantData?.color_code }}
-                                className="w-full h-full rounded-full"
-                              ></div>
+                                className={classNames(
+                                  "w-4 h-4 md:w-5 md:h-5 rounded-full p-0.5 border border-text-secondary"
+                                )}
+                              >
+                                <div
+                                  style={{ background: variantData?.color_code }}
+                                  className="w-full h-full rounded-full"
+                                ></div>
+                              </div>
                             </div>
-                          </div>
-                          <div className="w-full flex items-center mt-2 text-sm text-gray-500 justify-start">
-                            <p>Size:</p>
-                            <div className="ml-2 py-0.5 px-1.5 text-xs text-white font-medium bg-select rounded-md">
-                              {variantData?.agegroup || ""}
+                            <div className="flex items-center text-sm text-gray-500">
+                              <p className="mr-2">Size:</p>
+                              <div className="py-0.5 px-1.5 text-xs text-white font-medium bg-select rounded-md">
+                                {variantData?.agegroup || ""}
+                              </div>
                             </div>
-                          </div>
-                          <div className="w-full flex items-center mt-2 text-sm text-gray-500 justify-start">
-                            <p>Qty:</p>
-                            <div className="ml-2 font-medium">
-                              {variantData?.qty || ""}
+                            <div className="flex items-center text-sm text-gray-500">
+                              <p className="mr-2">Qty:</p>
+                              <div className="font-medium">
+                                {variantData?.qty || ""}
+                              </div>
                             </div>
                           </div>
                         </div>
@@ -215,10 +214,10 @@ const Cart = () => {
                   <img
                     alt="cart_image"
                     src={cart_image}
-                    className="object-cover max-w-[280px] w-auto"
+                    className="object-cover max-w-[180px] md:max-w-[280px] w-auto"
                   />
                   <div className="mt-10 flex flex-col items-center justify-center">
-                    <h2 className="text-center text-2xl text-text mb-1 font-semibold">
+                    <h2 className="text-center text-xl md:text-2xl text-text mb-1 font-semibold">
                       Your Bag is empty !!
                     </h2>
                     <p className="text-center text-slate-400 text-md my-0.5">
@@ -226,7 +225,7 @@ const Cart = () => {
                     </p>
                     <Button handleClick={() => handleRedirect('/')}
                       label="Explore"
-                      className="!w-auto mt-6 !min-w-36 !rounded-full mb-1 flex items-center justify-center !bg-pink !border-pink hover:!border-yellow hover:!bg-yellow transition-all duration-300"
+                      className="!w-auto mt-4 md:mt-6 !min-w-36 !rounded-full mb-1 flex items-center justify-center !bg-pink !border-pink hover:!border-yellow hover:!bg-yellow transition-all duration-300"
                     />
                   </div>
                 </div>

@@ -87,12 +87,12 @@ const Address = () => {
         }} >
             <div className="relative container mx-auto lg:px-4 p-4 max-w-7xl">
                 <div className="w-full flex flex-col items-start justify-start my-9">
-                    <h2 className="text-3xl text-text mb-1.5 font-semibold">My Address</h2>
-                    <div className='w-full flex items-center justify-between' >
+                    <h2 className="text-xl md:text-3xl text-text mb-1.5 font-semibold">My Address</h2>
+                    <div className='w-full flex items-start md:items-center flex-col md:flex-row justify-between' >
                         <p className="text-slate-400 text-md">
                             Manage your delivery addresses with ease on our Address Page.
                         </p>
-                        <Button handleClick={(e) => handleAddAddress(e)} className='flex items-center justify-center' >
+                        <Button handleClick={(e) => handleAddAddress(e)} className='flex mt-4 md:mt-0 items-center justify-center' >
                             <ICONS.LOCATION className='w-5 h-5 mr-1' />
                             <span>Add Address</span>
                         </Button>
@@ -116,7 +116,7 @@ const Address = () => {
                                     <div onClick={() => handleDefault(address?.id)} className={classNames('w-full py-2 px-3 lex rounded-lg h-full bg-slate-50 flex-col cursor-pointer border-2', address?.isDefault ? 'border-green ' : 'border-slate-50')} >
                                         <div className='w-full flex justify-between items-center' >
                                             <div className='w-auto' >
-                                                <h2 className="text-text text-lg title-font font-medium">{address?.full_name || ''}</h2>
+                                                <h2 className="text-text text-base md:text-lg title-font font-medium">{address?.full_name || ''}</h2>
                                                 <p className="text-slate-400 text-sm title-font font-medium">{address?.phone || ''}</p>
                                             </div>
                                             <div className='flex items-center justify-end' >
@@ -128,7 +128,7 @@ const Address = () => {
                                             </button> */}
                                             </div>
                                         </div>
-                                        <div className='w-full mt-3' >
+                                        <div className='w-full text-sm md:text-base mt-3' >
                                             <p>{address?.address_line_1}, {address?.address_line_2}</p>
                                             <p>{address?.city}, {address?.state} - {address?.pincode}</p>
                                             <p>{address?.country}</p>
@@ -142,10 +142,10 @@ const Address = () => {
                                     <img
                                         alt="location_image"
                                         src={location_image}
-                                        className="object-cover max-w-[280px] w-auto"
+                                        className="object-cover max-w-[180px] md:max-w-[280px] w-auto"
                                     />
                                     <div className="mt-10 flex flex-col items-center justify-center">
-                                        <h2 className="text-center text-2xl text-text mb-1 font-semibold">
+                                        <h2 className="text-center text-xl md:text-2xl text-text mb-1 font-semibold">
                                             Your Address is empty !!
                                         </h2>
                                         <p className="text-center text-slate-400 text-md my-0.5">
@@ -157,7 +157,7 @@ const Address = () => {
                         )}
                     </div>
                 </div>
-                <Modal rootClass='lg:!max-w-[768px]' {...{ open: Boolean(selected?.id) || Boolean(selected), setOpen: setSelected }} >
+                <Modal rootClass='lg:!max-w-[768px] !px-4 !md:px-6' {...{ open: Boolean(selected?.id) || Boolean(selected), setOpen: setSelected }} >
                     <div className="w-full relative flex flex-col items-start justify-center" >
                         <AddressForm {...selected} {...{ setOpen: setSelected }} />
                     </div>

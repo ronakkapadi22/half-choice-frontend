@@ -61,12 +61,12 @@ const ProductSearch = () => {
       description: "Search for trendy kids' clothing at Halfchoice. Discover dresses, ethnic wear, tops, shirts, jeans, and more for boys and girls. Shop the latest styles and trends",
       keywords: "Kids fashion search, trendy kids clothing, search kids dresses, kids ethnic wear, kids clothes online"
     }} >
-      <div className="relative container mx-auto lg:px-4 p-4 max-w-7xl">
+      <div className="relative container mx-auto lg:px-4 px-2 py-4 md:py-4 md:px-4 max-w-7xl">
         <div className="w-full">
           <Breadcrumb links={links} />
         </div>
-        <div className="relative container mx-auto lg:px-4 p-4 max-w-4xl">
-          <div className="w-full flex flex-col items-start justify-start my-9">
+        <div className="relative container mx-auto lg:px-4 py-4 max-w-4xl">
+          <div className="w-full flex flex-col items-start justify-start mb-10 md:my-9">
             <div className="relative w-full">
               <ICONS.SEARCH className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
               <input
@@ -91,10 +91,10 @@ const ProductSearch = () => {
                     <img
                       alt="search_image"
                       src={search_image}
-                      className="object-cover max-w-[280px] w-auto"
+                      className="object-cover max-w-[180px] md:max-w-[280px] w-auto"
                     />
                     <div className="mt-10 flex flex-col items-center justify-center">
-                      <h2 className="text-center text-2xl text-text mb-1 font-semibold">
+                      <h2 className="text-center text-xl md:text-2xl text-text mb-1 font-semibold">
                         Waiting for search
                       </h2>
                       <p className="text-center text-slate-400 text-md my-0.5">
@@ -105,7 +105,7 @@ const ProductSearch = () => {
                 ) : isLoading ? (
                   [1, 2, 3, 4]?.map((item) => (
                     <div
-                      className="w-full mb-2 animate-pulse h-[40px] rounded-xl bg-slate-200"
+                      className="w-full mb-2 animate-pulse h-[40px] rounded-full bg-slate-200"
                       key={item}
                     ></div>
                   ))
@@ -123,10 +123,10 @@ const ProductSearch = () => {
                     <img
                       alt="cart_image"
                       src={cart_image}
-                      className="object-cover max-w-[280px] w-auto"
+                      className="object-cover max-w-[180px] md:max-w-[280px] w-auto"
                     />
                     <div className="mt-10 flex flex-col items-center justify-center">
-                      <h2 className="text-center text-2xl text-text mb-1 font-semibold">
+                      <h2 className="text-center text-xl md:text-2xl text-text mb-1 font-semibold">
                         Products not found!!
                       </h2>
                       <p className="text-center text-slate-400 text-md my-0.5">

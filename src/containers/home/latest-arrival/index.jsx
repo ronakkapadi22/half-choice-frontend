@@ -95,26 +95,26 @@ const LatestArrival = ({ title, className, disabledMeta, ...props }) => {
         className
       )}
     >
-      <div className="flex items-end mb-12 justify-between w-full">
+      <div className="flex items-start md:items-end mb-12 justify-between w-full">
         <div className="flex flex-col">
-          <h3 className="text-xl font-semibold text-pink">Our</h3>
-          <h2 className="mb-6 text-4xl font-bold">{title || ""}</h2>
+          <h3 className="text-lg md:text-xl font-semibold text-pink">Our</h3>
+          <h2 className="mb-4 md:mb-6 text-2xl md:text-4xl font-bold">{title || ""}</h2>
           <p className="text-gray-600 text-lg">
             Explore the latest arrivals in kids' clothing with adorable, comfy,
             and playful styles perfect for every little trendsetter.
           </p>
         </div>
         <div className="flex">
-          <button className="mr-2 w-10 h-10 flex items-center justify-center rounded-full border border-text">
+          <button className="mr-2 w-8 h-8 md:w-10 md:h-10 flex items-center justify-center rounded-full border border-text">
             <ICONS.CHEVRON_LEFT
               onClick={handlePrevious}
-              className="text-text w-6 h-6"
+              className="text-text w-4 h-4 md:w-6 md:h-6"
             />
           </button>
-          <button className="w-10 h-10 flex items-center justify-center rounded-full border border-text">
+          <button className="w-8 h-8 md:w-10 md:h-10 flex items-center justify-center rounded-full border border-text">
             <ICONS.CHEVRON_RIGHT
               onClick={handleNext}
-              className="text-text w-6 h-6"
+              className="text-text w-4 h-4 md:w-6 md:h-6"
             />
           </button>
         </div>

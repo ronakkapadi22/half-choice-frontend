@@ -44,8 +44,8 @@ const WhatWeDo = () => {
     <section className="w-full">
       <div className="relative container mx-auto lg:px-4 p-4 max-w-7xl">
         <div className="w-full">
-          <h2 className="text-xl font-semibold text-pink">What</h2>
-          <h3 className="mb-6 text-4xl font-bold">We do</h3>
+          <h2 className="text-lg md:text-xl font-semibold text-pink">What</h2>
+          <h3 className="mb-4 md:mb-6 text-2xl md:text-4xl font-bold">We do</h3>
           <p className="mb-12 text-lg text-gray-600">
             At HalfChoice we don't just provide children's clothing; we
             celebrate the
