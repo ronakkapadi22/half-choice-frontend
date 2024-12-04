@@ -156,7 +156,7 @@ const OrderDetails = () => {
         <h2 className="text-xl md:text-3xl text-text mb-1.5 font-semibold">
           Order Details
         </h2>
-        <p className="text-slate-400 text-md">
+        <p className="text-slate-400 text-sm md:text-md">
           A details of my recent purchase, featuring a variety of items I've
           added to my wardrobe. From everyday essentials to statement pieces,
           these orders reflect my evolving style and personal preferences.

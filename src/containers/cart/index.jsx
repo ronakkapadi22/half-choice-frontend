@@ -123,7 +123,7 @@ const Cart = () => {
           <h2 className="text-xl md:text-3xl text-text mb-1.5 font-semibold">
             Shopping Bag
           </h2>
-          <p className="text-slate-400 text-md">
+          <p className="text-slate-400 text-sm md:text-md">
             Explore a vibrant collection of kids' clothing that blends playful
             designs with practical comfort, perfect for all occasions.
           </p>

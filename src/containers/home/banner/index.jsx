@@ -114,11 +114,11 @@ const Slide = ({ isActive, image, message, btn, small }) => {
       <div className="md:col-span-6 order-2 md:order-1" >
         <div className="flex h-full justify-center items-center" >
           <div className="w-full md:pl-8 text-center md:text-left" >
-            <h2 className={isActive ? 'fade-up mb-4 md:mb-6 text-2xl md:text-4xl font-medium text-pink' : ''}>{small}</h2>
-            <h1 className={isActive ? 'fade-up-delay text-3xl md:text-5xl !leading-normal md:!leading-[74px]' : ''}>{message || ''}</h1>
+            <h2 className={isActive ? 'fade-up mb-4 md:mb-6 text-xl md:text-4xl font-medium text-pink' : ''}>{small}</h2>
+            <h1 className={isActive ? 'fade-up-delay text-2xl md:text-5xl !leading-normal md:!leading-[74px]' : ''}>{message || ''}</h1>
             <Button
               className={classNames(
-                "!w-auto mt-4 md:mt-10 text-base md:text-xl flex items-center !min-w-full md:!min-w-40 !rounded-full justify-center !bg-green !border-green hover:!border-pink hover:!bg-pink transition-all duration-300",
+                "!w-auto mt-4 md:mt-10 text-base md:text-xl flex items-center mx-auto md:mx-0 !min-w-40 !rounded-full justify-center !bg-green !border-green hover:!border-pink hover:!bg-pink transition-all duration-300",
                 isActive ? 'fade-up-delay-btn' : ''
               )}
             >

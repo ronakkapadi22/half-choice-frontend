@@ -69,7 +69,7 @@ const Orders = () => {
         </div>
         <div className="w-full flex flex-col items-start justify-start my-9">
           <h2 className="text-xl md:text-3xl text-text mb-1.5 font-semibold">My Orders</h2>
-          <p className="text-slate-400 text-md">
+          <p className="text-slate-400 text-sm md:text-md">
             A list of my recent purchases, featuring a variety of items I've added
             to my wardrobe. From everyday essentials to statement pieces, these
             orders reflect my evolving style and personal preferences.

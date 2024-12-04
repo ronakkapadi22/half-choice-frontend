@@ -89,7 +89,7 @@ const Address = () => {
                 <div className="w-full flex flex-col items-start justify-start my-9">
                     <h2 className="text-xl md:text-3xl text-text mb-1.5 font-semibold">My Address</h2>
                     <div className='w-full flex items-start md:items-center flex-col md:flex-row justify-between' >
-                        <p className="text-slate-400 text-md">
+                        <p className="text-slate-400 text-sm md:text-md">
                             Manage your delivery addresses with ease on our Address Page.
                         </p>
                         <Button handleClick={(e) => handleAddAddress(e)} className='flex mt-4 md:mt-0 items-center justify-center' >

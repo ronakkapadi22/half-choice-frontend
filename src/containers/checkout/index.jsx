@@ -291,7 +291,7 @@ const Checkout = () => {
           <h2 className="text-xl md:text-3xl text-text mb-1.5 font-semibold">
             Review and Complete Your Purchase
           </h2>
-          <p className="text-slate-400 text-md">
+          <p className="text-slate-400 text-sm md:text-md">
             Securely review your items, enter your shipping details, and choose
             your payment method to complete your purchase. Your cart is just a few
             steps away from being yours!

@@ -100,7 +100,7 @@ const ProductCard = ({
                     <p className="text-text text-base max-w-xs overflow-hidden text-ellipsis whitespace-nowrap cursor-pointer">
                         {variant?.name || ""}
                     </p>
-                    <div className="w-full flex justify-start items-center my-1.5 text-lg md:text-xl font-medium">
+                    <div className="w-full flex justify-start items-center my-1.5 text-base md:text-xl font-medium">
                         <ins className="no-underline">₹ {attribute?.selling_price}</ins>
                         <del className="ml-4 line-through text-sm md:text-base text-less">
                             ₹ {attribute?.mrp}
@@ -120,7 +120,7 @@ const ProductCard = ({
                         <div className="flex items-center justify-end">
                             {sizes.map((size) => (
                                 <div
-                                    className="border rounded-sm text-sm px-1 text-text-secondary min-w-6 py-0.5 ml-1 flex items-center justify-center border-text-secondary"
+                                    className="border rounded-sm text-xs px-1 text-text-secondary min-w-6 py-[2px] md:py-0.5 ml-1 flex items-center justify-center border-text-secondary"
                                     key={size}
                                 >
                                     {size}

@@ -155,7 +155,7 @@ const Products = () => {
       </div>
       <div className="w-full flex flex-col items-start justify-start my-9">
         <h2 className="text-xl md:text-3xl text-text mb-1.5 font-semibold">Products</h2>
-        <p className="text-slate-400 text-md">
+        <p className="text-slate-400 text-sm md:text-md">
           Vibrant and durable clothing for kids of all ages, designed to inspire play and comfort. From cozy pajamas to adventure-ready outfits, we dress young imaginations with style and practicality.
         </p>
         <div className='w-full mt-8 md:mt-16 grid grid-cols-12 gap-6' >
