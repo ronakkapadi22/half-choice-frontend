@@ -1,4 +1,5 @@
 import { initializeApp } from "firebase/app";
+import { getRemoteConfig, fetchAndActivate, getValue } from "firebase/remote-config";
 import {
   getAuth,
   signInWithPhoneNumber,
@@ -28,12 +29,20 @@ const firebaseConfig = {
 //   measurementId: "G-38YSEW8SNT"
 // };
 
-
 const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
 const auth = getAuth(app);
 
 
+// Initialize Remote Config
+const remoteConfig = getRemoteConfig(app);
 
-export { auth, RecaptchaVerifier, signInWithPhoneNumber };
+// Set default values and fetch settings
+remoteConfig.settings = {
+  minimumFetchIntervalMillis: 3600000, // Fetch interval (e.g., 1 hour)
+};
+
+
+
+export { auth, RecaptchaVerifier, signInWithPhoneNumber, remoteConfig, fetchAndActivate, getValue };
 

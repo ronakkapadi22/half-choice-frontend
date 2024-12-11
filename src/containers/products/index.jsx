@@ -70,6 +70,20 @@ const Products = () => {
         }
       })
       if (response?.data) {
+
+        const params = {
+          user_id: user?.id,
+          pageSize: products?.length,
+          pageNumber: 1
+        }
+
+        if ((getParams('name')) !== 'apparel') {
+          params['cat_id'] = getParams('cat_id')
+          params['sub_sub_cat_id'] = getParams('sub_sub_cat_id')
+        } else {
+          params['sub_cat_id'] = getParams('sub_cat_id')
+        }
+
         fetchAllProducts({
           isInitial: true,
           query: {
@@ -77,13 +91,7 @@ const Products = () => {
             pageNumber: getCurrentPage(products?.length, 16)
           },
           isLoader: false,
-          params: {
-            user_id: user?.id,
-            cat_id: getParams('cat_id'),
-            sub_sub_cat_id: getParams('sub_sub_cat_id'),
-            pageSize: products?.length,
-            pageNumber: 1
-          }
+          params
         });
       }
     } catch (error) {
@@ -92,6 +100,20 @@ const Products = () => {
   }, [user?.id, fetchAllProducts, getParams, getCurrentPage, products?.length])
 
   const handlePaginationData = async ({ pageNumber, pageSize }) => {
+
+    const params = {
+      user_id: user?.id,
+      pageNumber: pageNumber + 1,
+      pageSize: 16
+    }
+
+    if ((getParams('name')) !== 'apparel') {
+      params['cat_id'] = getParams('cat_id')
+      params['sub_sub_cat_id'] = getParams('sub_sub_cat_id')
+    } else {
+      params['sub_cat_id'] = getParams('sub_cat_id')
+    }
+
     fetchAllProducts({
       isInitial: false,
       isLoader: false,
@@ -99,13 +121,7 @@ const Products = () => {
         pageNumber: pageNumber + 1,
         pageSize
       },
-      params: {
-        user_id: user?.id,
-        cat_id: getParams('cat_id'),
-        sub_sub_cat_id: getParams('sub_sub_cat_id'),
-        pageNumber: pageNumber + 1,
-        pageSize: 16
-      }
+      params
     })
   }
 
@@ -133,9 +149,12 @@ const Products = () => {
       pageNumber: 1,
       pageSize: 16
     }
+
     if ((getParams('name')) !== 'apparel') {
       params['cat_id'] = getParams('cat_id')
       params['sub_sub_cat_id'] = getParams('sub_sub_cat_id')
+    } else {
+      params['sub_cat_id'] = getParams('sub_cat_id')
     }
     fetchAllProducts({
       isInitial: true,
@@ -161,7 +180,7 @@ const Products = () => {
         <div className='w-full mt-8 md:mt-16 grid grid-cols-12 gap-6' >
           <div className='col-span-12 md:col-span-3' >
             <CustomAccordion {...{ cat_id: getParams('cat_id'), sub_sub_cat_id: getParams('sub_sub_cat_id') }} handleValue={(main, sub) => {
-              handleRedirect(`${PAGES.PRODUCTS.path}/?cat_id=${main?.is_parent ? "" : main?.id}&sub_sub_cat_id=${sub?.ids ? sub?.ids?.join(',') : sub?.id}&name=${getTitle(sub?.label)}`)
+              handleRedirect(`${PAGES.PRODUCTS.path}/?cat_id=${main?.is_parent ? "" : main?.id}&sub_sub_cat_id=${sub?.ids ? sub?.ids?.join(',') : sub?.id}&name=${getTitle(sub?.label)}&sub_cat_id=${main?.is_parent ? main?.id : ''}`)
             }} accordion={categories} />
           </div>
           <div className='col-span-12 md:col-span-9' >

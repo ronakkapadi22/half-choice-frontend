@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useMemo, useRef, useState } from "react";
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Pagination, Autoplay } from 'swiper/modules';
 import 'swiper/css';
@@ -16,11 +16,20 @@ import banner7 from "../../../assets/images/banner4.png";
 import banner8 from "../../../assets/images/banner8.png";
 import banner9 from "../../../assets/images/banner9.png";
 import banner10 from "../../../assets/images/banner10.png";
+import { useSelector } from "react-redux";
 
 const HomeBanner = () => {
+
+  const { home_banners } = useSelector(({ common }) => common)
+
   const [activeIndex, setActiveIndex] = useState(0);
 
   const swiperRef = useRef(null);
+
+  const banners = useMemo(() => {
+    if (!home_banners || !home_banners?.length) return []
+    return home_banners || []
+  }, [home_banners])
 
   const goNext = () => {
     if (swiperRef.current && swiperRef.current.swiper) {
@@ -41,7 +50,7 @@ const HomeBanner = () => {
       <div onClick={goPrev} className="swiper-button image-swiper-button-prev border p-3 rounded-full border-text">
         <ICONS.CHEVRON_LEFT />
       </div>
-      <Swiper ref={swiperRef}
+      {banners?.length ? <Swiper ref={swiperRef}
         modules={[Autoplay, Pagination]}
         spaceBetween={50}
         slidesPerView={1}
@@ -60,37 +69,12 @@ const HomeBanner = () => {
         }}
         onSlideChange={(swiper) => setActiveIndex(swiper.realIndex)}
       >
-        <SwiperSlide>
-          <Slide image={banner1} small="Trendy Kids' Fashion" message="Shop Trendy Kids' Fashion - Stylish Dresses to Ethnic Wear!" btn='Shop Now' isActive={activeIndex === 0} />
-        </SwiperSlide>
-        <SwiperSlide>
-          <Slide image={banner2} small="One-Stop Kids' Clothes" message="Explore Kids' Clothes - Casual, Party & Ethnic Wear at Best Prices!" btn='Browse Collection' isActive={activeIndex === 1} />
-        </SwiperSlide>
-        <SwiperSlide>
-          <Slide image={banner3} small="Kids' Clothing for Every Occasion" message="Find Trendy Outfits - Dresses, Ethnic Wear, T-shirts & More!" btn='Explore Now' isActive={activeIndex === 2} />
-        </SwiperSlide>
-        <SwiperSlide>
-          <Slide image={banner4} small="Stylish & Comfortable Kids' Clothes" message="Fashionable & Comfortable Kids' Clothes - T-shirts, Dresses & More!" btn="Shop Stylish Outfits" isActive={activeIndex === 3} />
-        </SwiperSlide>
-        <SwiperSlide>
-          <Slide image={banner6} small="Affordable Kids' Fashion" message="Affordable, High-Quality Kids' Clothing - Dresses, Casuals & Ethnic Wear!" btn="Start Shopping" isActive={activeIndex === 4} />
-        </SwiperSlide>
-        <SwiperSlide>
-          <Slide image={banner5} small="Kids' Fashion for Celebrations" message="Perfect Kids' Fashion for Birthdays, Festivals & Celebrations!" btn="Shop for Occasions" isActive={activeIndex === 5} />
-        </SwiperSlide>
-        <SwiperSlide>
-          <Slide image={banner7} small="Comfort & Style for Kids" message="Stylish & Comfortable Kids' Clothing for Boys & Girls!" btn="Discover Comfort" isActive={activeIndex === 6} />
-        </SwiperSlide>
-        <SwiperSlide>
-          <Slide image={banner8} small="Ethnic Wear for Kids" message="Shop Trendy Ethnic Wear for Kids - Perfect for Festivities!" btn="Explore Ethnic Wear" isActive={activeIndex === 7} />
-        </SwiperSlide>
-        <SwiperSlide>
-          <Slide image={banner9} small="Perfect Dresses for Kids" message="Elegant Party Dresses & Fun Frocks for Your Little One!" btn="Shop Dresses Now" isActive={activeIndex === 8} />
-        </SwiperSlide>
-        <SwiperSlide>
-          <Slide small="Seasonal Kids' Fashion" image={banner10} message="New Styles in Kids' Fashion - Dresses, T-shirts & Ethnic Wear!" btn="Shop Fresh Styles" isActive={activeIndex === 9} />
-        </SwiperSlide>
-      </Swiper>
+        {
+          banners?.map((item, i) => <SwiperSlide key={item?.id} >
+            <Slide image={item?.image || ''} small={item?.title || ''} message={item?.sub_title || ''} btn={item?.action || ''} isActive={activeIndex === i} />
+          </SwiperSlide>)
+        }
+      </Swiper> : null}
     </div>
   );
 };

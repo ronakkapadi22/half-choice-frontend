@@ -149,7 +149,7 @@ const Cart = () => {
                     <div key={id} className="rounded-md py-2 px-3 mb-3 relative bg-slate-50 w-full">
                       <Button
                         handleClick={() => handleDelete({ id, ...data })}
-                        className="absolute !rounded !bg-red-500 !border-red-500 !py-1.5 !px-2 top-4 right-4 !text-white flex justify-center items-center z-10"
+                        className="absolute !rounded-lg !bg-red-500 !border-red-500 !py-1.5 !px-2 top-4 right-4 !text-white flex justify-center items-center z-2"
                       >
                         <ICONS.DELETE className="w-4 h-4 md:w-5 md:h-5 text-white" />
                       </Button>

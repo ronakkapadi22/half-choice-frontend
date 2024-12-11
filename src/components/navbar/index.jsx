@@ -37,6 +37,7 @@ const NavBar = () => {
   const [confirm, setConfirm] = useState(false);
   const { user } = useSelector(({ auth }) => auth);
   const { data, isLoading } = useSelector(({ category }) => category);
+  const { offer } = useSelector(({ common }) => common)
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -89,7 +90,7 @@ const NavBar = () => {
 
   return (
     <div className="w-full">
-      <Discount discount="25% off with COD Available | Free Delivery" />
+      <Discount discount={offer?.description || ''} />
       <header className="bg-white">
         <nav
           aria-label="Global"
@@ -146,7 +147,7 @@ const NavBar = () => {
                           handleRedirect(
                             `${PAGES.PRODUCTS.path}?cat_id=${item?.is_parent ? "" : cat?.id
                             }&sub_sub_cat_id=${item?.ids ? item?.ids?.join(",") : item?.id
-                            }&name=${getTitle(item?.name)}`
+                            }&name=${getTitle(item?.name)}&sub_cat_id=${item?.is_parent ? cat?.id : ''}`
                           )
                         }
                       >
@@ -314,6 +315,24 @@ const NavBar = () => {
                     </div>
                   </div>
                 ) : null}
+                {
+                  isUserLogged ? <div className="w-full flex flex-col py-4" >
+                    <Link
+                      to={PAGES.CART.path}
+                      className="flex items-center px-3 py-2 -mx-3 text-base font-medium leading-7 text-gray-900 rounded-lg hover:bg-gray-50"
+                    >
+                      <ICONS.CART className="w-6 h-6 mr-2" />
+                      My Cart
+                    </Link>
+                    <Link
+                      to={PAGES.ORDERS.path}
+                      className="flex items-center px-3 py-2 -mx-3 text-base font-medium leading-7 text-gray-900 rounded-lg hover:bg-gray-50"
+                    >
+                      <ICONS.BAG className="w-6 h-6 mr-2" />
+                      My Orders
+                    </Link>
+                  </div> : null
+                }
                 <div className="py-6 space-y-2">
                   <Link
                     to={PAGES.HOME.path}
@@ -339,7 +358,7 @@ const NavBar = () => {
                               handleRedirect(
                                 `${PAGES.PRODUCTS.path}?cat_id=${item?.is_parent ? '' : item?.id
                                 }&sub_sub_cat_id=${val?.ids ? val?.ids?.join(',') : val?.id
-                                }&name=${getTitle(val?.name)}`
+                                }&name=${getTitle(val?.name)}&sub_cat_id=${item?.is_parent ? cat?.id : ''}`
                               );
                             }}
                             as="p"

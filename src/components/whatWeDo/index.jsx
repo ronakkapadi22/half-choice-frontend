@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo } from "react";
 import IMG_1 from "../../assets/images/image1.png";
 import IMG_2 from "../../assets/images/image2.png";
 import IMG_3 from "../../assets/images/image3.png";
@@ -7,38 +7,39 @@ import VECTOR_1 from "../../assets/images/vector1.png";
 import VECTOR_2 from "../../assets/images/vector2.png";
 import VECTOR_3 from "../../assets/images/vector3.png";
 import VECTOR_4 from "../../assets/images/vector4.png";
+import { useSelector } from "react-redux";
+
+const image = {
+  0: IMG_1,
+  1: IMG_2,
+  2: IMG_3,
+  3: IMG_4
+}
+
+const vectors = {
+  0: VECTOR_1,
+  1: VECTOR_2,
+  2: VECTOR_3,
+  3: VECTOR_4
+}
+
+const borders = {
+  0: 'border-[#ebf9da]',
+  1: 'border-[#ffd4e8]',
+  2: 'border-[#ffefcf]',
+  3: 'border-blue-100'
+}
 
 const WhatWeDo = () => {
-  const features = [
-    {
-      title: "Quality Meets Style",
-      desc: "Our expertly crafted kids' clothing combines quality and style, ensuring your child stays fashionable and comfortable while being well-prepared for any adventure.",
-      img: IMG_1,
-      vec: VECTOR_1,
-      borderColor: "border-[#ebf9da]",
-    },
-    {
-      title: "Affordable Fashion",
-      desc: "At Half Choice, affordability doesn't mean compromising on style. We make it possible for parents to dress their children in chic, durable clothing without breaking the bank.",
-      img: IMG_2,
-      vec: VECTOR_2,
-      borderColor: "border-[#ffd4e8]",
-    },
-    {
-      title: "Diverse Fashion Selection",
-      desc: "Our diverse range of clothing allows your child's unique personality to shine. We offer a wide variety of styles, ensuring that your child can express their individuality and creativity through their fashion choices.",
-      img: IMG_3,
-      vec: VECTOR_3,
-      borderColor: "border-[#ffefcf]",
-    },
-    {
-      title: "Customer-Centric Care",
-      desc: "Your satisfaction is our priority. Enjoy impeccable customer service, easy returns, and swift shipping, all backed by our friendly and knowledgeable team.",
-      img: IMG_4,
-      vec: VECTOR_4,
-      borderColor: "border-blue-100",
-    },
-  ];
+
+  const { what_we_do } = useSelector(({ common }) => common)
+
+  const features = useMemo(() => {
+    if (!what_we_do || !what_we_do?.length) return []
+    return what_we_do?.map((item, i) => ({
+      ...item, img: image?.[i], vec: vectors?.[i], borderColor: borders?.[i]
+    }))
+  }, [what_we_do])
 
   return (
     <section className="w-full">
@@ -61,13 +62,13 @@ const WhatWeDo = () => {
               className={`p-6 rounded-xl border-2 ${feature.borderColor}`}
             >
               <div className={`w-24 h-24 mx-0 mb-8 relative`}>
-                <img src={feature.vec} alt="vector" />
-                <img src={feature.img} alt="img" className="absolute top-0" />
+                <img src={feature.vec} alt={feature.title} />
+                <img src={feature.img} alt={feature.sub_title} className="absolute top-0" />
               </div>
               <h4 className="mb-2 text-xl font-semibold text-left">
                 {feature.title}
               </h4>
-              <p className="text-left text-gray-600">{feature.desc}</p>
+              <p className="text-left text-gray-600">{feature.sub_title}</p>
             </div>
           ))}
         </div>

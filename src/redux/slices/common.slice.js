@@ -1,7 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-    ui_key: 'login'
+    ui_key: 'login',
+    home_banners: [],
+    what_we_do: [],
+    home_posters: []
 }
 
 export const commonSlice = createSlice({
@@ -12,10 +15,15 @@ export const commonSlice = createSlice({
             return {
                 ...state, ui_key: action.payload
             }
+        },
+        handleRemoteConfig: (state, action) => {
+            return {
+                ...state, ...action.payload
+            }
         }
     }
 })
 
-export const { handleAuthUI } = commonSlice.actions
+export const { handleAuthUI, handleRemoteConfig } = commonSlice.actions
 
 export default commonSlice.reducer;

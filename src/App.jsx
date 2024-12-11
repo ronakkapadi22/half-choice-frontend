@@ -1,21 +1,29 @@
-import { Provider } from "react-redux";
-import { persistor, store } from "./redux";
+import { useEffect } from "react";
 import { BrowserRouter } from "react-router-dom";
+import { remoteConfig, getValue, fetchAndActivate } from "./firebase";
 import Routing from "./routes";
-import { PersistGate } from "redux-persist/integration/react";
 
 import 'owl.carousel/dist/assets/owl.carousel.css';
 import 'owl.carousel/dist/assets/owl.theme.default.css';
+import { useDispatch } from "react-redux";
+import { handleRemoteConfig } from "./redux/slices/common.slice";
 
 const App = () => {
+
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+    fetchAndActivate(remoteConfig).then(() => {
+      const values = getValue(remoteConfig, 'home_data').asString()
+      const offer = getValue(remoteConfig, 'offer_home').asString()
+      dispatch(handleRemoteConfig({ ...JSON.parse(values), offer: JSON.parse(offer) }))
+    })
+  }, [dispatch])
+
   return (
-    <Provider store={store}>
-      <PersistGate persistor={persistor}>
-        <BrowserRouter>
-          <Routing />
-        </BrowserRouter>
-      </PersistGate>
-    </Provider>
+    <BrowserRouter>
+      <Routing />
+    </BrowserRouter>
   );
 };
 
