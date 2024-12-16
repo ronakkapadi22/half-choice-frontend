@@ -1,4 +1,4 @@
-import React, { useMemo, useRef, useState } from "react";
+import React, { useCallback, useMemo, useRef, useState } from "react";
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Pagination, Autoplay } from 'swiper/modules';
 import 'swiper/css';
@@ -7,6 +7,7 @@ import { classNames } from "../../../assets/utils/helper";
 import Button from "../../../shared/button";
 import { ICONS } from "../../../assets/icons";
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 const HomeBanner = () => {
 
@@ -72,6 +73,7 @@ const HomeBanner = () => {
 const Slide = ({ isActive, image, message, btn, small }) => {
   const [imagePosition, setImagePosition] = useState({ x: 0, y: 0 });
 
+  const navigate = useNavigate()
   const handleMouseMove = (event) => {
     const { clientX, clientY, currentTarget } = event;
     const { offsetLeft, offsetTop, offsetWidth, offsetHeight } = currentTarget;
@@ -83,6 +85,10 @@ const Slide = ({ isActive, image, message, btn, small }) => {
     setImagePosition({ x: xPos, y: yPos });
   };
 
+  const handleRedirect = useCallback((path = '') => {
+    navigate(path)
+  }, [navigate])
+
   return <div className="slide w-full px-4 md:!px-20 h-screen md:h-[calc(100vh-122px)]" onMouseMove={handleMouseMove}>
     <div className="grid grid-cols-1 md:grid-cols-12 md:gap-4 w-full h-full" >
       <div className="md:col-span-6 order-2 md:order-1" >
@@ -90,7 +96,7 @@ const Slide = ({ isActive, image, message, btn, small }) => {
           <div className="w-full md:pl-8 text-center md:text-left" >
             <h2 className={isActive ? 'fade-up mb-4 md:mb-6 text-xl md:text-3xl font-medium text-pink' : ''}>{small}</h2>
             <h1 className={isActive ? 'fade-up-delay text-2xl md:text-4xl !leading-normal md:!leading-[74px]' : ''}>{message || ''}</h1>
-            <Button
+            <Button handleClick={() => handleRedirect('/products?cat_id=27&sub_sub_cat_id=38,39&name=apparel&sub_cat_id=')}
               className={classNames(
                 "!w-auto mt-4 md:mt-10 text-base md:text-xl flex items-center mx-auto md:mx-0 !min-w-40 !rounded-full justify-center !bg-green !border-green hover:!border-pink hover:!bg-pink transition-all duration-300",
                 isActive ? 'fade-up-delay-btn' : ''
