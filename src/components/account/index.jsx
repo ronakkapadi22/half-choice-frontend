@@ -25,14 +25,20 @@ const Account = ({ ...props }) => {
 
     const { handleBlur, handleSubmit, setValues, values, errors, touched } = useFormik({
         initialValues: {
-            fName: '',
-            lName: '',
+            fname: '',
+            lname: '',
             email: '',
             phone: ''
         },
         validationSchema: RegisterSchema,
         onSubmit: async (values) => {
-            await updateProfileAPI(values)
+            const clone = {
+                email: values?.email,
+                phone: values?.phone,
+                fName: values?.fname,
+                lName: values?.lname
+            }
+            await updateProfileAPI(clone)
         }
     })
 
@@ -71,8 +77,8 @@ const Account = ({ ...props }) => {
     useEffect(() => {
         if (Object.values(user).length) {
             setValues({
-                fName: user?.fname?.trim() || '',
-                lName: user?.lname?.trim() || '',
+                fname: user?.fname?.trim() || '',
+                lname: user?.lname?.trim() || '',
                 email: user?.email?.trim() || '',
                 phone: user?.phone?.trim() || ''
             })
@@ -112,13 +118,13 @@ const Account = ({ ...props }) => {
                             placeholder="Enter First Name"
                             type="text"
                             label="First Name"
-                            isError={touched.fName && errors.fName}
+                            isError={touched.fname && errors.fname}
                             {...{
-                                name: "fName",
-                                value: values.fName,
+                                name: "fname",
+                                value: values.fname,
                                 handleChange,
                                 onBlur: handleBlur,
-                                error: errors.fName
+                                error: errors.fname
                             }}
                         />
                     </div>
@@ -127,13 +133,13 @@ const Account = ({ ...props }) => {
                             placeholder="Enter Last Name"
                             type="text"
                             label="Last Name"
-                            isError={errors.lName && touched.lName}
+                            isError={errors.lname && touched.lname}
                             {...{
-                                name: "lName",
-                                value: values.lName,
+                                name: "lname",
+                                value: values.lname,
                                 handleChange,
                                 onBlur: handleBlur,
-                                error: errors.lName
+                                error: errors.lname
                             }}
                         />
                     </div>

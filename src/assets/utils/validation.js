@@ -21,13 +21,13 @@ export const LoginSchema = Yup.object().shape({
 });
 
 export const RegisterSchema = Yup.object().shape({
-  fName: Yup.string()
+  fname: Yup.string()
     .required("First name is required")
     .matches(/^[A-Za-z]+$/, "First name should only contain letters")
     .min(2, "First name must be at least 2 characters")
     .max(50, "First name must be less than 50 characters"),
 
-  lName: Yup.string()
+  lname: Yup.string()
     .required("Last name is required")
     .matches(/^[A-Za-z]+$/, "Last name should only contain letters")
     .min(2, "Last name must be at least 2 characters")
