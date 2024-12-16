@@ -4,7 +4,8 @@ const initialState = {
     ui_key: 'login',
     home_banners: [],
     what_we_do: [],
-    home_posters: []
+    home_posters: [],
+    seo: {}
 }
 
 export const commonSlice = createSlice({

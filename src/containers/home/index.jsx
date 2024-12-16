@@ -15,6 +15,10 @@ const Home = () => {
   const [fetchHome] = useDispatchWithAbort(getCommerce);
   const user = useSelector(({ auth }) => auth.user);
 
+  const { seo } = useSelector(({ common }) => common)
+
+  console.log('seo', seo)
+
   useEffect(() => {
     fetchHome({
       params: {

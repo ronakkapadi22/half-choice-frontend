@@ -43,6 +43,5 @@ remoteConfig.settings = {
 };
 
 
-
 export { auth, RecaptchaVerifier, signInWithPhoneNumber, remoteConfig, fetchAndActivate, getValue };
 
