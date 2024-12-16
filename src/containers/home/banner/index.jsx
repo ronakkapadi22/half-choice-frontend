@@ -6,16 +6,6 @@ import 'swiper/css/pagination';
 import { classNames } from "../../../assets/utils/helper";
 import Button from "../../../shared/button";
 import { ICONS } from "../../../assets/icons";
-import banner1 from "../../../assets/images/banner1.png";
-import banner2 from "../../../assets/images/banner2.png";
-import banner3 from "../../../assets/images/banner3.png";
-import banner4 from "../../../assets/images/banner7.png";
-import banner5 from "../../../assets/images/banner5.png";
-import banner6 from "../../../assets/images/banner6.png";
-import banner7 from "../../../assets/images/banner4.png";
-import banner8 from "../../../assets/images/banner8.png";
-import banner9 from "../../../assets/images/banner9.png";
-import banner10 from "../../../assets/images/banner10.png";
 import { useSelector } from "react-redux";
 
 const HomeBanner = () => {
@@ -98,8 +88,8 @@ const Slide = ({ isActive, image, message, btn, small }) => {
       <div className="md:col-span-6 order-2 md:order-1" >
         <div className="flex h-full justify-center items-center" >
           <div className="w-full md:pl-8 text-center md:text-left" >
-            <h2 className={isActive ? 'fade-up mb-4 md:mb-6 text-xl md:text-4xl font-medium text-pink' : ''}>{small}</h2>
-            <h1 className={isActive ? 'fade-up-delay text-2xl md:text-5xl !leading-normal md:!leading-[74px]' : ''}>{message || ''}</h1>
+            <h2 className={isActive ? 'fade-up mb-4 md:mb-6 text-xl md:text-3xl font-medium text-pink' : ''}>{small}</h2>
+            <h1 className={isActive ? 'fade-up-delay text-2xl md:text-4xl !leading-normal md:!leading-[74px]' : ''}>{message || ''}</h1>
             <Button
               className={classNames(
                 "!w-auto mt-4 md:mt-10 text-base md:text-xl flex items-center mx-auto md:mx-0 !min-w-40 !rounded-full justify-center !bg-green !border-green hover:!border-pink hover:!bg-pink transition-all duration-300",

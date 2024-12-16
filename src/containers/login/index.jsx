@@ -20,6 +20,7 @@ import { setDataFromLocal } from "../../assets/utils/local";
 import ReactHelmet from "../seo/helmet";
 
 const Login = () => {
+  const { seo } = useSelector(({ common }) => common)
   const navigate = useNavigate();
   const [otp, setOtp] = useState("");
   const [otpError, setOtpError] = useState(false);
@@ -121,6 +122,11 @@ const Login = () => {
         const { data } = response?.data;
         setLoader(false);
         if (!data?.isUserExist) {
+          dispatch(handleAuthSlice({
+            user: {
+              phone: values.phoneNumber
+            }
+          }))
           navigate(PAGES.REGISTER.path);
           return;
         }
@@ -270,9 +276,9 @@ const Login = () => {
 
   return (
     <ReactHelmet {...{
-      title: "Login to Your Account - Access Your Halfchoice Kids Fashion Shopping Account",
-      description: "Login to your Halfchoice account for easy access to your orders, personalized recommendations, and exclusive deals on trendy kids' clothes",
-      keywords: "Login page, kids fashion account, Halfchoice login, kids clothing orders, personalized kids fashion"
+      title: seo?.login_register?.meta_title || '',
+      description: seo?.login_register?.meta_description || '',
+      keywords: seo?.login_register?.meta_keywords || '',
     }} >
       <div className="grid w-full h-full grid-cols-12">
         <div className="items-center justify-center hidden col-span-12 md:col-span-7 bg-background md:flex">

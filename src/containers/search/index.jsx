@@ -12,6 +12,7 @@ import { PAGES } from "../../assets/utils/urls";
 import ReactHelmet from "../seo/helmet";
 
 const ProductSearch = () => {
+  const { seo } = useSelector(({ common }) => common)
   const [searchValue, setSearchValue] = useState("");
   const { isLoading, data } = useSelector(({ products }) => products?.search);
   const navigate = useNavigate()
@@ -57,9 +58,9 @@ const ProductSearch = () => {
 
   return (
     <ReactHelmet {...{
-      title: "Search Kids' Fashion - Dresses, Ethnic Wear, Tops & More at Halfchoice",
-      description: "Search for trendy kids' clothing at Halfchoice. Discover dresses, ethnic wear, tops, shirts, jeans, and more for boys and girls. Shop the latest styles and trends",
-      keywords: "Kids fashion search, trendy kids clothing, search kids dresses, kids ethnic wear, kids clothes online"
+      title: seo?.search?.meta_title || '',
+      description: seo?.search?.meta_description || '',
+      keywords: seo?.search?.meta_keywords || '',
     }} >
       <div className="relative container mx-auto lg:px-4 px-2 py-4 md:py-4 md:px-4 max-w-7xl">
         <div className="w-full">

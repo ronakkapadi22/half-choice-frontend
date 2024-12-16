@@ -1,10 +1,7 @@
 import React, { useMemo } from "react";
-import offer_1 from "../../assets/images/boys_discount.jpeg";
-import offer_2 from "../../assets/images/girls_discount.jpeg";
-import { ICONS } from "../../assets/icons";
 import { useSelector } from "react-redux";
 
-const Offers = ({ ...props }) => {
+const Offers = () => {
 
   const { home_posters } = useSelector(({ common }) => common)
 

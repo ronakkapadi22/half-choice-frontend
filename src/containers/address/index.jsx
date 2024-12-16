@@ -15,6 +15,7 @@ import ReactHelmet from '../seo/helmet'
 
 const Address = () => {
 
+    const { seo } = useSelector(({ common }) => common)
     const navigate = useNavigate()
     const [searchParams] = useSearchParams()
     const user = useSelector(({ auth }) => auth.user);
@@ -81,9 +82,9 @@ const Address = () => {
 
     return (
         <ReactHelmet {...{
-            title: "Manage Your Address Book - Save and Update Shipping Addresses at Halfchoice",
-            description: "Update or add new shipping and billing addresses in your address book at Halfchoice. Enjoy fast checkout with saved addresses for all your kids' fashion orders",
-            keywords: "Address book, manage addresses, update shipping address, save billing address, kids fashion delivery"
+            title: seo?.address?.meta_title || '',
+            description: seo?.address?.meta_description || '',
+            keywords: seo?.address?.meta_keywords || '',
         }} >
             <div className="relative container mx-auto lg:px-4 p-4 max-w-7xl">
                 <div className="w-full flex flex-col items-start justify-start my-9">

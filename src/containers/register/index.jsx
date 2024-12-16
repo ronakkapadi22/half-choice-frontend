@@ -1,9 +1,8 @@
-import React, { useCallback, useState } from "react";
+import React, { useEffect, useState } from "react";
 import logo from "../../assets/images/logo.png";
 import Form from "../../shared/form";
 import FormControl from "../../shared/form-control";
 import Button from "../../shared/button";
-import CustomInput from "../../shared/input";
 import { api } from "../../api";
 import { useNavigate } from "react-router-dom";
 import { classNames, isTokenActivated } from "../../assets/utils/helper";
@@ -20,6 +19,8 @@ const Register = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
+  const { seo } = useSelector(({ common }) => common)
+  const { user } = useSelector(({ auth }) => auth)
   const [loader, setLoader] = useState(false);
 
   const { handleSubmit, values, errors, setValues } = useFormik({
@@ -35,13 +36,22 @@ const Register = () => {
     },
   });
 
+  useEffect(() => {
+    if (user?.phone) {
+      setValues(prev => ({
+        ...prev, phone: user?.phone
+      }))
+    }
+  }, [user?.phone])
+
+
   const handleRegister = async (data) => {
     setLoader(true);
     try {
       const response = await api.auth.register({
         data: {
           ...data,
-          login_type: 0,
+          login_type: "0",
           device_id: "d1",
           device_token: "testtoken",
           device_type: "web",
@@ -77,9 +87,9 @@ const Register = () => {
 
   return (
     <ReactHelmet {...{
-      title: "Login to Your Account - Access Your Halfchoice Kids Fashion Shopping Account",
-      description: "Login to your Halfchoice account for easy access to your orders, personalized recommendations, and exclusive deals on trendy kids' clothes",
-      keywords: "Login page, kids fashion account, Halfchoice login, kids clothing orders, personalized kids fashion"
+      title: seo?.login_register?.meta_title || '',
+      description: seo?.login_register?.meta_description || '',
+      keywords: seo?.login_register?.meta_keywords || '',
     }} >
       <div className="grid w-full h-full grid-cols-12">
         <div className="items-center justify-center hidden col-span-12 md:col-span-7 bg-background md:flex">
@@ -126,6 +136,7 @@ const Register = () => {
             <FormControl
               className="mb-4"
               isPhone
+              disabled={!!user?.phone}
               placeholder="Enter Phone Number"
               type="number"
               label="Phone Number"

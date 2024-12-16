@@ -15,25 +15,31 @@ const Home = () => {
   const [fetchHome] = useDispatchWithAbort(getCommerce);
   const user = useSelector(({ auth }) => auth.user);
 
-  const { seo } = useSelector(({ common }) => common)
-
-  console.log('seo', seo)
+  const { seo } = useSelector(({ common }) => common);
 
   useEffect(() => {
     fetchHome({
       params: {
-        user_id: user?.id
-      }
+        user_id: user?.id,
+      },
     });
   }, [fetchHome]);
 
   return (
-    <ReactHelmet keywords="Buy kids clothes online, trendy kids wear India, kids dresses for girls, boys ethnic wear online, online kids fashion shopping, best kids clothing brands India, kids party wear dresses" description="Shop trendy kids' clothes online at Halfchoice. Find dresses, ethnic wear, and casual outfits for boys and girls at the best prices in India" title="Buy Kids Clothes Online - Trendy Dresses & Ethnic Wear for Boys & Girls | Halfchoice" >
+    <ReactHelmet
+      keywords={seo?.home?.meta_keywords || ''}
+      description={seo?.home?.meta_description || ''}
+      title={seo?.home?.meta_title || ''}
+    >
       <div className="relative w-full">
         <HomeBanner />
         <LatestArrival disabledMeta className="py-16" title="Latest Arrival" />
         <Offers />
-        <PopularProducts disabledMeta className="py-16" title='Popular Products' />
+        <PopularProducts
+          disabledMeta
+          className="py-16"
+          title="Popular Products"
+        />
         <SocialFeed />
         <WhatWeDo />
         <OurValues />

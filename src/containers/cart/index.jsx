@@ -16,6 +16,7 @@ import ReactHelmet from "../seo/helmet";
 import DUMMY_IMAGE from "../../assets/images/skeleton.jpeg";
 
 const Cart = () => {
+  const { seo } = useSelector(({ common }) => common)
   const navigate = useNavigate();
   const user = useSelector(({ auth }) => auth.user);
   const { isLoading, cart } = useSelector(({ cart }) => cart);
@@ -111,9 +112,9 @@ const Cart = () => {
 
   return (
     <ReactHelmet {...{
-      title: "Your Shopping Cart - Review and Checkout Kids' Fashion at Halfchoice",
-      description: "View your shopping cart at Halfchoice and review your kids' fashion choices. Enjoy easy checkout, free delivery, and COD across India",
-      keywords: "Shopping cart, kids fashion cart, checkout kids clothes, kids clothing India, free delivery cart"
+      title: seo?.cart?.meta_title || '',
+      description: seo?.cart?.meta_description || '',
+      keywords: seo?.cart?.meta_keywords || '',
     }} >
       <div className="relative container mx-auto lg:px-4 p-4 max-w-7xl">
         <div className="w-full" >

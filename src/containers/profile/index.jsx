@@ -4,9 +4,10 @@ import Provider from '../../components/account-provider'
 import Account from '../../components/account'
 import Logout from '../../components/account/log-out'
 import ReactHelmet from '../seo/helmet'
+import { useSelector } from 'react-redux'
 
 const Profile = () => {
-
+    const { seo } = useSelector(({ common }) => common)
     const links = useMemo(() => [
         {
             id: 'profile',
@@ -31,9 +32,9 @@ const Profile = () => {
 
     return (
         <ReactHelmet {...{
-            title: "About Halfchoice - Leading Kids Fashion Brand for Stylish, Affordable Kids' Clothes in India",
-            description: "Explore Halfchoice, India's top kids fashion brand offering trendy, stylish, and affordable kids' clothes for boys and girls. Enjoy free delivery and COD across India",
-            keywords: "Kids fashion brand, stylish kids clothing, affordable kids clothes, trendy kids wear, free delivery India"
+            title: seo?.profile?.meta_title || '',
+            description: seo?.profile?.meta_description || '',
+            keywords: seo?.profile?.meta_keywords || '',
         }} >
             <div className="relative container mx-auto lg:px-4 p-4 max-w-7xl">
                 <div className="w-full" >

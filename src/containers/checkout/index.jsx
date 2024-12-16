@@ -27,6 +27,7 @@ import { useRazorpay } from "react-razorpay";
 import ReactHelmet from "../seo/helmet";
 
 const Checkout = () => {
+  const { seo } = useSelector(({ common }) => common)
   const { error, isLoading: gatewayLoading, Razorpay } = useRazorpay()
   const navigate = useNavigate();
   const user = useSelector(({ auth }) => auth.user);
@@ -279,9 +280,9 @@ const Checkout = () => {
 
   return (
     <ReactHelmet {...{
-      title: "Checkout - Secure Payment & Fast Delivery for Kids' Fashion at Halfchoice",
-      description: "Complete your order with secure payment and enjoy fast delivery on trendy kids' clothes. Halfchoice offers COD, free shipping, and easy checkout across India",
-      keywords: "Checkout page, secure payment, kids fashion checkout, fast delivery India, cash on delivery"
+      title: seo?.checkout?.meta_title || '',
+      description: seo?.checkout?.meta_description || '',
+      keywords: seo?.checkout?.meta_keywords || '',
     }} >
       <div className="relative container mx-auto lg:px-4 p-4 max-w-7xl">
         <div className="w-full">

@@ -59,9 +59,9 @@ const Orders = () => {
 
   return (
     <ReactHelmet {...{
-      title: "Your Order History - View Past Orders at Halfchoice",
-      description: "View your order history and track past purchases on Halfchoice. Access details on kids' fashion orders, delivery status, and more",
-      keywords: "Order history, view past orders, kids fashion orders, track order history, past purchases kids clothes"
+      title: seo?.orders?.meta_title || '',
+      description: seo?.orders?.meta_description || '',
+      keywords: seo?.orders?.meta_keywords || '',
     }} >
       <div className="relative container mx-auto lg:px-4 p-4 max-w-7xl">
         <div className="w-full" >
