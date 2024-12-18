@@ -290,11 +290,11 @@ const Product = () => {
               <hr />
               <div className="w-full my-4">
                 <Button
-                  disabled={loader}
+                  disabled={loader || Number(attribute?.[attributeIndex]?.qty) === 0}
                   onClick={() => handleCartItem(attribute?.[attributeIndex])}
                   className={classNames(
                     "flex w-full justify-center items-center hover:border-yellow hover:bg-yellow transition-all duration-300",
-                    loader ? "cursor-not-allowed" : ""
+                    loader || Number(attribute?.[attributeIndex]?.qty) === 0 ? "cursor-not-allowed" : ""
                   )}
                 >
                   {loader ? (
@@ -302,8 +302,8 @@ const Product = () => {
                   ) : (
                     <span className="mr-2">
                       {attribute?.[attributeIndex]?.quantity
-                        ? "View to Bag"
-                        : "Add to Bag"}
+                        ? "View to Bag" : Number(attribute?.[attributeIndex]?.qty) === 0 ? 'Out of Stock'
+                          : "Add to Bag"}
                     </span>
                   )}
                   {loader ? (
