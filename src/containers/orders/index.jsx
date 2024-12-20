@@ -19,6 +19,8 @@ import { PAGES } from "../../assets/utils/urls";
 import ReactHelmet from "../seo/helmet";
 
 const Orders = () => {
+
+  const { seo } = useSelector(({ common }) => common)
   const navigate = useNavigate()
   const user = useSelector(({ auth }) => auth.user);
   const { isLoading, orders } = useSelector(({ order }) => order);
