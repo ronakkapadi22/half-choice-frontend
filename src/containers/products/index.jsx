@@ -29,7 +29,6 @@ const Products = () => {
   const { total, isLoading, data, pagination, loader } = useSelector(({ products }) => products?.products)
   const { data: categoryData, isLoading: categoryLoading } = useSelector(({ category }) => category);
 
-
   const handleRedirect = useCallback((path = '') => {
     navigate(path)
   }, [navigate])
@@ -55,6 +54,16 @@ const Products = () => {
   const isUserLogged = useMemo(() => {
     return Boolean(user?.id) && isTokenActivated(user?.authtoken);
   }, [user]);
+
+  useEffect(() => {
+    window.fbq('track', 'Products', {
+      category_name: getParams('name'),
+      cat_id: getParams('cat_id'),
+      sub_cat_id: getParams('sub_cat_id'),
+      sub_sub_cat_id: getParams('sub_sub_cat_id'),
+    });
+  }, [getParams]);
+    
 
   const handleWishlist = useCallback(async (id, isWishlist) => {
     if (!isUserLogged) {
@@ -250,7 +259,10 @@ const Products = () => {
           <p className="text-slate-400 mb-3 mt-1 text-base leading-normal">
             To access this feature, please sign in to your account first. Once you're logged in, you can continue to add items to your wishlist seamlessly.
           </p>
-          <Button label='Sign In' handleClick={() => handleRedirect(PAGES.LOGIN.path)} className='!rounded-full min-w-[140px] !border-green hover:!bg-pink hover:!border-pink !bg-green' />
+          <Button label='Sign In' handleClick={() => {
+            localStorage.setItem('redirect', location.pathname)
+            handleRedirect(PAGES.LOGIN.path)
+          }} className='!rounded-full min-w-[140px] !border-green hover:!bg-pink hover:!border-pink !bg-green' />
         </div>
       </Modal>
     </div>

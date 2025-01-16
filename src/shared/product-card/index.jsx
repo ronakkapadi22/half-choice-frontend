@@ -20,7 +20,7 @@ const ProductCard = ({
 
     const handleRedirect = useCallback(
         (path = "") => {
-            navigate(path);
+            window.open(path, '_blank')
         },
         [navigate]
     );

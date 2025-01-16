@@ -14,7 +14,7 @@ const PrivateLayout = ({ ...props }) => {
 
   return (
     <section className="relative w-full h-auto" {...props}>
-      <WithAuthenticatedOutlet {...props} replace {...{ to: "/" }} />
+      <WithAuthenticatedOutlet {...props} replace {...{ to: localStorage.getItem('redirect') || "/" }} />
     </section>
   );
 };

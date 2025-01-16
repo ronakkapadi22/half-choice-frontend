@@ -44,6 +44,9 @@ const Register = () => {
     }
   }, [user?.phone])
 
+  useEffect(() => {
+    window.fbq('track', 'Register')
+  }, [])
 
   const handleRegister = async (data) => {
     setLoader(true);
@@ -69,7 +72,7 @@ const Register = () => {
             user: { ...data, role: "user" },
           })
         );
-        navigate(PAGES.HOME.path);
+        navigate(localStorage.getItem('redirect') || PAGES.HOME.path);
       }
     } catch (error) {
       setLoader(false);

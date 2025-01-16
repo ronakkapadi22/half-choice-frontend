@@ -45,6 +45,10 @@ const Wishlists = () => {
     setConfirm(id)
   }, [])
 
+    useEffect(() => {
+      window.fbq('track', 'Wishlist')
+    }, [])
+
   const handleRedirect = useCallback((path = '') => {
     navigate(path)
   }, [navigate])

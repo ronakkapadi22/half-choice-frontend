@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import OtpInput from "react-otp-input";
 import logo from "../../assets/images/logo.png";
 import Form from "../../shared/form";
@@ -54,6 +54,10 @@ const Login = () => {
       });
     }
   };
+
+    useEffect(() => {
+      window.fbq('track', 'Login')
+    }, [])
 
   const handleSendOTP = () => {
     setLoader(true);
@@ -139,7 +143,7 @@ const Login = () => {
           })
         );
         setDataFromLocal("token", data?.authtoken);
-        navigate(PAGES.HOME.path);
+        navigate(localStorage.getItem('redirect') || PAGES.HOME.path);
       }
     } catch (error) {
       setLoader(false);

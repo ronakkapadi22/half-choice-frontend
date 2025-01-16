@@ -20,6 +20,7 @@ import { PAGES } from "../../assets/utils/urls";
 import Spinner from "../..";
 import ReactHelmet from "../seo/helmet";
 import DUMMY_IMAGE from "../../assets/images/skeleton.jpeg";
+import RelatedProducts from "../../components/related-products";
 
 const Product = () => {
   const ref = useRef();
@@ -43,6 +44,10 @@ const Product = () => {
       },
     });
   }, [product_id, fetchProduct]);
+
+  useEffect(() => {
+    window.fbq('track', 'Product', { product_id });
+  }, [product_id]);
 
   const handleNext = useCallback(() => {
     if (ref.current) {
@@ -151,8 +156,6 @@ const Product = () => {
       console.log("error", error);
     }
   };
-
-  console.log(images)
 
   return (
     <ReactHelmet {...{ title: data?.meta_title, description: data?.meta_description, keywords: data?.meta_keywords }} >
@@ -337,6 +340,10 @@ const Product = () => {
               </div>
             </div>
           </div>
+          <div className="col-span-12 p-2" >
+            <div className="mb-2 text-2xl font-medium" >Related Products</div>
+            <RelatedProducts product={data} {...{open, setOpen, isUserLogged}} />
+          </div>
         </div>
         <Modal {...{ open, setOpen }}>
           <div className="relative flex flex-col items-start justify-center w-full">
@@ -354,7 +361,10 @@ const Product = () => {
             </p>
             <Button
               label="Sign In"
-              handleClick={() => handleRedirect(PAGES.LOGIN.path)}
+              handleClick={() => {
+                localStorage.setItem('redirect', location.pathname)
+                handleRedirect(PAGES.LOGIN.path)}
+              } 
               className="!rounded-full min-w-[140px] !border-green hover:!bg-pink hover:!border-pink !bg-green"
             />
           </div>

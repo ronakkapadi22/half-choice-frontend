@@ -14,7 +14,7 @@ const AuthLayout = ({ ...props }) => {
 
 	return (
 		<section className="w-screen h-screen" {...props}>
-			<WithAuthLayout {...props} replace {...{ to: '/' }} />
+			<WithAuthLayout {...props} replace {...{ to: localStorage.getItem('redirect') || '/' }} />
 		</section>
 	)
 }

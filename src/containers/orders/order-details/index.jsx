@@ -11,7 +11,12 @@ import {
   IMAGE_PATH,
   ORDER_COLORS,
 } from "../../../assets/utils/constant";
-import { classNames, convertOrderStatus, getTitle } from "../../../assets/utils/helper";
+import {
+  classNames,
+  convertOrderStatus,
+  getTitle,
+  isEmptyObject,
+} from "../../../assets/utils/helper";
 import Button from "../../../shared/button";
 import Modal from "../../../shared/modal";
 import { ICONS } from "../../../assets/icons";
@@ -33,7 +38,7 @@ const OrderDetails = () => {
 
   const { values, errors, handleSubmit, setValues } = useFormik({
     initialValues: {
-      reason: null
+      reason: null,
     },
     enableReinitialize: true,
     validationSchema: CancelReasonSchema,
@@ -43,31 +48,31 @@ const OrderDetails = () => {
   });
 
   const handleCancelOrder = async (payload) => {
-    setLoader(true)
+    setLoader(true);
     try {
       const response = await api.orders.cancel({
         data: {
           user_id: user?.id,
           order_id: id,
-          reason: payload?.reason || '',
-          reasonDes: payload?.reason || ''
-        }
-      })
+          reason: payload?.reason || "",
+          reasonDes: payload?.reason || "",
+        },
+      });
       if (response?.data) {
-        setLoader(false)
+        setLoader(false);
         fetchOrder({
           params: {
             user_id: user?.id,
             order_id: id,
           },
-        })
-        setSelected(null)
+        });
+        setSelected(null);
       }
     } catch (error) {
-      setLoader(false)
-      console.log('error', error)
+      setLoader(false);
+      console.log("error", error);
     }
-  }
+  };
 
   const [fetchOrder] = useDispatchWithAbort(getOrder);
   const [fetchReasons] = useDispatchWithAbort(getReasons);
@@ -86,9 +91,12 @@ const OrderDetails = () => {
     [values]
   );
 
-  const handleSelect = useCallback((value) => {
-    setValues({ reason: value })
-  }, [setValues])
+  const handleSelect = useCallback(
+    (value) => {
+      setValues({ reason: value });
+    },
+    [setValues]
+  );
 
   useEffect(() => {
     fetchOrder({
@@ -146,6 +154,15 @@ const OrderDetails = () => {
         ?.reduce((a, b) => a + b, 0),
     };
   }, [data, isLoading]);
+
+  useEffect(() => {
+    !isEmptyObject(data) &&
+      window.fbq("track", "Order", {
+        order_id: id,
+        order_number: data?.order_no,
+      });
+    Number(summary.total) && window.fbq('track', 'Purchase', {currency: "INR", value: Number(summary.subtotal)});
+  }, [data, summary]);
 
   return (
     <div className="relative container mx-auto lg:px-4 p-4 max-w-7xl">
@@ -232,77 +249,79 @@ const OrderDetails = () => {
             <div className="mt-4 flex flex-col w-full relative">
               {isLoading
                 ? CAROUSEL_LOADER?.map((item) => (
-                  <div
-                    key={item}
-                    className="animate-pulse bg-gray-100 mb-4 w-full rounded-md min-h-[120px]"
-                  />
-                ))
-                : data?.orderItems?.map((product) => {
-                  const image = product?.image?.split(",")?.[0];
-                  return (
                     <div
-                      className="rounded-md py-2 px-3 mb-3 relative bg-gray-100"
-                      key={product?.id}
-                    >
-                      <div className="w-full flex items-center justify-start">
-                        <img
-                          className="w-28 rounded-md xl:max-h-[280px] object-cover object-center"
-                          src={image ? (IMAGE_PATH + image) : DUMMY_IMAGE}
-                        />
-                        <div className="w-full ml-4">
-                          <h2
-                            onClick={() =>
-                              handleRedirect(
-                                PAGES.PRODUCTS.path +
-                                "/" +
-                                product?.product_id + "/" + getTitle(product?.product_name)
-                              )
-                            }
-                            className="flex cursor-pointer justify-between text-base font-medium text-text !line-clamp-1"
-                          >
-                            {product?.product_name || ""}
-                          </h2>
-                          <div className="w-full flex justify-start items-center my-1.5 text-base font-medium">
-                            <ins className="no-underline">
-                              ₹ {product?.selling_price}
-                            </ins>
-                            <del className="ml-2 line-through text-sm text-less">
-                              ₹ {product?.mrp}
-                            </del>
-                            <div className="ml-2 py-0.5 px-1.5 text-xs text-white font-medium bg-green rounded-md">
-                              {`-${product?.discount}%` || ""}
-                            </div>
-                          </div>
-                          <div className="w-full flex items-center mt-2 text-sm text-gray-500 justify-start">
-                            <p>Color:</p>
-                            <div
-                              className={classNames(
-                                "w-4 ml-2 items-center cursor-pointer justify-center border-text-secondary border h-4 md:w-5 md:h-5 rounded-full p-0.5"
-                              )}
+                      key={item}
+                      className="animate-pulse bg-gray-100 mb-4 w-full rounded-md min-h-[120px]"
+                    />
+                  ))
+                : data?.orderItems?.map((product) => {
+                    const image = product?.image?.split(",")?.[0];
+                    return (
+                      <div
+                        className="rounded-md py-2 px-3 mb-3 relative bg-gray-100"
+                        key={product?.id}
+                      >
+                        <div className="w-full flex items-center justify-start">
+                          <img
+                            className="w-28 rounded-md xl:max-h-[280px] object-cover object-center"
+                            src={image ? IMAGE_PATH + image : DUMMY_IMAGE}
+                          />
+                          <div className="w-full ml-4">
+                            <h2
+                              onClick={() =>
+                                handleRedirect(
+                                  PAGES.PRODUCTS.path +
+                                    "/" +
+                                    product?.product_id +
+                                    "/" +
+                                    getTitle(product?.product_name)
+                                )
+                              }
+                              className="flex cursor-pointer justify-between text-base font-medium text-text !line-clamp-1"
                             >
+                              {product?.product_name || ""}
+                            </h2>
+                            <div className="w-full flex justify-start items-center my-1.5 text-base font-medium">
+                              <ins className="no-underline">
+                                ₹ {product?.selling_price}
+                              </ins>
+                              <del className="ml-2 line-through text-sm text-less">
+                                ₹ {product?.mrp}
+                              </del>
+                              <div className="ml-2 py-0.5 px-1.5 text-xs text-white font-medium bg-green rounded-md">
+                                {`-${product?.discount}%` || ""}
+                              </div>
+                            </div>
+                            <div className="w-full flex items-center mt-2 text-sm text-gray-500 justify-start">
+                              <p>Color:</p>
                               <div
-                                style={{ background: product?.color_code }}
-                                className="w-full h-full rounded-full"
-                              ></div>
+                                className={classNames(
+                                  "w-4 ml-2 items-center cursor-pointer justify-center border-text-secondary border h-4 md:w-5 md:h-5 rounded-full p-0.5"
+                                )}
+                              >
+                                <div
+                                  style={{ background: product?.color_code }}
+                                  className="w-full h-full rounded-full"
+                                ></div>
+                              </div>
                             </div>
-                          </div>
-                          <div className="w-full flex items-center mt-2 text-sm text-gray-500 justify-start">
-                            <p>Size:</p>
-                            <div className="ml-2 py-0.5 px-1.5 text-xs text-white font-medium bg-select rounded-md">
-                              {product?.agegroup || ""}
+                            <div className="w-full flex items-center mt-2 text-sm text-gray-500 justify-start">
+                              <p>Size:</p>
+                              <div className="ml-2 py-0.5 px-1.5 text-xs text-white font-medium bg-select rounded-md">
+                                {product?.agegroup || ""}
+                              </div>
                             </div>
-                          </div>
-                          <div className="w-full flex items-center mt-2 text-sm text-gray-500 justify-start">
-                            <p>Qty:</p>
-                            <div className="ml-2 font-medium">
-                              {product?.quantity || ""}
+                            <div className="w-full flex items-center mt-2 text-sm text-gray-500 justify-start">
+                              <p>Qty:</p>
+                              <div className="ml-2 font-medium">
+                                {product?.quantity || ""}
+                              </div>
                             </div>
                           </div>
                         </div>
                       </div>
-                    </div>
-                  );
-                })}
+                    );
+                  })}
             </div>
           </div>
         </div>
@@ -357,9 +376,7 @@ const OrderDetails = () => {
               </div>
               <hr />
               <div className="flex justify-between my-3">
-                <span className="text-text font-semibold">
-                  Your Payment
-                </span>
+                <span className="text-text font-semibold">Your Payment</span>
                 <span className="text-text font-semibold">
                   ₹{summary?.subtotal?.toFixed(2)}
                 </span>
@@ -367,10 +384,16 @@ const OrderDetails = () => {
             </div>
           </div>
           <div className="w-full mt-4">
-            <Button disabled={data?.status !== 'PENDING'}
+            <Button
+              disabled={data?.status !== "PENDING"}
               handleClick={() => handleSelected(data)}
-              className={classNames("w-full hover:bg-yellow hover:border-yellow transition-all duration-300", data?.status !== 'PENDING' ? 'bg-[#e2218fa6] cursor-not-allowed hover:!bg-[#fcb018a6]' : '')}
-              label={data?.status !== 'PENDING' ? "Calcelled" : "Cancel Order"}
+              className={classNames(
+                "w-full hover:bg-yellow hover:border-yellow transition-all duration-300",
+                data?.status !== "PENDING"
+                  ? "bg-[#e2218fa6] cursor-not-allowed hover:!bg-[#fcb018a6]"
+                  : ""
+              )}
+              label={data?.status !== "PENDING" ? "Calcelled" : "Cancel Order"}
             />
           </div>
         </div>
@@ -397,11 +420,41 @@ const OrderDetails = () => {
             </div>
             <div className="grid w-full grid-cols-12 gap-4 mt-4">
               {reasonLoading
-                ? CAROUSEL_LOADER?.map((value) => <div className={"col-span-12 md:col-span-6 animate-pulse w-full rounded-lg h-10 bg-gray-100"} key={value}></div>)
-                : reasonData?.map((reason) => <div onClick={() => handleSelect(reason?.name || '')} className={classNames("col-span-12 text-sm md:col-span-6 w-full p-2 cursor-pointer bg-gray-100 rounded-lg border", values['reason'] === reason?.name ? 'border-select bg-[#87ceeb6b]' : '')} key={reason?.id}>{reason?.name || ''}</div>)}
+                ? CAROUSEL_LOADER?.map((value) => (
+                    <div
+                      className={
+                        "col-span-12 md:col-span-6 animate-pulse w-full rounded-lg h-10 bg-gray-100"
+                      }
+                      key={value}
+                    ></div>
+                  ))
+                : reasonData?.map((reason) => (
+                    <div
+                      onClick={() => handleSelect(reason?.name || "")}
+                      className={classNames(
+                        "col-span-12 text-sm md:col-span-6 w-full p-2 cursor-pointer bg-gray-100 rounded-lg border",
+                        values["reason"] === reason?.name
+                          ? "border-select bg-[#87ceeb6b]"
+                          : ""
+                      )}
+                      key={reason?.id}
+                    >
+                      {reason?.name || ""}
+                    </div>
+                  ))}
             </div>
-            <Form {...{ handleSubmit }} >
-              <textarea rows={5} className={classNames("text-sm focus:!ring-0 focus-visible:!ring-0 resize-none w-full mt-4 border rounded-lg p-4", errors['reason'] ? 'border-red-500' : '')} placeholder="Enter Order Cancel Reason" value={values.reason} name="reason" onChange={handleChange} />
+            <Form {...{ handleSubmit }}>
+              <textarea
+                rows={5}
+                className={classNames(
+                  "text-sm focus:!ring-0 focus-visible:!ring-0 resize-none w-full mt-4 border rounded-lg p-4",
+                  errors["reason"] ? "border-red-500" : ""
+                )}
+                placeholder="Enter Order Cancel Reason"
+                value={values.reason}
+                name="reason"
+                onChange={handleChange}
+              />
               <Button
                 type="submit"
                 disabled={loader}
@@ -410,7 +463,7 @@ const OrderDetails = () => {
                   loader ? "cursor-not-allowed" : ""
                 )}
               >
-                <span>{!loader ? 'Submit' : "Loading"}</span>
+                <span>{!loader ? "Submit" : "Loading"}</span>
                 {loader ? <Spinner className="ml-1 !w-4 !h-4" /> : null}
               </Button>
             </Form>

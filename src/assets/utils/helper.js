@@ -25,16 +25,16 @@ export const isTokenActivated = (token) => {
 export const generateRandomDigitNumber = () => {
   // Generate a random number between 1000000000000 and 9999999999999
   return Math.floor(Math.random() * 9000000000000) + 1000000000000;
-}
+};
 
-
-export const convertOrderStatus = (inputString = '') => {
+export const convertOrderStatus = (inputString = "") => {
   const words = inputString.split("_");
-  const capitalizedWords = words.map(word => word.charAt(0).toUpperCase()
-    + word.slice(1));
+  const capitalizedWords = words.map(
+    (word) => word.charAt(0).toUpperCase() + word.slice(1)
+  );
   const convertedString = capitalizedWords.join(" ");
   return convertedString;
-}
+};
 
 export const debounce = (callback, wait) => {
   // initialize the timer
@@ -47,18 +47,22 @@ export const debounce = (callback, wait) => {
       // if time hasn't passed yet, restart the timer
       timer = startTimer(callback);
     }
-  }
+  };
 
   return debouncedFunc;
-}
+};
 
 const handleItems = (data = []) => {
-  if (!data || !data.length) return []
+  if (!data || !data.length) return [];
   const groupedMap = new Map();
-  const clone = [...data]
-  clone.forEach(item => {
+  const clone = [...data];
+  clone.forEach((item) => {
     if (!groupedMap?.has(item?.name)) {
-      groupedMap?.set(item?.name, { ids: [], name: item?.name, image: item?.image });
+      groupedMap?.set(item?.name, {
+        ids: [],
+        name: item?.name,
+        image: item?.image,
+      });
     }
     groupedMap?.get(item?.name)?.ids?.push(item?.id);
   });
@@ -66,9 +70,14 @@ const handleItems = (data = []) => {
   return Array.from(groupedMap.values());
 };
 
+export const isEmptyObject = (obj) => {
+  if (!obj) return true;
+  return Object.getOwnPropertyNames(obj).length === 0;
+};
+
 export const restructureCategories = (data) => {
   // Helper function to remove "- boys" from names
-  const cleanName = (name) => name.replace(/\s*-\s*boys$/i, '');
+  const cleanName = (name) => name.replace(/\s*-\s*boys$/i, "");
 
   // Function to create a category object
   const createCategory = (category) => ({
@@ -76,13 +85,13 @@ export const restructureCategories = (data) => {
     is_parent: category?.is_parent,
     name: cleanName(category.name),
     image: category?.image,
-    sub: []
+    sub: [],
   });
 
   // Find the root category (Kids), Boys, and Girls categories
-  const rootCategory = data.find(category => category.is_parent === 0);
-  const boysCategory = data.find(category => category.name === "Boys");
-  const girlsCategory = data.find(category => category.name === "Girls");
+  const rootCategory = data.find((category) => category.is_parent === 0);
+  const boysCategory = data.find((category) => category.name === "Boys");
+  const girlsCategory = data.find((category) => category.name === "Girls");
 
   if (!rootCategory || !boysCategory || !girlsCategory) {
     return [];
@@ -91,18 +100,19 @@ export const restructureCategories = (data) => {
   const result = [
     createCategory(rootCategory),
     createCategory(boysCategory),
-    createCategory(girlsCategory)
+    createCategory(girlsCategory),
   ];
 
   // Helper function to add subcategories
   const addSubcategories = (parentId, targetArray) => {
-    data.filter(category => category.is_parent === parentId)
-      .forEach(subCategory => {
+    data
+      .filter((category) => category.is_parent === parentId)
+      .forEach((subCategory) => {
         targetArray.push({
           id: subCategory.id,
           is_parent: subCategory?.is_parent,
           name: cleanName(subCategory.name),
-          image: subCategory?.image || ''
+          image: subCategory?.image || "",
         });
       });
   };
@@ -117,30 +127,32 @@ export const restructureCategories = (data) => {
   // Add Girls subcategories
   addSubcategories(girlsCategory.id, result[2].sub);
 
-  return result?.map(item => ({
-    ...item, sub: item?.is_parent ? item?.sub : handleItems(item?.sub || [])
-  }))
+  return result?.map((item) => ({
+    ...item,
+    sub: item?.is_parent ? item?.sub : handleItems(item?.sub || []),
+  }));
 };
 
-export const letterCutting = (name = '') => {
-  const nameArray = name?.split(' ');
-  const initials = nameArray.map(name => name?.[0]?.toUpperCase());
-  return initials.join('');
-}
+export const letterCutting = (name = "") => {
+  const nameArray = name?.split(" ");
+  const initials = nameArray.map((name) => name?.[0]?.toUpperCase());
+  return initials.join("");
+};
 
 export const totalPages = (totalCount, pageLimit) => {
   return Math.ceil(totalCount / pageLimit);
-}
+};
 
 export const getCurrentPage = (offset, pageLimit) => {
   return Math.ceil(offset / pageLimit);
-}
+};
 
-export const getTitle = (str = '') => {
-  if (!str) return ''
-  const modifiedStr = str.toLowerCase().replace(/\s+/g, '-');
-  return modifiedStr
-}
-
-
-
+export const getTitle = (str = "") => {
+  if (!str) return "";
+  return str
+    .toLowerCase() // Convert to lowercase
+    .replace(/[^a-z0-9\s-]/g, "") // Remove special characters
+    .replace(/\s+/g, "-") // Replace spaces with hyphens
+    .replace(/-+/g, "-") // Replace multiple hyphens with a single one
+    .trim(); // Remove leading or trailing hyphens
+};

@@ -59,6 +59,10 @@ const Orders = () => {
     }
   }, [])
 
+  useEffect(() => {
+    window.fbq('track', 'Orders')
+  }, [])
+
   return (
     <ReactHelmet {...{
       title: seo?.orders?.meta_title || '',

@@ -10,6 +10,7 @@ import { useSelector } from "react-redux";
 import OurValues from "../../components/value-proposition";
 import SocialFeed from "../../components/social-feed";
 import ReactHelmet from "../seo/helmet";
+import OtherLinks from "../../components/other-links";
 
 const Home = () => {
   const [fetchHome] = useDispatchWithAbort(getCommerce);
@@ -24,6 +25,10 @@ const Home = () => {
       },
     });
   }, [fetchHome]);
+
+  useEffect(() => {
+    window.fbq("track", "Home");
+  }, [])
 
   return (
     <ReactHelmet
@@ -43,6 +48,7 @@ const Home = () => {
         <SocialFeed />
         <WhatWeDo />
         <OurValues />
+        <OtherLinks/>
       </div>
     </ReactHelmet>
   );

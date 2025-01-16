@@ -192,6 +192,7 @@ const Checkout = () => {
           })
           if (response?.data) {
             setOrder({ ...payload, orderId: payload?.order_no, type: 'failed' })
+            window.fbp('track', 'Order', { order_id: payload?.order_no, type: 'failed' })
           }
         }
       },
@@ -204,7 +205,8 @@ const Checkout = () => {
           }
         })
         if (response?.data) {
-          setOrder({ ...payload, orderId: payload?.order_no, type: 'failed' })
+          setOrder({ ...payload, orderId: payload?.order_no, type: 'success' })
+          window.fbp('track', 'Order', { order_id: payload?.order_no, type: 'success' })
         }
       },
       prefill: {
@@ -267,6 +269,7 @@ const Checkout = () => {
         setOrderLoader(false);
         if (paymentOption === 'COD') {
           setOrder({ ...response?.data?.data, estimationDate });
+          window.fbp('track', 'Order', { order_id: response?.data?.data?.orderId, type: 'success' })
         } else {
           await handlePaymentIntent({ ...response?.data?.data, name: my_address?.full_name, phone: my_address?.phone, estimationDate })
         }

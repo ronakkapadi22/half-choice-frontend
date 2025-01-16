@@ -26,6 +26,10 @@ const App = () => {
     });
   }, [dispatch]);
 
+  useEffect(() => {
+    window.fbq("track", "PageView");
+  }, [])
+
   return (
     <BrowserRouter>
       <Routing />

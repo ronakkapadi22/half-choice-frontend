@@ -16,7 +16,7 @@ import ReactHelmet from "../seo/helmet";
 import DUMMY_IMAGE from "../../assets/images/skeleton.jpeg";
 
 const Cart = () => {
-  const { seo } = useSelector(({ common }) => common)
+  const { seo } = useSelector(({ common }) => common);
   const navigate = useNavigate();
   const user = useSelector(({ auth }) => auth.user);
   const { isLoading, cart } = useSelector(({ cart }) => cart);
@@ -24,13 +24,15 @@ const Cart = () => {
   const [confirm, setConfirm] = useState(null);
   const [loading, setLoading] = useState(false);
 
-  const links = useMemo(() => [
-    {
-      id: 'cart',
-      label: 'Cart'
-    }
-  ], [])
-
+  const links = useMemo(
+    () => [
+      {
+        id: "cart",
+        label: "Cart",
+      },
+    ],
+    []
+  );
 
   useEffect(() => {
     fetchCart({
@@ -78,6 +80,25 @@ const Cart = () => {
     return { total, subtotal, total_discount };
   }, [isLoading, cart]);
 
+  
+  const eventData = useMemo(
+    () => ({
+      items: my_cart?.map(({ id, product_id, product_name, variant_id }) => ({
+        id,
+        product_id,
+        product_name,
+        variant_id,
+      })),
+      ...summary
+    }),
+    [my_cart, summary]
+  );
+
+
+  useEffect(() => {
+   eventData?.total && window.fbq('track', 'Cart', { ...eventData })
+  }, [eventData])
+
   const handleDelete = ({ ...data }) => {
     setConfirm(data);
   };
@@ -111,13 +132,15 @@ const Cart = () => {
   }, [user?.id, fetchCart, confirm]);
 
   return (
-    <ReactHelmet {...{
-      title: seo?.cart?.meta_title || '',
-      description: seo?.cart?.meta_description || '',
-      keywords: seo?.cart?.meta_keywords || '',
-    }} >
+    <ReactHelmet
+      {...{
+        title: seo?.cart?.meta_title || "",
+        description: seo?.cart?.meta_description || "",
+        keywords: seo?.cart?.meta_keywords || "",
+      }}
+    >
       <div className="relative container mx-auto lg:px-4 p-4 max-w-7xl">
-        <div className="w-full" >
+        <div className="w-full">
           <Breadcrumb links={links} />
         </div>
         <div className="w-full flex flex-col items-start justify-start my-9">
@@ -145,9 +168,12 @@ const Cart = () => {
               ) : my_cart?.length ? (
                 my_cart?.map(({ id, variantData, ...data }) => {
                   const image = variantData?.images?.[0]?.image_file;
-                  const imageAlt = variantData?.images?.[0]?.image_altertag
+                  const imageAlt = variantData?.images?.[0]?.image_altertag;
                   return (
-                    <div key={id} className="rounded-md py-2 px-3 mb-3 relative bg-slate-50 w-full">
+                    <div
+                      key={id}
+                      className="rounded-md py-2 px-3 mb-3 relative bg-slate-50 w-full"
+                    >
                       <Button
                         handleClick={() => handleDelete({ id, ...data })}
                         className="absolute !rounded-lg !bg-red-500 !border-red-500 !py-1.5 !px-2 top-4 right-4 !text-white flex justify-center items-center z-2"
@@ -158,13 +184,17 @@ const Cart = () => {
                         <img
                           alt={imageAlt}
                           className="md:w-28 h-40 md:h-auto rounded-md object-cover object-center"
-                          src={image ? (IMAGE_PATH + image) : DUMMY_IMAGE}
+                          src={image ? IMAGE_PATH + image : DUMMY_IMAGE}
                         />
                         <div className="w-full">
                           <h2
                             onClick={() =>
                               handleRedirect(
-                                PAGES.PRODUCTS.path + "/" + data?.product_id + '/' + getTitle(data?.product_name)
+                                PAGES.PRODUCTS.path +
+                                  "/" +
+                                  data?.product_id +
+                                  "/" +
+                                  getTitle(data?.product_name)
                               )
                             }
                             className="flex cursor-pointer justify-between text-base font-medium text-text !line-clamp-1"
@@ -172,8 +202,12 @@ const Cart = () => {
                             {variantData?.name || ""}
                           </h2>
                           <div className="w-full flex flex-wrap items-center my-1.5 text-base font-medium space-x-2">
-                            <ins className="no-underline">₹ {variantData?.selling_price}</ins>
-                            <del className="line-through text-sm text-less">₹ {variantData?.mrp}</del>
+                            <ins className="no-underline">
+                              ₹ {variantData?.selling_price}
+                            </ins>
+                            <del className="line-through text-sm text-less">
+                              ₹ {variantData?.mrp}
+                            </del>
                             <div className="py-0.5 px-1.5 text-xs text-white font-medium bg-green rounded-md">
                               {`-${variantData?.discount}%` || ""}
                             </div>
@@ -187,7 +221,9 @@ const Cart = () => {
                                 )}
                               >
                                 <div
-                                  style={{ background: variantData?.color_code }}
+                                  style={{
+                                    background: variantData?.color_code,
+                                  }}
                                   className="w-full h-full rounded-full"
                                 ></div>
                               </div>
@@ -224,7 +260,8 @@ const Cart = () => {
                     <p className="text-center text-slate-400 text-md my-0.5">
                       Explore more and shortlist some items.
                     </p>
-                    <Button handleClick={() => handleRedirect('/')}
+                    <Button
+                      handleClick={() => handleRedirect("/")}
                       label="Explore"
                       className="!w-auto mt-4 md:mt-6 !min-w-36 !rounded-full mb-1 flex items-center justify-center !bg-pink !border-pink hover:!border-yellow hover:!bg-yellow transition-all duration-300"
                     />
@@ -265,7 +302,8 @@ const Cart = () => {
                     ₹{summary?.subtotal?.toFixed(2)}
                   </span>
                 </div>
-                <Button handleClick={() => handleRedirect(PAGES.CHECKOUT.path)}
+                <Button
+                  handleClick={() => handleRedirect(PAGES.CHECKOUT.path)}
                   className="!mt-6 hover:bg-yellow hover:border-yellow transition-all duration-300"
                   label="Checkout"
                 />

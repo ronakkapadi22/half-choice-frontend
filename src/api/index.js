@@ -77,7 +77,15 @@ export const api = {
         data,
         params,
         ...configs,
-      })
+      }),
+      searchProduct: ({ data, params, ...configs }) =>
+        client({
+          url: '/product/productSearchList',
+          method: METHODS.GET,
+          data,
+          params,
+          ...configs,
+        })
   },
   cart: {
     getAll: ({ data, params, ...configs }) =>

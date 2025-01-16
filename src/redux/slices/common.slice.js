@@ -5,6 +5,7 @@ const initialState = {
     home_banners: [],
     what_we_do: [],
     home_posters: [],
+    popular_link: [],
     seo: {}
 }
 
