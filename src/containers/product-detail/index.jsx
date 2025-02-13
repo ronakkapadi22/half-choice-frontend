@@ -291,12 +291,12 @@ const Product = () => {
                 </div>
               </div>
               <hr />
-              <div className="w-full my-4">
+              <div className="w-full md:my-4">
                 <Button
                   disabled={loader || Number(attribute?.[attributeIndex]?.qty) === 0}
                   onClick={() => handleCartItem(attribute?.[attributeIndex])}
                   className={classNames(
-                    "flex w-full justify-center items-center hover:border-yellow hover:bg-yellow transition-all duration-300",
+                    "flex w-full justify-center py-6 md:py-2.5 items-center hover:border-yellow hover:bg-yellow transition-all duration-300 fixed md:relative bottom-0 left-0 rounded-none md:rounded-lg z-50",
                     loader || Number(attribute?.[attributeIndex]?.qty) === 0 ? "cursor-not-allowed" : ""
                   )}
                 >
@@ -342,7 +342,7 @@ const Product = () => {
           </div>
           <div className="col-span-12 p-2" >
             <div className="mb-2 text-2xl font-medium" >Related Products</div>
-            <RelatedProducts product={data} {...{open, setOpen, isUserLogged}} />
+            <RelatedProducts product={data} {...{ open, setOpen, isUserLogged }} />
           </div>
         </div>
         <Modal {...{ open, setOpen }}>
@@ -363,8 +363,9 @@ const Product = () => {
               label="Sign In"
               handleClick={() => {
                 localStorage.setItem('redirect', location.pathname)
-                handleRedirect(PAGES.LOGIN.path)}
-              } 
+                handleRedirect(PAGES.LOGIN.path)
+              }
+              }
               className="!rounded-full min-w-[140px] !border-green hover:!bg-pink hover:!border-pink !bg-green"
             />
           </div>

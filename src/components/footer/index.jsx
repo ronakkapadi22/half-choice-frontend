@@ -9,7 +9,7 @@ import moment from "moment";
 
 const Footer = () => {
   return (
-    <footer className="p-3 text-white md:p-10 bg-green lg:p-20">
+    <footer className="p-3 text-white md:p-10 bg-green lg:p-20 mb-[74px] md:mb-0">
       <div className="container flex items-center justify-between px-0 mx-auto mb-8 md:px-4 max-w-7xl">
         <div className="p-4 rounded-full">
           <Link to={PAGES.HOME.path}>
@@ -114,12 +114,11 @@ const Footer = () => {
             >
               contact us
             </a>
-            <Link
-              to={PAGES.HOME.path}
+            <a href="https://blog.halfchoice.in/" target="_blank"
               className="px-3 text-white hover:text-pink"
             >
               Blogs
-            </Link>
+            </a>
           </div>
         </div>
       </div>

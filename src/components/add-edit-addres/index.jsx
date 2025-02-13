@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import Button from "../../shared/button";
 import { ICONS } from "../../assets/icons";
 import { useFormik } from "formik";
@@ -7,7 +7,7 @@ import Form from "../../shared/form";
 import FormControl from "../../shared/form-control";
 import CustomCheckBox from "../../shared/checkbox";
 import { ADDRESS_TYPE } from "../../assets/utils/constant";
-import { classNames } from "../../assets/utils/helper";
+import { classNames, isEmptyObject } from "../../assets/utils/helper";
 import Spinner from "../..";
 import { api } from "../../api";
 import { useDispatch, useSelector } from "react-redux";
@@ -56,7 +56,7 @@ const AddressForm = ({ id, open, setOpen, ...props }) => {
       };
   }, [props, id]);
 
-  const { values, errors, handleSubmit, setValues } = useFormik({
+  const { values, errors, handleSubmit, setValues, handleBlur, touched } = useFormik({
     initialValues,
     enableReinitialize: true,
     validationSchema: AddressSchema,
@@ -64,6 +64,15 @@ const AddressForm = ({ id, open, setOpen, ...props }) => {
       await handleSubmitAddress(values);
     },
   });
+
+  useEffect(() => {
+    if (!isEmptyObject(user)) {
+      setValues(prev => ({
+        ...prev, full_name: `${user?.fname} ${user?.lname}`,
+        phone: user?.phone
+      }))
+    }
+  }, [])
 
   const handleSubmitAddress = async (payload) => {
     setLoader(true);
@@ -131,8 +140,9 @@ const AddressForm = ({ id, open, setOpen, ...props }) => {
           {...{
             name: "full_name",
             value: values.full_name,
-            error: errors["full_name"],
+            error: touched.full_name ? errors["full_name"] : null,
             handleChange,
+            handleBlur
           }}
         />
         <FormControl
@@ -144,8 +154,9 @@ const AddressForm = ({ id, open, setOpen, ...props }) => {
           {...{
             name: "phone",
             value: values.phone,
-            error: errors["phone"],
+            error: touched['phone'] ? errors["phone"] : null,
             handleChange,
+            handleBlur
           }}
         />
         <FormControl
@@ -155,8 +166,9 @@ const AddressForm = ({ id, open, setOpen, ...props }) => {
           {...{
             name: "address_line_1",
             value: values.address_line_1,
-            error: errors["address_line_1"],
+            error: touched['address_line_1'] ? errors["address_line_1"] : null,
             handleChange,
+            handleBlur
           }}
         />
         <FormControl
@@ -166,8 +178,9 @@ const AddressForm = ({ id, open, setOpen, ...props }) => {
           {...{
             name: "address_line_2",
             value: values.address_line_2,
-            error: errors["address_line_2"],
+            error: touched['address_line_2'] ? errors["address_line_2"] : null,
             handleChange,
+            handleBlur
           }}
         />
         <FormControl
@@ -177,8 +190,9 @@ const AddressForm = ({ id, open, setOpen, ...props }) => {
           {...{
             name: "city",
             value: values.city,
-            error: errors["city"],
+            error: touched?.city ? errors["city"] : null,
             handleChange,
+            handleBlur
           }}
         />
         <FormControl
@@ -188,8 +202,9 @@ const AddressForm = ({ id, open, setOpen, ...props }) => {
           {...{
             name: "state",
             value: values.state,
-            error: errors["state"],
+            error: touched['state'] ? errors["state"] : null,
             handleChange,
+            handleBlur
           }}
         />
         <FormControl
@@ -200,8 +215,9 @@ const AddressForm = ({ id, open, setOpen, ...props }) => {
             type: "number",
             name: "pincode",
             value: values.pincode,
-            error: errors["pincode"],
+            error: touched['pincode'] ? errors["pincode"] : null,
             handleChange,
+            handleBlur
           }}
         />
         <div className="w-full col-span-12">
@@ -216,7 +232,7 @@ const AddressForm = ({ id, open, setOpen, ...props }) => {
             label="Use a default address"
           />
         </div>
-        <div className="w-full col-span-12">
+        {/* <div className="w-full col-span-12">
           <label className="mb-1 text-sm sm:text-base font-medium text-text">
             Address Type
           </label>
@@ -236,7 +252,7 @@ const AddressForm = ({ id, open, setOpen, ...props }) => {
               </div>
             ))}
           </div>
-        </div>
+        </div> */}
         <div className="flex items-end justify-end col-span-12 mt-4">
           <Button
             type="submit"

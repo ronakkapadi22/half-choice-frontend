@@ -521,7 +521,7 @@ const Checkout = () => {
                   handleClick={handleOrder}
                   disabled={orderLoader}
                   className={classNames(
-                    "!w-full flex min-w-28 items-center justify-center hover:border-yellow hover:bg-yellow transition-all duration-300",
+                    "!w-full flex min-w-28 fixed bottom-0 left-0 rounded-none md:rounded-lg py-6 md:py-2 md:relative items-center justify-center hover:border-yellow hover:bg-yellow transition-all duration-300",
                     orderLoader ? "cursor-not-allowed" : ""
                   )}
                 >

@@ -38,9 +38,9 @@ const auth = getAuth(app);
 const remoteConfig = getRemoteConfig(app);
 
 // Set default values and fetch settings
-remoteConfig.settings = {
-  minimumFetchIntervalMillis: 3600000, // Fetch interval (e.g., 1 hour)
-};
+// remoteConfig.settings = {
+//   minimumFetchIntervalMillis: 3600000, // Fetch interval (e.g., 1 hour)
+// };
 
 
 export { auth, RecaptchaVerifier, signInWithPhoneNumber, remoteConfig, fetchAndActivate, getValue };

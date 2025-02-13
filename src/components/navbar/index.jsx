@@ -185,12 +185,12 @@ const NavBar = () => {
             >
               About Us
             </Link>
-            <Link
-              to="/"
+            <a href="https://blog.halfchoice.in/" target="_blank"
+
               className="text-sm font-semibold leading-6 text-gray-900"
             >
               Blogs
-            </Link>
+            </a>
           </PopoverGroup>
           <div className="items-center hidden lg:flex lg:flex-1 lg:justify-end">
             <ICONS.SEARCH

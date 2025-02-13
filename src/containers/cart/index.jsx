@@ -80,7 +80,7 @@ const Cart = () => {
     return { total, subtotal, total_discount };
   }, [isLoading, cart]);
 
-  
+
   const eventData = useMemo(
     () => ({
       items: my_cart?.map(({ id, product_id, product_name, variant_id }) => ({
@@ -96,7 +96,7 @@ const Cart = () => {
 
 
   useEffect(() => {
-   eventData?.total && window.fbq('track', 'Cart', { ...eventData })
+    eventData?.total && window.fbq('track', 'Cart', { ...eventData })
   }, [eventData])
 
   const handleDelete = ({ ...data }) => {
@@ -191,10 +191,10 @@ const Cart = () => {
                             onClick={() =>
                               handleRedirect(
                                 PAGES.PRODUCTS.path +
-                                  "/" +
-                                  data?.product_id +
-                                  "/" +
-                                  getTitle(data?.product_name)
+                                "/" +
+                                data?.product_id +
+                                "/" +
+                                getTitle(data?.product_name)
                               )
                             }
                             className="flex cursor-pointer justify-between text-base font-medium text-text !line-clamp-1"
@@ -304,7 +304,7 @@ const Cart = () => {
                 </div>
                 <Button
                   handleClick={() => handleRedirect(PAGES.CHECKOUT.path)}
-                  className="!mt-6 hover:bg-yellow hover:border-yellow transition-all duration-300"
+                  className="!mt-6 py-6 md:py-2 hover:bg-yellow hover:border-yellow transition-all duration-300 fixed md:relative bottom-0 left-0 w-full md:rounded-lg rounded-none"
                   label="Checkout"
                 />
               </div>
