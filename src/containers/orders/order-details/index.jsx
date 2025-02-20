@@ -155,13 +155,27 @@ const OrderDetails = () => {
     };
   }, [data, isLoading]);
 
+  const handleHelp = (orderNumber) => {
+    // Pre-fill the mailto link with dynamic order number
+    const email = 'halfchoice2023@gmail.com'; // Recipient email address
+    const subject = 'Halfchoice Order Help'; // Subject of the email
+    const body = `Hello Halfchoice,\n\nI need help with this order number ${orderNumber}.`; // Dynamic body text
+
+    // Create the mailto link with URL encoding
+    const mailtoLink = `mailto:${email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+
+    // Open the email client (Gmail or default)
+    window.location.href = mailtoLink;
+  };
+
+
   useEffect(() => {
     !isEmptyObject(data) &&
       window.fbq("track", "Order", {
         order_id: id,
         order_number: data?.order_no,
       });
-    Number(summary.total) && window.fbq('track', 'Purchase', {currency: "INR", value: Number(summary.subtotal)});
+    Number(summary.total) && window.fbq('track', 'Purchase', { currency: "INR", value: Number(summary.subtotal) });
   }, [data, summary]);
 
   return (
@@ -170,9 +184,20 @@ const OrderDetails = () => {
         <Breadcrumb links={links} />
       </div>
       <div className="w-full flex flex-col items-start justify-start my-9">
-        <h2 className="text-xl md:text-3xl text-text mb-1.5 font-semibold">
-          Order Details
-        </h2>
+        <div className="flex items-center justify-between w-full"> {/* Flex container for Order Details and Help button */}
+          <h2 className="text-xl md:text-3xl text-text mb-1.5 font-semibold">
+            Order Details
+          </h2>
+
+          {/* Help Button */}
+          <div className="p-2 rounded-full cursor-pointer bg-slate-100">
+            <ICONS.HELP
+              onClick={() => handleHelp(data?.order_no)} // Pass dynamic order number
+              className="w-7 h-7"
+              style={{ fill: '#ec4899' }} // Directly applying the pink color
+            />
+          </div>
+        </div>
         <p className="text-slate-400 text-sm md:text-md">
           A details of my recent purchase, featuring a variety of items I've
           added to my wardrobe. From everyday essentials to statement pieces,
@@ -249,79 +274,79 @@ const OrderDetails = () => {
             <div className="mt-4 flex flex-col w-full relative">
               {isLoading
                 ? CAROUSEL_LOADER?.map((item) => (
-                    <div
-                      key={item}
-                      className="animate-pulse bg-gray-100 mb-4 w-full rounded-md min-h-[120px]"
-                    />
-                  ))
+                  <div
+                    key={item}
+                    className="animate-pulse bg-gray-100 mb-4 w-full rounded-md min-h-[120px]"
+                  />
+                ))
                 : data?.orderItems?.map((product) => {
-                    const image = product?.image?.split(",")?.[0];
-                    return (
-                      <div
-                        className="rounded-md py-2 px-3 mb-3 relative bg-gray-100"
-                        key={product?.id}
-                      >
-                        <div className="w-full flex items-center justify-start">
-                          <img
-                            className="w-28 rounded-md xl:max-h-[280px] object-cover object-center"
-                            src={image ? IMAGE_PATH + image : DUMMY_IMAGE}
-                          />
-                          <div className="w-full ml-4">
-                            <h2
-                              onClick={() =>
-                                handleRedirect(
-                                  PAGES.PRODUCTS.path +
-                                    "/" +
-                                    product?.product_id +
-                                    "/" +
-                                    getTitle(product?.product_name)
-                                )
-                              }
-                              className="flex cursor-pointer justify-between text-base font-medium text-text !line-clamp-1"
+                  const image = product?.image?.split(",")?.[0];
+                  return (
+                    <div
+                      className="rounded-md py-2 px-3 mb-3 relative bg-gray-100"
+                      key={product?.id}
+                    >
+                      <div className="w-full flex items-center justify-start">
+                        <img
+                          className="w-28 rounded-md xl:max-h-[280px] object-cover object-center"
+                          src={image ? IMAGE_PATH + image : DUMMY_IMAGE}
+                        />
+                        <div className="w-full ml-4">
+                          <h2
+                            onClick={() =>
+                              handleRedirect(
+                                PAGES.PRODUCTS.path +
+                                "/" +
+                                product?.product_id +
+                                "/" +
+                                getTitle(product?.product_name)
+                              )
+                            }
+                            className="flex cursor-pointer justify-between text-base font-medium text-text !line-clamp-1"
+                          >
+                            {product?.product_name || ""}
+                          </h2>
+                          <div className="w-full flex justify-start items-center my-1.5 text-base font-medium">
+                            <ins className="no-underline">
+                              ₹ {product?.selling_price}
+                            </ins>
+                            <del className="ml-2 line-through text-sm text-less">
+                              ₹ {product?.mrp}
+                            </del>
+                            <div className="ml-2 py-0.5 px-1.5 text-xs text-white font-medium bg-green rounded-md">
+                              {`-${product?.discount}%` || ""}
+                            </div>
+                          </div>
+                          <div className="w-full flex items-center mt-2 text-sm text-gray-500 justify-start">
+                            <p>Color:</p>
+                            <div
+                              className={classNames(
+                                "w-4 ml-2 items-center cursor-pointer justify-center border-text-secondary border h-4 md:w-5 md:h-5 rounded-full p-0.5"
+                              )}
                             >
-                              {product?.product_name || ""}
-                            </h2>
-                            <div className="w-full flex justify-start items-center my-1.5 text-base font-medium">
-                              <ins className="no-underline">
-                                ₹ {product?.selling_price}
-                              </ins>
-                              <del className="ml-2 line-through text-sm text-less">
-                                ₹ {product?.mrp}
-                              </del>
-                              <div className="ml-2 py-0.5 px-1.5 text-xs text-white font-medium bg-green rounded-md">
-                                {`-${product?.discount}%` || ""}
-                              </div>
-                            </div>
-                            <div className="w-full flex items-center mt-2 text-sm text-gray-500 justify-start">
-                              <p>Color:</p>
                               <div
-                                className={classNames(
-                                  "w-4 ml-2 items-center cursor-pointer justify-center border-text-secondary border h-4 md:w-5 md:h-5 rounded-full p-0.5"
-                                )}
-                              >
-                                <div
-                                  style={{ background: product?.color_code }}
-                                  className="w-full h-full rounded-full"
-                                ></div>
-                              </div>
+                                style={{ background: product?.color_code }}
+                                className="w-full h-full rounded-full"
+                              ></div>
                             </div>
-                            <div className="w-full flex items-center mt-2 text-sm text-gray-500 justify-start">
-                              <p>Size:</p>
-                              <div className="ml-2 py-0.5 px-1.5 text-xs text-white font-medium bg-select rounded-md">
-                                {product?.agegroup || ""}
-                              </div>
+                          </div>
+                          <div className="w-full flex items-center mt-2 text-sm text-gray-500 justify-start">
+                            <p>Size:</p>
+                            <div className="ml-2 py-0.5 px-1.5 text-xs text-white font-medium bg-select rounded-md">
+                              {product?.agegroup || ""}
                             </div>
-                            <div className="w-full flex items-center mt-2 text-sm text-gray-500 justify-start">
-                              <p>Qty:</p>
-                              <div className="ml-2 font-medium">
-                                {product?.quantity || ""}
-                              </div>
+                          </div>
+                          <div className="w-full flex items-center mt-2 text-sm text-gray-500 justify-start">
+                            <p>Qty:</p>
+                            <div className="ml-2 font-medium">
+                              {product?.quantity || ""}
                             </div>
                           </div>
                         </div>
                       </div>
-                    );
-                  })}
+                    </div>
+                  );
+                })}
             </div>
           </div>
         </div>
@@ -421,27 +446,27 @@ const OrderDetails = () => {
             <div className="grid w-full grid-cols-12 gap-4 mt-4">
               {reasonLoading
                 ? CAROUSEL_LOADER?.map((value) => (
-                    <div
-                      className={
-                        "col-span-12 md:col-span-6 animate-pulse w-full rounded-lg h-10 bg-gray-100"
-                      }
-                      key={value}
-                    ></div>
-                  ))
+                  <div
+                    className={
+                      "col-span-12 md:col-span-6 animate-pulse w-full rounded-lg h-10 bg-gray-100"
+                    }
+                    key={value}
+                  ></div>
+                ))
                 : reasonData?.map((reason) => (
-                    <div
-                      onClick={() => handleSelect(reason?.name || "")}
-                      className={classNames(
-                        "col-span-12 text-sm md:col-span-6 w-full p-2 cursor-pointer bg-gray-100 rounded-lg border",
-                        values["reason"] === reason?.name
-                          ? "border-select bg-[#87ceeb6b]"
-                          : ""
-                      )}
-                      key={reason?.id}
-                    >
-                      {reason?.name || ""}
-                    </div>
-                  ))}
+                  <div
+                    onClick={() => handleSelect(reason?.name || "")}
+                    className={classNames(
+                      "col-span-12 text-sm md:col-span-6 w-full p-2 cursor-pointer bg-gray-100 rounded-lg border",
+                      values["reason"] === reason?.name
+                        ? "border-select bg-[#87ceeb6b]"
+                        : ""
+                    )}
+                    key={reason?.id}
+                  >
+                    {reason?.name || ""}
+                  </div>
+                ))}
             </div>
             <Form {...{ handleSubmit }}>
               <textarea

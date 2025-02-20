@@ -25,10 +25,23 @@ const ProductCard = ({
         [navigate]
     );
 
+    // const renderImages = useMemo(() => {
+    //     if (variant?.images?.length) {
+    //         const clone = [...variant?.images];
+    //         return IMAGE_PATH + clone?.[0]?.image_file;
+    //     } else return DUMMY_IMAGE;
+    // }, [variant]);
+
+
+    // Modify the renderImages to include multiple sizes for srcSet
     const renderImages = useMemo(() => {
         if (variant?.images?.length) {
             const clone = [...variant?.images];
-            return IMAGE_PATH + clone?.[0]?.image_file;
+            return {
+                small: IMAGE_PATH + clone?.[0]?.image_file.replace(/(\.[\w\d_-]+)$/i, '-small$1'), // Small image size
+                medium: IMAGE_PATH + clone?.[0]?.image_file.replace(/(\.[\w\d_-]+)$/i, '-medium$1'), // Medium image size
+                large: IMAGE_PATH + clone?.[0]?.image_file // Original image size (large)
+            };
         } else return DUMMY_IMAGE;
     }, [variant]);
 
@@ -84,16 +97,22 @@ const ProductCard = ({
                 <div className="w-full relative pi01Thumb">
                     <img
                         alt={imageAlterTag}
-                        src={renderImages}
+                        src={renderImages.large}
+                        srcSet={`${renderImages.small} 480w, ${renderImages.medium} 768w, ${renderImages.large} 1024w`}
+                        sizes="(max-width: 600px) 480px, (max-width: 1024px) 768px, 1024px"
                         className={classNames(
                             "rounded-xl xl:min-h-[400px] object-cover object-center",
                             imgClass
                         )}
+                        loading="lazy"
                     />
                     <img
                         alt={id}
-                        src={renderImages}
+                        src={renderImages.large}
+                        srcSet={`${renderImages.small} 480w, ${renderImages.medium} 768w, ${renderImages.large} 1024w`}
+                        sizes="(max-width: 600px) 480px, (max-width: 1024px) 768px, 1024px"
                         className={classNames("absolute bottom-0 left-[100%] opacity-0 hover:opacity-100 hover:left-0 overflow-hidden rounded-xl xl:min-h-[400px] object-cover object-center transition duration-300 ease-in-out -scale-x-100", imgClass)}
+                        loading="lazy"
                     />
                 </div>
                 <div className="mt-1 md:mt-3 w-full flex flex-col justify-start">

@@ -156,6 +156,24 @@ const Product = () => {
       console.log("error", error);
     }
   };
+  // Handle the share action
+  const handleShare = async (productTitle, productUrl) => {
+    if (navigator.share) {
+      try {
+        await navigator.share({
+          title: productTitle, // Dynamic product title
+          text: `Check out this amazing product: ${productTitle}`, // Custom message
+          url: productUrl, // Product details page URL
+        });
+        console.log('Share was successful.');
+      } catch (error) {
+        console.error('Error sharing:', error);
+      }
+    } else {
+      alert('Sharing not supported on this browser.');
+    }
+  };
+  
 
   return (
     <ReactHelmet {...{ title: data?.meta_title, description: data?.meta_description, keywords: data?.meta_keywords }} >
@@ -237,6 +255,13 @@ const Product = () => {
                   <del className="ml-4 text-base line-through text-less">
                     ₹ {attribute?.[attributeIndex]?.mrp}
                   </del>
+                </div>
+                <div className="p-2 rounded-full cursor-pointer bg-slate-100 mr-3">
+                  <ICONS.SHARE
+                    onClick={() => handleShare(data?.product_name, window.location.href)} // Pass the current page URL
+                    className="w-7 h-7"
+                    style={{ fill: '#ec4899' }} // Directly applying the pink color (hex: #ec4899)
+                  />
                 </div>
                 <div className="p-2 rounded-full cursor-pointer bg-slate-100">
                   {data?.wishlist ? (

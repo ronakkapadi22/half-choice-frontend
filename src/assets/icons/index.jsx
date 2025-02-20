@@ -36,8 +36,8 @@ import { IoIosCheckmarkCircle } from "react-icons/io";
 import { CiBoxes } from "react-icons/ci";
 import { TiHome } from "react-icons/ti";
 import { MdOutlineDone } from "react-icons/md";
-
-
+import { CiShare2 } from "react-icons/ci";
+import { TbHelp } from "react-icons/tb";
 
 export const ICONS = {
   CHECK: FaCheck,
@@ -80,5 +80,7 @@ export const ICONS = {
   CHECK_CIRCLE: IoIosCheckmarkCircle,
   BOX: CiBoxes,
   HOME: TiHome,
-  DONE: MdOutlineDone
+  DONE: MdOutlineDone,
+  SHARE: CiShare2,
+  HELP: TbHelp
 };
