@@ -1,11 +1,11 @@
-import React, { useCallback, useMemo } from "react";
+import React, { useCallback, useMemo, useState } from "react";
 import { classNames, getTitle } from "../../assets/utils/helper";
 import { IMAGE_PATH } from "../../assets/utils/constant";
 import { ICONS } from "../../assets/icons";
 import { useNavigate } from "react-router-dom";
 import { PAGES } from "../../assets/utils/urls";
 import ReactHelmet from "../../containers/seo/helmet";
-import DUMMY_IMAGE from "../../assets/images/skeleton.jpeg"
+import DUMMY_IMAGE from "../../assets/images/skeleton.jpeg";
 
 const ProductCard = ({
     id,
@@ -16,22 +16,17 @@ const ProductCard = ({
     disabledMeta,
     ...props
 }) => {
+    const [imageLoaded, setImageLoaded] = useState(false); // Track if image has loaded
+    const [imageError, setImageError] = useState(false); // Track if image failed to load
+
     const navigate = useNavigate();
 
     const handleRedirect = useCallback(
         (path = "") => {
-            window.open(path, '_blank')
+            window.open(path, '_blank');
         },
         [navigate]
     );
-
-    // const renderImages = useMemo(() => {
-    //     if (variant?.images?.length) {
-    //         const clone = [...variant?.images];
-    //         return IMAGE_PATH + clone?.[0]?.image_file;
-    //     } else return DUMMY_IMAGE;
-    // }, [variant]);
-
 
     // Modify the renderImages to include multiple sizes for srcSet
     const renderImages = useMemo(() => {
@@ -53,16 +48,25 @@ const ProductCard = ({
     }, []);
 
     const attribute = useMemo(() => {
-        if (!variant) return {}
+        if (!variant) return {};
         const clone = [...variant?.attributeData];
         return clone?.length ? clone?.[0] : {};
     }, [variant]);
 
     const sizes = useMemo(() => {
-        if (!variant) return []
+        if (!variant) return [];
         const clone = [...variant?.attributeData];
         return [...new Set(clone.map((val) => val.size))];
     }, [variant]);
+
+    // Handle image load and error events
+    const handleImageLoad = () => {
+        setImageLoaded(true); // Image loaded successfully
+    };
+
+    const handleImageError = () => {
+        setImageError(true); // Image failed to load
+    };
 
     return (
         <ReactHelmet
@@ -73,7 +77,19 @@ const ProductCard = ({
             }}
         >
             <div
-                onClick={() => handleRedirect(`${PAGES.PRODUCTS.path}/${id}/${getTitle(props?.meta_title || variant?.name)}`)}
+                //onClick={() => handleRedirect(`${PAGES.PRODUCTS.path}/${id}/${getTitle(props?.meta_title || variant?.name)}`)}
+                onClick={() => {
+                    const { slug_url, meta_title, variant} = props;
+                  
+                    // Construct the redirect URL based on slug_url presence
+                    const redirectUrl = slug_url
+                      ? `${PAGES.PRODUCTS.path}/${id}/${slug_url}`  // If slug_url is present
+                      : `${PAGES.PRODUCTS.path}/${id}/${getTitle(meta_title || variant?.name)}`;  // Fallback to id and title
+                    
+                    // Open the constructed URL in a new window
+                    window.open(redirectUrl, "_blank");
+                  }}
+                  
                 className={classNames(
                     "w-full productItem01 flex flex-col cursor-pointer items-center justify-center relative h-auto",
                     className
@@ -82,7 +98,7 @@ const ProductCard = ({
                 <div onClick={(e) => {
                     e.stopPropagation();
                     handleWishlist(id, props?.wishlist);
-                }} className="absolute z-[9] top-1 md;top-2 right-1 md:right-2 cursor-pointer bg-slate-100 rounded-full p-2">
+                }} className="absolute z-[9] top-1 md:top-2 right-1 md:right-2 cursor-pointer bg-slate-100 rounded-full p-2">
                     {props?.wishlist ? (
                         <ICONS.HEART_FILL className="w-6 h-6 text-pink" />
                     ) : (
@@ -97,7 +113,7 @@ const ProductCard = ({
                 <div className="w-full relative pi01Thumb">
                     <img
                         alt={imageAlterTag}
-                        src={renderImages.large}
+                        src={imageError ? DUMMY_IMAGE : renderImages.large} // Use dummy image if error
                         srcSet={`${renderImages.small} 480w, ${renderImages.medium} 768w, ${renderImages.large} 1024w`}
                         sizes="(max-width: 600px) 480px, (max-width: 1024px) 768px, 1024px"
                         className={classNames(
@@ -105,15 +121,19 @@ const ProductCard = ({
                             imgClass
                         )}
                         loading="lazy"
+                        onLoad={handleImageLoad} // Trigger onLoad
+                        onError={handleImageError} // Trigger onError
                     />
                     <img
                         alt={id}
-                        src={renderImages.large}
+                        src={imageError ? DUMMY_IMAGE : renderImages.large} // Use dummy image if error
                         srcSet={`${renderImages.small} 480w, ${renderImages.medium} 768w, ${renderImages.large} 1024w`}
                         sizes="(max-width: 600px) 480px, (max-width: 1024px) 768px, 1024px"
                         className={classNames("absolute bottom-0 left-[100%] opacity-0 hover:opacity-100 hover:left-0 overflow-hidden rounded-xl xl:min-h-[400px] object-cover object-center transition duration-300 ease-in-out -scale-x-100", imgClass)}
                         loading="lazy"
-                    />
+                        onLoad={handleImageLoad} // Trigger onLoad
+                        onError={handleImageError} // Trigger onError
+                    />  
                 </div>
                 <div className="mt-1 md:mt-3 w-full flex flex-col justify-start">
                     <p className="text-text text-base max-w-xs overflow-hidden text-ellipsis whitespace-nowrap cursor-pointer">

@@ -7,6 +7,7 @@ export default defineConfig({
   plugins: [react(), svgr()],
   optimizeDeps: {
     include: ['yup'],
+    exclude: ['@firebase/app'],
     esbuildOptions: {
       define: {
         global: 'globalThis',
@@ -26,4 +27,17 @@ export default defineConfig({
       overlay: false
     },
   },
-});
+  build: {
+    sourcemap: true,
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          vendor: ['react', 'react-dom', 'react-router-dom'],
+          utils: ['moment'],
+          icons: ['./src/assets/icons'],
+        }
+      },
+    },
+    chunkSizeWarningLimit: 1000,
+  },
+})

@@ -76,7 +76,7 @@ const LatestArrival = ({ title, className, disabledMeta, ...props }) => {
     >
       <div className="flex items-start md:items-end mb-12 justify-between w-full">
         <div className="flex flex-col">
-          <h3 className="text-lg md:text-xl font-semibold text-pink">Our</h3>
+        <span className="text-lg md:text-xl font-semibold text-pink">Our</span>
           <h2 className="mb-4 md:mb-6 text-2xl md:text-4xl font-bold">
             {title || ""}
           </h2>

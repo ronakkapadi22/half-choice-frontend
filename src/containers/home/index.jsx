@@ -32,9 +32,9 @@ const Home = () => {
 
   return (
     <ReactHelmet
-      keywords={seo?.home?.meta_keywords || ''}
-      description={seo?.home?.meta_description || ''}
-      title={seo?.home?.meta_title || ''}
+      keywords={seo?.home?.meta_keywords || 'Buy kids clothes online in India, Best kids clothing shopping app, Trendy kids wear online, Online kids fashion shopping India, Kids party wear dresses India, Girls dresses online shopping, Boys ethnic wear India, Buy baby clothes online India, Kids clothing brands India, Online shopping kids wear India, Best shopping app for kids clothes, Comfortable kids clothes India'}
+      description={seo?.home?.meta_description || 'Shop the Best Kids & Baby Clothes Online in India at Halfchoice – Up to 70% OFF on Trendy T-Shirts, Stylish Tops, Party Dresses, Ethnic Wear, Nightwear & More. Enjoy Free Shipping & Exclusive Deals!'}
+      title={seo?.home?.meta_title || 'Buy Kids & Baby Clothes Online in India – Up to 70% OFF | Free Shipping at Halfchoice'}
     >
       <div className="relative w-full">
         <HomeBanner />

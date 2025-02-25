@@ -7,7 +7,7 @@ const OurValues = () => {
         <section className="w-full pt-24 pb-6">
             <div className="relative container mx-auto lg:px-4 p-4 max-w-7xl">
                 <div className="w-full">
-                    <h2 className="text-lg md:text-xl font-semibold text-pink">Our</h2>
+                <span className="text-lg md:text-xl font-semibold text-pink">Our</span>
                     <h3 className="mb-4 md:mb-6 text-2xl md:text-4xl font-bold">Value Propositons</h3>
                     <p className="mb-12 text-lg text-gray-600">
                         We empower kids to be themselves through high-quality, affordable clothing that combines style, comfort, and durability. Our designs celebrate childhood while giving parents peace of mind.

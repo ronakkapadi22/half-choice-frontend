@@ -72,17 +72,45 @@ const Footer = () => {
               </div>
             </div>
             <div className="flex md:justify-end mr-[0px] mt-[60px] gap-3">
-              <a href="https://www.facebook.com/profile.php?id=61551765577969&mibextid=ZbWKwL" target="_blank" className="border rounded-[30px] p-3 cursor-pointer text-3xl bg-white text-green">
+              <a 
+                href="https://www.facebook.com/profile.php?id=61551765577969&mibextid=ZbWKwL" 
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Visit HalfChoice Facebook page" 
+                className="border rounded-[30px] p-3 cursor-pointer text-3xl bg-white text-green flex items-center"
+              >
                 <ICONS.FACEBOOK />
+                <span className="sr-only">Facebook</span>
               </a>
-              <a href="https://www.instagram.com/half.choice/" target="_blank" className="border rounded-[30px] p-3 cursor-pointer text-3xl bg-white text-green">
+              <a 
+                href="https://www.instagram.com/half.choice/" 
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Follow HalfChoice on Instagram"
+                className="border rounded-[30px] p-3 cursor-pointer text-3xl bg-white text-green flex items-center"
+              >
                 <ICONS.INSTAGRAM />
+                <span className="sr-only">Instagram</span>
               </a>
-              <a href="https://x.com/HalfChoice01" target="_blank" className="border rounded-[30px] p-3 cursor-pointer text-3xl bg-white text-green">
+              <a 
+                href="https://x.com/HalfChoice01" 
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Follow HalfChoice on X (Twitter)"
+                className="border rounded-[30px] p-3 cursor-pointer text-3xl bg-white text-green flex items-center"
+              >
                 <ICONS.TWITTER />
+                <span className="sr-only">X (Twitter)</span>
               </a>
-              <a href="https://www.youtube.com/@halfchoice" target="_blank" className="border rounded-[30px] p-3 cursor-pointer text-3xl bg-white text-green">
+              <a 
+                href="https://www.youtube.com/@halfchoice" 
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Subscribe to HalfChoice YouTube channel"
+                className="border rounded-[30px] p-3 cursor-pointer text-3xl bg-white text-green flex items-center"
+              >
                 <ICONS.YOUTUBE />
+                <span className="sr-only">YouTube</span>
               </a>
             </div>
           </div>
