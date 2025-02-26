@@ -6,7 +6,7 @@ import { AddressSchema } from "../../assets/utils/validation";
 import Form from "../../shared/form";
 import FormControl from "../../shared/form-control";
 import CustomCheckBox from "../../shared/checkbox";
-import { ADDRESS_TYPE } from "../../assets/utils/constant";
+
 import { classNames, isEmptyObject } from "../../assets/utils/helper";
 import Spinner from "../..";
 import { api } from "../../api";
@@ -17,6 +17,43 @@ const AddressForm = ({ id, open, setOpen, ...props }) => {
   const user = useSelector(({ auth }) => auth.user);
   const dispatch = useDispatch();
   const [loader, setLoader] = useState(false);
+
+  const detectUserLocation = () => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition((position) => {
+        const { latitude, longitude } = position.coords;
+        // Reverse geocode to get the city, state, etc.
+        fetch(`https://api.opencagedata.com/geocode/v1/json?q=${latitude}+${longitude}&key=7cb5b50115c943ef961135586e23780a`)
+          .then((response) => response.json())
+          .then((data) => {
+            const result = data.results[0];
+            if (result) {
+              const { city, state, postcode, state_district, suburb, road, neighbourhood, _normalized_city } = result.components;
+              
+              // Determine city
+              const cityToSet = city || state_district || suburb || _normalized_city;
+              
+              // Determine address line 2
+              const addressLine2 = `${road || ''} ${_normalized_city || ''} ${suburb || ''} ${neighbourhood || ''}`;
+  
+              // Update form values while preserving other fields
+              setValues((prev) => ({
+                ...prev,
+                city: cityToSet || prev.city,
+                state: state || prev.state,
+                pincode: postcode || prev.pincode,
+                address_line_2: addressLine2.trim() || prev.address_line_2,
+              }));
+            }
+          })
+          .catch((error) => {
+            console.error("Geolocation error: ", error);
+          });
+      });
+    } else {
+      console.log("Geolocation is not supported by this browser.");
+    }
+  };  
 
   const initialValues = useMemo(() => {
     if (id) {
@@ -66,14 +103,20 @@ const AddressForm = ({ id, open, setOpen, ...props }) => {
   });
 
   useEffect(() => {
-    if (!isEmptyObject(user)) {
-      setValues(prev => ({
-        ...prev, full_name: `${user?.fname} ${user?.lname}`,
-        phone: user?.phone
-      }))
+    // Call detectUserLocation only when adding a new address (id is null or undefined)
+    if (!id) {
+      // Check if user details are available and set form values
+      if (!isEmptyObject(user)) {
+        setValues(prev => ({
+          ...prev,
+          full_name: `${user?.fname} ${user?.lname}`,
+          phone: user?.phone
+        }));
+      }
+      detectUserLocation();
     }
-  }, [])
-
+  }, [user, id]);  // Runs when user or id changes
+  
   const handleSubmitAddress = async (payload) => {
     setLoader(true);
     try {
@@ -117,7 +160,7 @@ const AddressForm = ({ id, open, setOpen, ...props }) => {
   );
 
   return (
-    <div className="w-full h-auto p-0 md:p-4">
+    <div className="w-full h-auto p-0 md:p-4 max-h-[80vh] overflow-y-auto"> {/* Added max-height and overflow-y-auto */}
       <div className="flex items-center justify-between w-full mb-4">
         <h2 className="text-lg sm:text-xl font-medium text-text">
           {id ? "Edit Address" : "Add Address"}
@@ -232,27 +275,7 @@ const AddressForm = ({ id, open, setOpen, ...props }) => {
             label="Use a default address"
           />
         </div>
-        {/* <div className="w-full col-span-12">
-          <label className="mb-1 text-sm sm:text-base font-medium text-text">
-            Address Type
-          </label>
-          <div className="flex flex-wrap items-center justify-start w-full gap-2 sm:gap-3 mt-2">
-            {ADDRESS_TYPE?.map((type) => (
-              <div
-                key={type}
-                onClick={() => setValues({ ...values, address_type: type })}
-                className={classNames(
-                  "border py-1.5 sm:py-2 px-3 sm:px-4 text-xs sm:text-sm text-text font-medium border-select rounded-md cursor-pointer",
-                  values.address_type === type
-                    ? "bg-select !text-white"
-                    : "bg-transparent"
-                )}
-              >
-                {type || ""}
-              </div>
-            ))}
-          </div>
-        </div> */}
+
         <div className="flex items-end justify-end col-span-12 mt-4">
           <Button
             type="submit"
