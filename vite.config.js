@@ -18,6 +18,7 @@ export default defineConfig({
     proxy: {
       '/api': {
         target: 'https://apis.halfchoice.in',
+        //target: 'https://apis.attirebazar.com',
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/api/, ''),
       },

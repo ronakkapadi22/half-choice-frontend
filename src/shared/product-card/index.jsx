@@ -69,13 +69,13 @@ const ProductCard = ({
     };
 
     return (
-        <ReactHelmet
-            {...{
-                title: props?.meta_title,
-                description: props?.meta_description,
-                keywords: props?.meta_keywords, disabledMeta
-            }}
-        >
+        // <ReactHelmet
+        //     {...{
+        //         title: props?.meta_title,
+        //         description: props?.meta_description,
+        //         keywords: props?.meta_keywords, disabledMeta
+        //     }}
+        // >
             <div
                 //onClick={() => handleRedirect(`${PAGES.PRODUCTS.path}/${id}/${getTitle(props?.meta_title || variant?.name)}`)}
                 onClick={() => {
@@ -169,7 +169,7 @@ const ProductCard = ({
                     </div>
                 </div>
             </div>
-        </ReactHelmet>
+        // </ReactHelmet>
     );
 };
 

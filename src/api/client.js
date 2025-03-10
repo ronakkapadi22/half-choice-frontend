@@ -5,7 +5,7 @@ import { ERROR_MESSAGES, METHODS } from "../assets/utils/constant";
 
 // const BASE_URL = "http://api.halfchoice.in:3306/api/v1";
 const BASE_URL = "https://apis.halfchoice.in/api/v1";
-
+//const BASE_URL = "https://apis.attirebazar.com/api/v1";
 
 const axiosConfig = {
   baseURL: BASE_URL,
