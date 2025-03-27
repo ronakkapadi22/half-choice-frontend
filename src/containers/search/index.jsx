@@ -90,6 +90,45 @@ const ProductSearch = () => {
     }
   }, []);
 
+
+
+  const breadcrumb = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Home",
+        "item": "https://halfchoice.in/"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "Party Wear",
+        "item": "https://halfchoice.in/products?cat_id=27&sub_sub_cat_id=35,31&name=party-wear&sub_cat_id="
+      },
+      {
+        "@type": "ListItem",
+        "position": 3,
+        "name": "Western Wear",
+        "item": "https://halfchoice.in/products?cat_id=27&sub_sub_cat_id=36,32&name=western-wear&sub_cat_id="
+      },
+      {
+        "@type": "ListItem",
+        "position": 4,
+        "name": "Apparel",
+        "item": "https://halfchoice.in/products?cat_id=27&sub_sub_cat_id=38,39&name=apparel&sub_cat_id="
+      },
+      {
+        "@type": "ListItem",
+        "position": 5,
+        "name": "Casual Wear",
+        "item": "https://halfchoice.in/products?cat_id=27&sub_sub_cat_id=37,33&name=casual-wear&sub_cat_id="
+      }
+    ]
+  };
+
   return (
     <ReactHelmet
       {...{
@@ -98,6 +137,11 @@ const ProductSearch = () => {
         keywords: seo?.search?.meta_keywords || "",
       }}
     >
+
+      <script type="application/ld+json">
+        {JSON.stringify(breadcrumb)}
+      </script>
+
       <div className="relative container mx-auto lg:px-4 px-2 py-4 md:py-4 md:px-4 max-w-7xl">
         <div className="w-full">
           <Breadcrumb links={links} />

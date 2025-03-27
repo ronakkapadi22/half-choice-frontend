@@ -173,10 +173,153 @@ const Product = () => {
       alert('Sharing not supported on this browser.');
     }
   };
+
+  const schemaMarkup = useMemo(() => {
+    if (!data) return null;
+
+    return {
+      "@context": "https://schema.org/",
+      "@type": "Product",
+      "name": data?.product_name || "",
+      "image": images?.map(img => IMAGE_PATH + img?.image_file) || [],
+      "description": data?.meta_description || "",
+      "sku": data?.sku || "",
+      "brand": {
+        "@type": "Brand",
+        "name": data?.brand || "HalfChoice"
+      },
+      "offers": {
+        "@type": "Offer",
+        "url": window.location.href,
+        "priceCurrency": "INR",
+        "price": attribute?.[attributeIndex]?.selling_price || "",
+        "itemCondition": "https://schema.org/NewCondition",
+        "availability": Number(attribute?.[attributeIndex]?.qty) > 0
+          ? "https://schema.org/InStock"
+          : "https://schema.org/OutOfStock",
+        "seller": {
+          "@type": "Organization",
+          "name": "HalfChoice"
+        }
+      }
+    };
+  }, [data, images, attribute, attributeIndex]);
+
+    const faqSchema = {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What is the return policy for kids' clothes?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "We accept returns only if the wrong item was delivered or if the product is defective. Items must be reported within 48 hours of delivery with proof (images/videos)."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Do you offer cash on delivery (COD)?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes, we offer COD across India. Additional charges may apply."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Do you offer free delivery in India?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes, we offer free delivery on all orders across India. No minimum purchase required."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What sizes are available for kids' clothes?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "We offer sizes for kids from 1 to 15 years."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How long does delivery take?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Delivery takes 2 to 7 days depending on your location."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What payment methods do you accept?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "We accept UPI, PhonePe, GPay, net banking, and COD."
+          }
+        }
+      ]
+    };
+
+    
+  const organizationSchema = {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "HalfChoice",
+    "url": "https://halfchoice.in",
+    "logo": "https://halfchoice.in/assets/logo-Cm-CM6YC.png",
+    "description": "HalfChoice is a top kids' clothing website and the best kids' shopping app in India, offering trendy fashion for children aged 1-15 years. Shop stylish T-shirts, party dresses, ethnic wear, and more at great prices. Enjoy free shipping, exclusive deals & a seamless shopping experience. Download now!",
+    "sameAs": [
+      "https://www.facebook.com/profile.php?id=61551765577969&mibextid=ZbWKwL",
+      "https://www.instagram.com/half.choice/",
+      "https://x.com/HalfChoice01",
+      "https://x.com/HalfChoice01",
+      "https://www.youtube.com/@halfchoice",
+      "https://blog.halfchoice.in/",
+      "https://play.google.com/store/apps/details?id=com.half.choice"
+    ],
+    "contactPoint": [
+      {
+        "@type": "ContactPoint",
+        "telephone": "+91-8160678824",
+        "contactType": "customer service",
+        "areaServed": "IN",
+        "availableLanguage": ["English", "Hindi"]
+      }
+    ],
+    "keywords": [
+      "Top kids clothes website",
+      "Top kids shopping clothes app",
+      "Best kids shopping clothes app",
+      "Top kids shopping clothes app in India",
+      "Top kids shopping clothes app free",
+      "Top kids shopping clothes app download",
+      "Best app for baby clothes in India",
+      "Online shopping for kidswear in India",
+      "HalfChoice kids clothing online shopping",
+      "Kids shopping app India",
+      "HalfChoice kids clothing online shopping India",
+      "Best kids clothing online shopping India",
+      "Online shopping for kids clothes in India",
+      "HalfChoice kids clothing online shopping India"
+    ]
+  };
   
 
   return (
     <ReactHelmet {...{ title: data?.meta_title, description: data?.meta_description, keywords: data?.meta_keywords }} >
+     {/* Injecting Schema Markup */}
+     <script type="application/ld+json">
+        {JSON.stringify(schemaMarkup)}
+      </script>
+
+      <script type="application/ld+json">
+        {JSON.stringify(faqSchema)}
+      </script>
+
+      <script type="application/ld+json">
+        {JSON.stringify(organizationSchema)}
+      </script>
+
       <div className="container relative p-4 mx-auto lg:px-4 max-w-7xl">
         <div className="grid w-full grid-cols-12 gap-4">
           <div className="col-span-12 px-0 md:p-2 md:col-span-5">
@@ -396,6 +539,51 @@ const Product = () => {
           </div>
         </Modal>
       </div>
+
+      <section className="faq-section py-16 bg-gradient-to-b from-white to-gray-100">
+          <div className="container mx-auto px-6 max-w-3xl">
+            <h2 className="text-3xl font-extrabold text-center text-gray-800 mb-10">Frequently Asked Questions</h2>
+
+            <div className="space-y-6">
+              {[
+                {
+                  question: "What is the return policy for kids' clothes?",
+                  answer: "We accept returns only if the wrong item was delivered or if the product is defective. Items must be reported within 48 hours of delivery with proof (images/videos).",
+                },
+                {
+                  question: "Do you offer cash on delivery (COD)?",
+                  answer: "Yes, we offer COD across India. Additional charges may apply.",
+                },
+                {
+                  question: "Do you offer free delivery in India?",
+                  answer: "Yes, we offer free delivery on all orders across India. No minimum purchase required.",
+                },
+                {
+                  question: "What sizes are available for kids' clothes?",
+                  answer: "We offer sizes for kids from 1 to 15 years.",
+                },
+                {
+                  question: "How long does delivery take?",
+                  answer: "Delivery takes 2 to 7 days depending on your location.",
+                },
+                {
+                  question: "What payment methods do you accept?",
+                  answer: "We accept UPI, PhonePe, GPay, net banking, and COD.",
+                },
+              ].map((faq, index) => (
+                <details key={index} className="group bg-white p-5 rounded-lg shadow-lg cursor-pointer transition-all">
+                  <summary className="flex justify-between items-center font-medium text-lg text-gray-800 group-open:text-primary">
+                    {faq.question}
+                    <svg className="w-5 h-5 text-gray-600 group-open:rotate-180 transition-transform duration-200" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                      <path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd" />
+                    </svg>
+                  </summary>
+                  <p className="mt-3 text-gray-600 leading-relaxed">{faq.answer}</p>
+                </details>
+              ))}
+            </div>
+          </div>
+        </section>
     </ReactHelmet>
   );
 };

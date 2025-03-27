@@ -14,6 +14,21 @@ const OtherLinks = ({ label, ...props }) => {
     }
   }
 
+   // Generate structured data for SiteNavigationElement
+   const navigationSchema = {
+    "@context": "https://schema.org",
+    "@type": "SiteNavigationElement",
+    "name": "Other Related Links",
+    "url": "https://halfchoice.in",
+    "about": "Find other related links for kids' fashion, latest arrivals, and more.",
+    "potentialAction": popular_link?.map((item) => ({
+      "@type": "ReadAction",
+      "target": item?.link,
+      "name": item?.title,
+    })),
+  };
+
+
   return (
     <div className="w-full pt-2 pb-6">
       <div className="relative container mx-auto lg:px-4 p-4 max-w-7xl">
@@ -36,6 +51,10 @@ const OtherLinks = ({ label, ...props }) => {
           ))}
         </div>
       </div>
+        {/* Add Schema Markup */}
+        <script type="application/ld+json">
+        {JSON.stringify(navigationSchema)}
+      </script>
     </div>
   );
 };
